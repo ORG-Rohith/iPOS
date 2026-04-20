@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>POS Back Office — Login</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-wrapper {
+      display: flex;
+      width: 900px;
+      min-height: 520px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+
+    .login-brand {
+      flex: 1;
+      background: linear-gradient(160deg, #e94560, #0f3460);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      color: white;
+    }
+
+    .login-brand .logo {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .login-brand h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .login-brand p {
+      font-size: 14px;
+      opacity: 0.8;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .login-brand .features {
+      margin-top: 32px;
+      width: 100%;
+    }
+
+    .login-brand .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .login-brand .feature-item span.icon {
+      font-size: 18px;
+    }
+
+    .login-form-side {
+      flex: 1;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+    }
+
+    .login-form-side h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+    }
+
+    .login-form-side p.sub {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e8e8e8;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #333;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: #e94560;
+    }
+
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .forgot {
+      font-size: 13px;
+      color: #e94560;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #e94560, #c73652);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(233,69,96,0.4);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+      width: 100%;
+    }
+
+    .divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid #eee;
+    }
+
+    .divider span {
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background: #f0f4ff;
+      color: #0f3460;
+    }
+
+    .error-msg {
+      display: none;
+      background: #fff0f3;
+      border: 1px solid #ffccd5;
+      color: #c73652;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-brand">
+      <div class="logo">🏪</div>
+      <h1>POSPlatform</h1>
+      <p>Multi-tenant POS for Retail<br/>and Food & Beverage</p>
+      <div class="features">
+        <div class="feature-item">
+          <span class="icon">✅</span>
+          <span>Multi-tenant and multi-outlet</span>
+        </div>
+        <div class="feature-item">
+          <span class="icon">✅</span>
+          <span>Offline + online capability</span>
+        </div>
+        <div class="feature-item">
+          <span class="icon">✅</span>
+          <span>India and Australia ready</span>
+        </div>
+        <div class="feature-item">
+          <span class="icon">✅</span>
+          <span>Android and Windows POS</span>
+        </div>
+        <div class="feature-item">
+          <span class="icon">✅</span>
+          <span>Retail and F&B modes</span>
+        </div>
+      </div>
+    </div>
+    <div class="login-form-side">
+      <h2>Welcome Back</h2>
+      <p class="sub">Sign in to your back office account</p>
+      <div class="error-msg" id="errorMsg">
+        Invalid email or password. Please try again.
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="admin@yourbusiness.com" value="admin@demo.com"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter your password" value="password"/>
+      </div>
+      <div class="form-row">
+        <label class="remember">
+          <input type="checkbox" checked/> Remember me
+        </label>
+        <a href="#" class="forgot">Forgot Password?</a>
+      </div>
+      <button class="btn-login" onclick="handleLogin()">Sign In to Back Office</button>
+      <div class="divider">
+        <hr/><span>Demo accounts</span><hr/>
+      </div>
+      <div class="badge-row">
+        <span class="badge">Tenant Admin</span>
+        <span class="badge">Outlet Manager</span>
+        <span class="badge">Accountant</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function handleLogin() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorMsg = document.getElementById('errorMsg');
+
+      if (email === 'admin@demo.com' && password === 'password') {
+        errorMsg.style.display = 'none';
+        alert('Login successful! Redirecting to Dashboard...\n\nOpen backoffice-dashboard.html to continue.');
+      } else {
+        errorMsg.style.display = 'block';
+      }
+    }
+
+    document.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') handleLogin();
+    });
+  </script>
+</body>
+</html>
