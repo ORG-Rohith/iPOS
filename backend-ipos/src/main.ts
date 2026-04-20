@@ -1,25 +1,35 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
+import { SeederService } from './config/seeders/seeder.service'; // ✅ add this
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-    app.setGlobalPrefix('api/v1');
-     app.useGlobalPipes(
+
+  app.setGlobalPrefix('api/v1');
+
+  app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,        // strips unknown fields
-      forbidNonWhitelisted: true, // throws error on unknown fields
-      transform: true,        // auto transforms types
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
     }),
   );
-   app.enableCors({
-    origin: '*', // change to frontend URL in production
+
+  app.enableCors({
+    origin: '*',
   });
+
+  // ✅ IMPORTANT: initialize app first
+  await app.init();
+
+  // ✅ Run migrations + seeding here
+  const seeder = app.get(SeederService);
+  await seeder.run();
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
 
   console.log(`🚀 Server running on http://localhost:${port}/api/v1`);
-
 }
 bootstrap();

@@ -10,10 +10,12 @@ import { OutletsModule } from './core/outlets/outlets.module';
 import { UsersModule } from './auth/users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { EmailModule } from './common/email/email.module';
+import { SeederModule } from './config/seeders/seeder.module';
 
 @Module({
-  imports: [  ConfigModule.forRoot({
-    isGlobal: true,
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
       load: [databaseConfig],
     }),
     TypeOrmModule.forRootAsync({
@@ -21,7 +23,7 @@ import { EmailModule } from './common/email/email.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get<string>('database.host'),
+        host: configService.get<string>('host.docker.internal'),
         port: configService.get<number>('database.port'),
         username: configService.get<string>('database.username'),
         password: configService.get<string>('database.password'),
@@ -35,7 +37,8 @@ import { EmailModule } from './common/email/email.module';
     OutletsModule,
     UsersModule,
     AuthModule,
-    EmailModule
+    EmailModule,
+    SeederModule,
   ],
   controllers: [AppController],
   providers: [AppService],
