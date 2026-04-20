@@ -1,4 +1,4 @@
-import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
@@ -6,7 +6,6 @@ import { Role } from '../../auth/roles/roles.entity';
 import { RolePermission } from '../../auth/roles/role-permissions.entity';
 import { Permission } from '../../auth/permissions/permissions.entity';
 
-// ─── Default system roles with their permissions ──────────
 export const DEFAULT_ROLES = [
   {
     name: 'Tenant Admin',
@@ -63,7 +62,7 @@ export const DEFAULT_ROLES = [
 ];
 
 @Injectable()
-export class RolesSeeder implements OnApplicationBootstrap {
+export class RolesSeeder {
   private readonly logger = new Logger(RolesSeeder.name);
 
   constructor(
@@ -77,59 +76,49 @@ export class RolesSeeder implements OnApplicationBootstrap {
     private readonly permissionRepo: Repository<Permission>,
   ) {}
 
-  async onApplicationBootstrap() {
-    await this.seedRoles();
-  }
-
   async seedRoles(): Promise<void> {
     this.logger.log('👥 Seeding default roles...');
 
     for (const roleData of DEFAULT_ROLES) {
-      // Check if role already exists
       let role = await this.roleRepo.findOne({
         where: { name: roleData.name, is_system: true },
       });
 
       if (!role) {
-        // Create role
         role = this.roleRepo.create({
           uuid: uuidv4(),
           name: roleData.name,
           display_name: roleData.display_name,
           is_system: true,
-          tenant_id: null, // system-level roles
+          tenant_id: null,
         });
 
         role = await this.roleRepo.save(role);
         this.logger.log(`  ✅ Role created: ${role.name}`);
       } else {
-        this.logger.log(`  ⏭️  Role exists: ${role.name}. Skipping.`);
+        this.logger.log(`  ⏭️ Role exists: ${role.name}`);
       }
 
-      // Assign permissions to role
       await this.assignPermissionsToRole(role, roleData.permissions);
     }
 
     this.logger.log('✅ Roles seeding complete.');
   }
 
-  // ─── Assign permissions to a role ────────────────────────
   private async assignPermissionsToRole(
     role: Role,
     permissionCodes: string[],
   ): Promise<void> {
     for (const code of permissionCodes) {
-      // Find permission by code
       const permission = await this.permissionRepo.findOne({
         where: { code },
       });
 
       if (!permission) {
-        this.logger.warn(`  ⚠️  Permission not found: ${code}`);
+        this.logger.warn(`⚠️ Permission not found: ${code}`);
         continue;
       }
 
-      // Check if already assigned
       const existing = await this.rolePermissionRepo.findOne({
         where: {
           role_id: role.id,
@@ -137,9 +126,8 @@ export class RolesSeeder implements OnApplicationBootstrap {
         },
       });
 
-      if (existing) continue; // skip duplicate
+      if (existing) continue;
 
-      // Assign
       const rp = this.rolePermissionRepo.create({
         role_id: role.id,
         permission_id: permission.id,
