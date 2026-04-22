@@ -5,10 +5,10 @@ interface TenantsLayoutProps {
     title: string;
 }
 
-const TenantDetailsLayout: React.FC<TenantsLayoutProps> = ({ children, title }) => {
+const TenantDetailsLayout: React.FC<TenantsLayoutProps> = ({ children }) => {
     return (
         <div className="min-h-screen bg-[#f4f6fb] flex flex-col">
-            <Topbar title="Create Tenant" variant="createTenant" />
+            <Topbar title="Tenant Details" variant="tenantDetails" />
             <main className="p-7 flex-1">{children}</main>
         </div>
     );
