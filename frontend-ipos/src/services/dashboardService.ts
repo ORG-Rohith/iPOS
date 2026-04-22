@@ -1,7 +1,9 @@
+import { FaFlask, FaStore, FaUser, FaUserCheck } from "react-icons/fa";
 import type {
   DashboardData,
   SidebarData,
 } from "../../src/features/auth/types/dashboard";
+import type { TenantStatsData } from "../features/auth/types/tenant.types";
 
 export const fetchSidebarData = async (): Promise<SidebarData> => {
   // Simulate API call
@@ -71,6 +73,7 @@ export const fetchDashboardData = async (): Promise<DashboardData> => {
       resolve({
         stats: [
           {
+            color: "border-red-500",
             label: "Today's Sales",
             value: "$4,820",
             change: "↑ 12% from yesterday",
@@ -79,6 +82,7 @@ export const fetchDashboardData = async (): Promise<DashboardData> => {
             type: "sales",
           },
           {
+            color: "border-blue-500",
             label: "Total Orders",
             value: "147",
             change: "↑ 8% from yesterday",
@@ -87,6 +91,7 @@ export const fetchDashboardData = async (): Promise<DashboardData> => {
             type: "orders",
           },
           {
+            color: "border-green-500",
             label: "Customers Served",
             value: "132",
             change: "↑ 5% from yesterday",
@@ -95,6 +100,7 @@ export const fetchDashboardData = async (): Promise<DashboardData> => {
             type: "customers",
           },
           {
+            color: "border-orange-500",
             label: "Avg Order Value",
             value: "$32.80",
             change: "↓ 2% from yesterday",
@@ -202,6 +208,53 @@ export const fetchDashboardData = async (): Promise<DashboardData> => {
             id: "5",
             message: "📦 Purchase order #PO-0023 received at Sydney CBD",
             type: "info",
+          },
+        ],
+      });
+    }, 500);
+  });
+};
+
+export const fetchTenantsData = async (): Promise<TenantStatsData> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        TenantStats: [
+          {
+            color: "border-red-500",
+            label: "Total Tenants",
+            value: "12",
+            change: "",
+            trend: "up",
+            icon: FaUser,
+            type: "sales",
+          },
+          {
+            color: "border-green-500",
+            label: "Active Tenants",
+            value: "10",
+            change: "",
+            trend: "up",
+            icon: FaUserCheck,
+            type: "orders",
+          },
+          {
+            color: "border-blue-500",
+            label: "Trial",
+            value: "2",
+            change: "",
+            trend: "up",
+            icon: FaFlask,
+            type: "customers",
+          },
+          {
+            color: "border-orange-500",
+            label: "Total Outlets",
+            value: "28",
+            change: "",
+            trend: "up",
+            icon: FaStore,
+            type: "revenue",
           },
         ],
       });

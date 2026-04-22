@@ -46,7 +46,8 @@ const TenantCard: React.FC<{ tenant: Tenant }> = ({ tenant }) => {
 
             {/* Actions */}
             <div className="flex gap-2 mt-4">
-                <button className="bg-pink-100 text-pink-600 px-3 py-1.5 rounded text-sm">
+                <button className="bg-pink-100 text-pink-600 px-3 py-1.5 rounded text-sm"
+                    onClick={() => navigate(`/tenants/manage`)}>
                     Manage
                 </button>
                 <button className="border px-3 py-1.5 rounded text-sm"

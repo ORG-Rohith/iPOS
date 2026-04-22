@@ -14,6 +14,7 @@ export interface SidebarData {
 }
 
 export interface StatData {
+  color: string
   label: string;
   value: string;
   change: string;

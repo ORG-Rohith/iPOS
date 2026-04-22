@@ -1,5 +1,5 @@
-import React from 'react';
-import type { ChartData } from '../../../src/features/auth/types/dashboard';
+import React from "react";
+import type { ChartData } from "../../../src/features/auth/types/dashboard";
 
 interface WeeklySalesChartProps {
   data: ChartData[];
@@ -9,16 +9,24 @@ const WeeklySalesChart: React.FC<WeeklySalesChartProps> = ({ data }) => {
   return (
     <div className="bg-white rounded-[14px] p-6 shadow-[0_2px_12px_rgba(0,0,0,0.06)] h-full">
       <div className="flex justify-between items-center mb-5">
-        <h3 className="text-[15px] font-bold text-[#1a1a2e]">Weekly Sales Overview</h3>
-        <a href="#" className="text-[12px] color-[#e94560] font-semibold hover:underline">View Full Report</a>
+        <h3 className="text-[15px] font-bold text-[#1a1a2e]">
+          Weekly Sales Overview
+        </h3>
+        <a href="#" className="text-[12px] text-[#e94560] font-semibold ">
+          View Full Report
+        </a>
       </div>
 
       <div className="flex items-end gap-2.5 h-[140px]">
         {data.map((item, index) => (
-          <div key={index} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+          <div
+            key={index}
+            className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group"
+          >
             <div
-              className={`w-full rounded-t-md transition-opacity group-hover:opacity-80 ${item.type === 'primary' ? 'bg-[#e94560]' : 'bg-[#4361ee]'
-                }`}
+              className={`w-full rounded-t-md transition-opacity group-hover:opacity-80 ${
+                item.type === "primary" ? "bg-[#e94560]" : "bg-[#4361ee]"
+              }`}
               style={{ height: `${item.value}%` }}
             ></div>
             <div className="text-[11px] text-gray-400">{item.label}</div>

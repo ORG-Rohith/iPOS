@@ -1,19 +1,11 @@
 import React from "react";
-import { useDashboard } from "../hooks/useDashboard";
 import TenantsLayout from "../layout/TenantsLayout";
 import TenantCard from "../components/tenants/TenantCard";
-import TenantStatCard from "../components/tenants/TenantStatCard";
+import StatCard from "../components/Dashboard/StatCard";
+import { useTenants } from "../hooks/useTenants";
 
 export const TenantsPage: React.FC = () => {
-
-  const { error } = useDashboard();
-
-  const stats = [
-    { label: "Total Tenants", value: 12, color: "border-red-400" },
-    { label: "Active", value: 10, color: "border-green-400" },
-    { label: "Trial", value: 2, color: "border-blue-400" },
-    { label: "Total Outlets", value: 28, color: "border-orange-400" },
-  ];
+  const { data, error } = useTenants();
 
   const tenants = [
     {
@@ -50,7 +42,6 @@ export const TenantsPage: React.FC = () => {
     },
   ] as const;
 
-
   if (error) {
     return (
       <TenantsLayout title="Tenants">
@@ -64,11 +55,10 @@ export const TenantsPage: React.FC = () => {
 
   return (
     <TenantsLayout title="Tenants">
-
       {/* 🔥 Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
-        {stats.map((stat, i) => (
-          <TenantStatCard key={i} {...stat} />
+        {data?.TenantStats.map((stat: any, i) => (
+          <StatCard key={i} stat={stat} />
         ))}
       </div>
 
