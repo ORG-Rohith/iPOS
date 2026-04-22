@@ -3,6 +3,9 @@ import LoginPage from "../features/auth/LoginPage";
 import { SuperAdminDashboard } from "../pages/DashboardPage";
 import ForgetPasswordPage from "../features/auth/ForgetPasswordPage";
 import CreateNewPassword from "../features/auth/CreateNewPasswordPage";
+import { TenantsPage } from "../pages/TenantsPage";
+import { CreateTenantPage } from "../pages/CreateTenantPage";
+import TenantDetailsPage from "../pages/TenantDetailsPage";
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -10,7 +13,10 @@ const AppRoutes = () => (
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/dashboard" element={<SuperAdminDashboard />} />
-      <Route path="/forgotpasword" element={<ForgetPasswordPage />} />
+      <Route path="/tenants" element={<TenantsPage />} />
+      <Route path="/tenants/create" element={<CreateTenantPage />} />
+      <Route path="/tenants/edit" element={<TenantDetailsPage />} />
+      <Route path="/forgot-password" element={<ForgetPasswordPage />} />
       <Route path="/reset-password" element={<CreateNewPassword />} />
     </Routes>
   </BrowserRouter>
