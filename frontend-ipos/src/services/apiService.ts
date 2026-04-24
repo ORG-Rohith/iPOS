@@ -19,6 +19,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
 
 export const apiService = {
   get: async <T>(endpoint: string, options: RequestOptions = {}): Promise<T> => {
+    console.log("url==========================", BASE_URL);
     const url = new URL(`${BASE_URL}${endpoint}`);
     if (options.params) {
       Object.keys(options.params).forEach((key) =>
