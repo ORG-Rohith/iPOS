@@ -20,14 +20,14 @@ async function handleResponse<T>(response: Response): Promise<T> {
 export const apiService = {
   get: async <T>(endpoint: string, options: RequestOptions = {}): Promise<T> => {
     console.log("url==========================", BASE_URL);
-    const url = new URL(`${BASE_URL}${endpoint}`);
-    if (options.params) {
-      Object.keys(options.params).forEach((key) =>
-        url.searchParams.append(key, options.params![key]),
-      );
-    }
-
-    const response = await fetch(url.toString(), {
+    // const url = new URL(`${endpoint}`);
+    // if (options.params) {
+    //   Object.keys(options.params).forEach((key) =>
+    //     url.searchParams.append(key, options.params![key]),
+    //   );
+    // }
+    console.log("url================baseurl+endpoint==========", `${BASE_URL}${endpoint}`);
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
       ...options,
       headers: {
         ...apiService.getHeaders(),
