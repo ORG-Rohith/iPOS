@@ -16,8 +16,8 @@ const AppRoutes = () => (
       <Route path="/dashboard" element={<SuperAdminDashboard />} />
       <Route path="/tenants" element={<TenantsPage />} />
       <Route path="/tenants/create" element={<CreateTenantPage />} />
-      <Route path="/tenants/edit" element={<EditTenantPage />} />
-      <Route path="/tenants/manage" element={<TenantDetailsPage />} />
+      <Route path="/tenants/edit/:id" element={<EditTenantPage />} />
+      <Route path="/tenants/manage/:id" element={<TenantDetailsPage />} />
       <Route path="/forgot-password" element={<ForgetPasswordPage />} />
       <Route path="/reset-password" element={<CreateNewPassword />} />
     </Routes>

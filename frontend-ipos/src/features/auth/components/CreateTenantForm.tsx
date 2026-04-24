@@ -288,7 +288,7 @@ const CreateTenantForm: React.FC<Props> = ({ onSubmit }) => {
     const [form, setForm] = useState<CreateTenantPayload>({
         businessName: "",
         legalName: "",
-        businessType: "",
+        businessType: undefined,
         registrationNumber: "",
         taxId: "",
         contactName: "",
@@ -296,13 +296,14 @@ const CreateTenantForm: React.FC<Props> = ({ onSubmit }) => {
         phone: "",
         website: "",
         country: "",
+        country_code: "",
         state: "",
         city: "",
         address: "",
         postalCode: "",
         plan: "Standard",
         billingCycle: "Monthly",
-        outlets: 1,
+        // outlets: 1,
         currency: "",
         timezone: "",
     });
@@ -559,7 +560,7 @@ const CreateTenantForm: React.FC<Props> = ({ onSubmit }) => {
                         Monthly
                     </button>
 
-                    <button
+                    {/* <button
                         type="button"
                         onClick={() => setForm({ ...form, billingCycle: "Annual" })}
                         className={`px-4 py-1.5 rounded-lg text-sm ${form.billingCycle === "Annual"
@@ -568,6 +569,17 @@ const CreateTenantForm: React.FC<Props> = ({ onSubmit }) => {
                             }`}
                     >
                         Annual
+                    </button> */}
+
+                    <button
+                        type="button"
+                        onClick={() => setForm({ ...form, billingCycle: "Yearly" })}
+                        className={`px-4 py-1.5 rounded-lg text-sm ${form.billingCycle === "Yearly"
+                            ? "bg-[#e94560] text-white"
+                            : "bg-gray-100"
+                            }`}
+                    >
+                        Yearly
                     </button>
                 </div>
             </div>

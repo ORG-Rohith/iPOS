@@ -1,23 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import type { Tenant } from "../../features/auth/types/tenant.types";
 
-interface Tenant {
-    name: string;
-    country: string;
-    outlets: number;
-    devices: number;
-    plan: string;
-    status: "Active" | "Trial" | "Suspended";
-}
-
-const statusColors: any = {
-    Active: "bg-green-100 text-green-600",
-    Trial: "bg-blue-100 text-blue-600",
-    Suspended: "bg-red-100 text-red-600",
+const statusColors: Record<string, string> = {
+    active: "bg-green-100 text-green-600",
+    trial: "bg-blue-100 text-blue-600",
+    suspended: "bg-red-100 text-red-600",
+    inactive: "bg-gray-100 text-gray-600",
 };
 
 const TenantCard: React.FC<{ tenant: Tenant }> = ({ tenant }) => {
     const navigate = useNavigate();
+    const statusKey = tenant.status.toLowerCase();
+
     return (
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
 
@@ -25,18 +20,20 @@ const TenantCard: React.FC<{ tenant: Tenant }> = ({ tenant }) => {
             <div className="flex justify-between items-start">
                 <div>
                     <h3 className="font-semibold text-gray-800">{tenant.name}</h3>
-                    <span className="text-xs text-gray-400">{tenant.country}</span>
+                    <span className="text-xs text-gray-400">{tenant.country_code}</span>
                 </div>
 
-                <span className={`text-xs px-2 py-1 rounded-full ${statusColors[tenant.status]}`}>
+                <span className={`text-xs px-2 py-1 rounded-full capitalize ${statusColors[statusKey] || "bg-gray-100 text-gray-600"}`}>
                     {tenant.status}
                 </span>
             </div>
 
             {/* Info */}
             <div className="mt-3 text-sm text-gray-600">
-                <p>{tenant.outlets} outlets</p>
-                <p>{tenant.devices} active devices</p>
+                <p>{tenant.outlets?.length || 0} outlets</p>
+                <p>{tenant.devices?.length || 0} active devices</p>
+
+                {/* <p>{tenant.settings?.plan || "Standard"} Plan</p> */}
             </div>
 
             {/* Plan */}
@@ -46,12 +43,12 @@ const TenantCard: React.FC<{ tenant: Tenant }> = ({ tenant }) => {
 
             {/* Actions */}
             <div className="flex gap-2 mt-4">
-                <button className="bg-pink-100 text-pink-600 px-3 py-1.5 rounded text-sm"
-                    onClick={() => navigate(`/tenants/manage`)}>
+                <button className="bg-pink-100 text-pink-600 px-3 py-1.5 rounded text-sm hover:bg-pink-200 transition-colors"
+                    onClick={() => navigate(`/tenants/manage/${tenant.uuid}`)}>
                     Manage
                 </button>
-                <button className="border px-3 py-1.5 rounded text-sm"
-                    onClick={() => navigate(`/tenants/edit`)}>
+                <button className="border border-gray-200 px-3 py-1.5 rounded text-sm hover:bg-gray-50 transition-colors"
+                    onClick={() => navigate(`/tenants/edit/${tenant.uuid}`)}>
                     Edit
                 </button>
             </div>

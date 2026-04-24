@@ -18,12 +18,13 @@ import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { PlatformAdminGuard } from '../../auth/guards/platform-admin.guard';
 import { CurrentUser } from '../../auth/decorators/current-user.decorator';
 import { RequestUser } from '../../auth/users/types/jwt-payload.type';
+import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 // ✅ All routes protected — JWT + Super Admin only
 @Controller('tenants')
 @UseGuards(JwtAuthGuard, PlatformAdminGuard)
 export class TenantsController {
-  constructor(private readonly tenantsService: TenantsService) {}
+  constructor(private readonly tenantsService: TenantsService) { }
 
   // POST /api/v1/tenants
   @Post()
@@ -37,23 +38,29 @@ export class TenantsController {
   findAll() {
     return this.tenantsService.findAll();
   }
-
-  // GET /api/v1/tenants/:id
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.tenantsService.findOne(id);
+  
+  // GET /api/v1/tenants/stats
+  @Get('stats')
+  getStats() {
+    return this.tenantsService.getStats();
   }
 
-  // PUT /api/v1/tenants/:id
-  @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateTenantDto) {
-    return this.tenantsService.update(id, dto);
+  // GET /api/v1/tenants/:uuid
+  @Get(':uuid')
+  findOne(@Param('uuid') uuid: string) {
+    return this.tenantsService.findOne(uuid);
   }
 
-  // DELETE /api/v1/tenants/:id
-  @Delete(':id')
+  // PUT /api/v1/tenants/:uuid
+  @Put(':uuid')
+  update(@Param('uuid') uuid: string, @Body() dto: UpdateTenantDto) {
+    return this.tenantsService.update(uuid, dto);
+  }
+
+  // DELETE /api/v1/tenants/:uuid
+  @Delete(':uuid')
   @HttpCode(HttpStatus.OK)
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.tenantsService.remove(id);
+  remove(@Param('uuid', ParseIntPipe) uuid: string) {
+    return this.tenantsService.remove(uuid);
   }
 }

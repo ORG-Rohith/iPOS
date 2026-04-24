@@ -3,20 +3,29 @@ import { HiOutlinePencil, HiOutlineArrowUpTray } from "react-icons/hi2";
 
 interface TenantHeaderProps {
   name: string;
-  logoUrl?: string;
+  country?: string;
   badges: string[];
 }
 
-const TenantHeader: React.FC<TenantHeaderProps> = ({ name, logoUrl, badges }) => {
+const TenantHeader: React.FC<TenantHeaderProps> = ({ name, country, badges }) => {
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
       <div className="flex items-center gap-4 w-full md:w-auto">
         <div className="w-16 h-12 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-          {logoUrl ? (
-            <img src={logoUrl} alt={name} className="w-full h-full object-contain" />
+          {/* {country ? (
+            <img src={country} alt={name} className="w-full h-full object-contain" />
           ) : (
             <span className="text-2xl">🇦🇺</span>
-          )}
+          )} */}
+
+          <span className="text-2xl"> {country
+            ? country
+              .toUpperCase()
+              .slice(0, 2) // ensures "AUS" → "AU"
+              .replace(/./g, char =>
+                String.fromCodePoint(127397 + char.charCodeAt(0))
+              )
+            : "🌍"}</span>
         </div>
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{name}</h1>
@@ -24,11 +33,10 @@ const TenantHeader: React.FC<TenantHeaderProps> = ({ name, logoUrl, badges }) =>
             {badges.map((badge, idx) => (
               <span
                 key={idx}
-                className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
-                  badge === "Active"
-                    ? "bg-teal-50 text-teal-600 border border-teal-100"
-                    : "bg-orange-50 text-orange-600 border border-orange-100"
-                }`}
+                className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${badge === "Active"
+                  ? "bg-teal-50 text-teal-600 border border-teal-100"
+                  : "bg-orange-50 text-orange-600 border border-orange-100"
+                  }`}
               >
                 {badge}
               </span>

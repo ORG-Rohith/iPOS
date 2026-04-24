@@ -1,3 +1,4 @@
+import { apiService } from "./apiService";
 import { FaFlask, FaStore, FaUser, FaUserCheck } from "react-icons/fa";
 import type {
   DashboardData,
@@ -215,49 +216,49 @@ export const fetchDashboardData = async (): Promise<DashboardData> => {
   });
 };
 
+
+
 export const fetchTenantsData = async (): Promise<TenantStatsData> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        TenantStats: [
-          {
-            color: "border-red-500",
-            label: "Total Tenants",
-            value: "12",
-            change: "",
-            trend: "up",
-            icon: FaUser,
-            type: "sales",
-          },
-          {
-            color: "border-green-500",
-            label: "Active Tenants",
-            value: "10",
-            change: "",
-            trend: "up",
-            icon: FaUserCheck,
-            type: "orders",
-          },
-          {
-            color: "border-blue-500",
-            label: "Trial",
-            value: "2",
-            change: "",
-            trend: "up",
-            icon: FaFlask,
-            type: "customers",
-          },
-          {
-            color: "border-orange-500",
-            label: "Total Outlets",
-            value: "28",
-            change: "",
-            trend: "up",
-            icon: FaStore,
-            type: "revenue",
-          },
-        ],
-      });
-    }, 500);
-  });
+  const stats = await apiService.get<any>("/tenants/stats");
+  
+  return {
+    TenantStats: [
+      {
+        color: "border-red-500",
+        label: "Total Tenants",
+        value: stats.total.toString(),
+        change: "",
+        trend: "up",
+        icon: FaUser,
+        type: "sales",
+      },
+      {
+        color: "border-green-500",
+        label: "Active Tenants",
+        value: stats.active.toString(),
+        change: "",
+        trend: "up",
+        icon: FaUserCheck,
+        type: "orders",
+      },
+      {
+        color: "border-blue-500",
+        label: "Trial",
+        value: stats.trial.toString(),
+        change: "",
+        trend: "up",
+        icon: FaFlask,
+        type: "customers",
+      },
+      {
+        color: "border-orange-500",
+        label: "Total Outlets",
+        value: stats.totalOutlets.toString(),
+        change: "",
+        trend: "up",
+        icon: FaStore,
+        type: "revenue",
+      },
+    ],
+  };
 };

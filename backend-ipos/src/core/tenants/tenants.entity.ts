@@ -1,29 +1,34 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+  Index,
+} from "typeorm";
 import { Outlet } from "../outlets/outlets.entity";
 import { User } from "src/auth/users/users.entity";
 
-@Entity('core_tenants')
+@Entity("core_tenants")
 export class Tenant {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'uuid', unique: true })
+  @Index({ unique: true })
+  @Column({ type: "uuid", generated: "uuid" })
   uuid: string;
+
+  @Index({ unique: true })
+  @Column({ nullable: true })
+  slug: string;
 
   @Column()
   name: string;
 
-  @Column({ nullable: true, unique: true })
-  slug: string;
-
-  @Column()
-  country: string;
-
-  @Column()
-  currency: string;
-
+  // 🏢 Business Info
   @Column({ nullable: true })
-  timezone: string;
+  legal_name: string;
 
   @Column({ nullable: true })
   business_type: string;
@@ -32,24 +37,81 @@ export class Tenant {
   tax_id: string;
 
   @Column({ nullable: true })
+  registration_number: string;
+
+  // 🌍 Location & Currency
+  @Column({ default: "India" })
+  country: string;
+
+  @Column({ default: "IN" })
+  country_code: string;
+
+  @Column({ default: "INR" })
+  currency: string;
+
+  @Column({ nullable: true })
+  timezone: string;
+
+  // 📞 Contact Info
+  @Column({ nullable: true })
+  email: string;
+
+  @Column({ nullable: true })
+  phone: string;
+
+  @Column({ nullable: true })
+  contact_name: string;
+
+  @Column({ nullable: true })
+  website: string;
+
+  // 📍 Address
+  @Column({ nullable: true })
+  address: string;
+
+  @Column({ nullable: true })
+  city: string;
+
+  @Column({ nullable: true })
+  state: string;
+
+  @Column({ nullable: true })
+  postal_code: string;
+
+  // 🏷 Branding
+  @Column({ nullable: true })
   logo_url: string;
 
-  @Column({ default: 'active' })
-  status: string;
+  // 📊 Status
+  @Column({ default: "Active" })
+  status: "Active" | "Terminated" | "Suspended" | "Trial";
 
   @Column({ default: false })
   onboarding_complete: boolean;
 
-  @Column({ type: 'jsonb', nullable: true })
-  settings: any;
+  // 💳 Subscription
+  @Column({ nullable: true })
+  plan: string;
 
+  @Column({ nullable: true })
+  billing_cycle: "Monthly" | "Yearly";
+
+  // // ⚙️ Flexible fields
+  // @Column({ type: "jsonb", nullable: true })
+  // settings: Record<string, any>;
+
+  // 🗑 Soft delete
+  @Column({ default: false })
+  is_deleted: boolean;
+
+  // 🕒 Audit
   @CreateDateColumn()
   created_on: Date;
 
   @UpdateDateColumn()
   updated_on: Date;
 
-  // 🔥 RELATION
+  // 🔥 RELATIONS
   @OneToMany(() => Outlet, (outlet) => outlet.tenant)
   outlets: Outlet[];
 
