@@ -1,14 +1,14 @@
-import { apiService } from "./apiService";
+import { apiTenantService } from "./apiService";
 import type { Tenant, CreateTenantPayload } from "../features/auth/types/tenant.types";
 
 export const tenantService = {
   getAllTenants: async (): Promise<Tenant[]> => {
-    return apiService.get<Tenant[]>("/tenants");
+    return apiTenantService.get<Tenant[]>("/tenants");
   },
 
   // ✅ use uuid
   getTenantById: async (uuid: string): Promise<Tenant> => {
-    return apiService.get<Tenant>(`/tenants/${uuid}`);
+    return apiTenantService.get<Tenant>(`/tenants/${uuid}`);
   },
 
   createTenant: async (data: CreateTenantPayload): Promise<Tenant> => {
@@ -40,7 +40,7 @@ export const tenantService = {
       logo_url: data.logoUrl,
     };
 
-    return apiService.post<Tenant>("/tenants", payload);
+    return apiTenantService.post<Tenant>("/tenants", payload);
   },
 
   updateTenant: async (
@@ -84,11 +84,11 @@ export const tenantService = {
     // 📊 Status
     if (data.status) payload.status = data.status;
 
-    return apiService.put<Tenant>(`/tenants/${uuid}`, payload);
+    return apiTenantService.put<Tenant>(`/tenants/${uuid}`, payload);
   },
 
   // ⚠️ If backend uses soft delete, this should be PATCH
   deleteTenant: async (uuid: string): Promise<{ message: string }> => {
-    return apiService.delete<{ message: string }>(`/tenants/${uuid}`);
+    return apiTenantService.delete<{ message: string }>(`/tenants/${uuid}`);
   },
 };

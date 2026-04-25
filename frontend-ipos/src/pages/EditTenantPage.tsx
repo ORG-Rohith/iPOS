@@ -40,21 +40,21 @@ export const EditTenantPage: React.FC = () => {
   // Map real tenant data to the form payload structure
   const initialData: any = {
     businessName: tenant.name,
-    legalName: tenant.settings?.legalName || tenant.name, // fallback
-    businessType: tenant.business_type || "Retail",
-    registrationNumber: tenant.settings?.registrationNumber || "",
+    legalName: tenant.legal_name || tenant.name, // fallback
+    businessType: tenant.business_type || "N/A",
+    registrationNumber: tenant.registration_number || "",
     taxId: tenant.tax_id || "",
-    contactName: tenant.settings?.contactName || "",
-    email: tenant.settings?.email || "",
-    phone: tenant.settings?.phone || "",
-    website: tenant.settings?.website || "",
+    contactName: tenant.contact_name || "",
+    email: tenant.email || "",
+    phone: tenant.phone || "",
+    website: tenant.website || "",
     country: tenant.country,
-    state: tenant.settings?.state || "",
-    city: tenant.settings?.city || "",
-    address: tenant.settings?.address || "",
-    postalCode: tenant.settings?.postalCode || "",
-    plan: tenant.settings?.plan || "Premium",
-    billingCycle: tenant.settings?.billingCycle || "Monthly",
+    state: tenant.state || "",
+    city: tenant.city || "",
+    address: tenant.address || "",
+    postalCode: tenant.postal_code || "",
+    plan: tenant.plan || "Premium",
+    billingCycle: tenant.billing_cycle || "Monthly",
     outlets: tenant.outlets?.length || 0,
     currency: tenant.currency,
     timezone: tenant.timezone || "",
@@ -74,7 +74,7 @@ export const EditTenantPage: React.FC = () => {
     <CreateTenantLayout title="Edit Tenant">
       <div className="max-w-7xl mx-auto">
         <Breadcrumbs items={breadcrumbItems} />
-        
+
         <div className="flex flex-col gap-2 mb-6">
           <h2 className="text-xl font-bold text-gray-900">Edit Tenant: {tenant.name}</h2>
           <p className="text-sm text-gray-500">Update business information and manage operational status</p>

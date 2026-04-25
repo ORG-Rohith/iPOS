@@ -114,7 +114,7 @@ import { useNavigate } from "react-router-dom";
 interface TopbarProps {
   title?: string;
   subtitle?: string;
-  variant?: "dashboard" | "tenants" | "createTenant" | "tenantDetails";
+  variant?: "dashboard" | "tenants" | "createTenant" | "tenantDetails" | "outlets" | "outletsDetails";
 }
 
 const Topbar: React.FC<TopbarProps> = ({
@@ -158,6 +158,18 @@ const Topbar: React.FC<TopbarProps> = ({
           </>
         );
 
+      case "outlets":
+        return (
+          <>
+            <h1 className="text-xl font-bold text-[#1a1a2e] truncate">
+              Outlet Management
+            </h1>
+            <p className="text-[13px] text-gray-400 mt-0.5 truncate">
+              Manage your business locations and devices
+            </p>
+          </>
+        );
+
       case "createTenant":
         return (
           <>
@@ -178,6 +190,17 @@ const Topbar: React.FC<TopbarProps> = ({
             </h1>
             <p className="text-[13px] text-gray-400 mt-0.5 truncate">
               Tenant details
+            </p>
+          </>
+        );
+      case "outletsDetails":
+        return (
+          <>
+            <h1 className="text-xl font-bold text-[#1a1a2e] truncate">
+              Outlet Details
+            </h1>
+            <p className="text-[13px] text-gray-400 mt-0.5 truncate">
+              Outlet details
             </p>
           </>
         );
@@ -224,6 +247,16 @@ const Topbar: React.FC<TopbarProps> = ({
             + Add Tenant
           </button>
         );
+      case "outlets":
+        return (
+          <button
+            onClick={() => navigate("/outlets/create")}
+            className="px-[18px] py-2 bg-[#e94560] text-white rounded-lg text-[13px] font-semibold hover:opacity-90"
+          >
+            + Add New Outlet
+          </button>
+        );
+
 
       case "createTenant":
         return (

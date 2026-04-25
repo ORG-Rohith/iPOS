@@ -17,7 +17,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
   return data as T;
 }
 
-export const apiService = {
+export const apiTenantService = {
   get: async <T>(endpoint: string, options: RequestOptions = {}): Promise<T> => {
     console.log("url==========================", BASE_URL);
     // const url = new URL(`${endpoint}`);
@@ -30,7 +30,7 @@ export const apiService = {
     const response = await fetch(`${BASE_URL}${endpoint}`, {
       ...options,
       headers: {
-        ...apiService.getHeaders(),
+        ...apiTenantService.getHeaders(),
         ...options.headers,
       },
     });
@@ -46,7 +46,7 @@ export const apiService = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...apiService.getHeaders(),
+        ...apiTenantService.getHeaders(),
         ...options.headers,
       },
       body: JSON.stringify(body),
@@ -64,7 +64,7 @@ export const apiService = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        ...apiService.getHeaders(),
+        ...apiTenantService.getHeaders(),
         ...options.headers,
       },
       body: JSON.stringify(body),
@@ -82,7 +82,7 @@ export const apiService = {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        ...apiService.getHeaders(),
+        ...apiTenantService.getHeaders(),
         ...options.headers,
       },
       body: JSON.stringify(body),
@@ -98,7 +98,7 @@ export const apiService = {
     const response = await fetch(`${BASE_URL}${endpoint}`, {
       method: "DELETE",
       headers: {
-        ...apiService.getHeaders(),
+        ...apiTenantService.getHeaders(),
         ...options.headers,
       },
       ...options,
@@ -111,3 +111,32 @@ export const apiService = {
     return token ? { Authorization: `Bearer ${token}` } : {};
   },
 };
+
+export const apiOutletService = {
+
+  get: async <T>(endpoint: string, options: RequestOptions = {}): Promise<T> => {
+    console.log("url==========================", BASE_URL);
+    // const url = new URL(`${endpoint}`);
+    // if (options.params) {
+    //   Object.keys(options.params).forEach((key) =>
+    //     url.searchParams.append(key, options.params![key]),
+    //   );
+    // }
+    console.log("url================baseurl+endpoint==========", `${BASE_URL}${endpoint}`);
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
+      ...options,
+      headers: {
+        ...apiOutletService.getHeaders(),
+        ...options.headers,
+      },
+    });
+    return handleResponse<T>(response);
+  },
+
+  getHeaders: (): HeadersInit => {
+    const token = localStorage.getItem("accessToken");
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  },
+
+};
+

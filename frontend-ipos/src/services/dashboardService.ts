@@ -1,4 +1,4 @@
-import { apiService } from "./apiService";
+import { apiTenantService } from "./apiService";
 import { FaFlask, FaStore, FaUser, FaUserCheck } from "react-icons/fa";
 import type {
   DashboardData,
@@ -219,8 +219,8 @@ export const fetchDashboardData = async (): Promise<DashboardData> => {
 
 
 export const fetchTenantsData = async (): Promise<TenantStatsData> => {
-  const stats = await apiService.get<any>("/tenants/stats");
-  
+  const stats = await apiTenantService.get<any>("/tenants/stats");
+
   return {
     TenantStats: [
       {

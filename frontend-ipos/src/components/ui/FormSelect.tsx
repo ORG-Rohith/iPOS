@@ -1,9 +1,14 @@
 import React from "react";
 
+interface Option {
+    label: string;
+    value: string | number;
+}
+
 interface FormSelectProps
     extends React.SelectHTMLAttributes<HTMLSelectElement> {
     label: string;
-    options: string[];
+    options: (string | Option)[];
 }
 
 const FormSelect: React.FC<FormSelectProps> = ({
@@ -27,11 +32,15 @@ const FormSelect: React.FC<FormSelectProps> = ({
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm outline-none focus:border-[#e94560]"
             >
                 <option value="">Select {label}</option>
-                {options.map((opt, idx) => (
-                    <option key={idx} value={opt}>
-                        {opt}
-                    </option>
-                ))}
+                {options.map((opt, idx) => {
+                    const label = typeof opt === "string" ? opt : opt.label;
+                    const value = typeof opt === "string" ? opt : opt.value;
+                    return (
+                        <option key={idx} value={value}>
+                            {label}
+                        </option>
+                    );
+                })}
             </select>
         </div>
     );
