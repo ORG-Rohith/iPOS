@@ -1,3 +1,5 @@
+import { Card } from "../ui/card";
+
 interface PlanCardProps {
     name: string;
     price: string;
@@ -14,7 +16,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
     onClick,
 }) => {
     return (
-        <div
+        <Card
             onClick={onClick}
             className={`border rounded-xl p-5 cursor-pointer transition-all ${selected
                 ? "border-[#e94560] bg-[#fff5f6]"
@@ -29,7 +31,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                     <li key={i}>✔ {f}</li>
                 ))}
             </ul>
-        </div>
+        </Card>
     );
 };
 

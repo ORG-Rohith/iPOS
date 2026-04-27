@@ -1,4 +1,5 @@
 import React from "react";
+import { Label } from "./label";
 
 interface Option {
     label: string;
@@ -19,12 +20,12 @@ const FormSelect: React.FC<FormSelectProps> = ({
 }) => {
     return (
         <div className="flex flex-col gap-1.5 w-full">
-            <label
+            <Label
                 htmlFor={id}
                 className="text-[12px] font-semibold text-gray-600 uppercase tracking-wide"
             >
                 {label}
-            </label>
+            </Label>
 
             <select
                 id={id}

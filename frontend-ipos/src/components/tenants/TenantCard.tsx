@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import type { Tenant } from "../../features/auth/types/tenant.types";
+import { Button } from "../ui/Button";
+import { Card } from "../ui/card";
 
 const statusColors: Record<string, string> = {
     active: "bg-green-100 text-green-600",
@@ -14,7 +16,7 @@ const TenantCard: React.FC<{ tenant: Tenant }> = ({ tenant }) => {
     const statusKey = tenant.status.toLowerCase();
 
     return (
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+        <Card className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
 
             {/* Header */}
             <div className="flex justify-between items-start">
@@ -43,16 +45,20 @@ const TenantCard: React.FC<{ tenant: Tenant }> = ({ tenant }) => {
 
             {/* Actions */}
             <div className="flex gap-2 mt-4">
-                <button className="bg-pink-100 text-pink-600 px-3 py-1.5 rounded text-sm hover:bg-pink-200 transition-colors"
+                <Button 
+                    variant="ghost"
+                    className="bg-pink-100 text-pink-600 px-3 py-1.5 h-auto rounded text-sm hover:bg-pink-200 transition-colors"
                     onClick={() => navigate(`/tenants/manage/${tenant.uuid}`)}>
                     Manage
-                </button>
-                <button className="border border-gray-200 px-3 py-1.5 rounded text-sm hover:bg-gray-50 transition-colors"
+                </Button>
+                <Button 
+                    variant="outline"
+                    className="border border-gray-200 px-3 py-1.5 h-auto rounded text-sm hover:bg-gray-50 transition-colors"
                     onClick={() => navigate(`/tenants/edit/${tenant.uuid}`)}>
                     Edit
-                </button>
+                </Button>
             </div>
-        </div>
+        </Card>
     );
 };
 

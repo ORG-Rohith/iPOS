@@ -1,5 +1,7 @@
 import React from "react";
 import { HiOutlinePencil, HiOutlineArrowUpTray } from "react-icons/hi2";
+import { Button } from "../ui/Button";
+import { Card } from "../ui/card";
 
 interface TenantHeaderProps {
   name: string;
@@ -9,15 +11,9 @@ interface TenantHeaderProps {
 
 const TenantHeader: React.FC<TenantHeaderProps> = ({ name, country, badges }) => {
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+    <Card className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
       <div className="flex items-center gap-4 w-full md:w-auto">
         <div className="w-16 h-12 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-          {/* {country ? (
-            <img src={country} alt={name} className="w-full h-full object-contain" />
-          ) : (
-            <span className="text-2xl">🇦🇺</span>
-          )} */}
-
           <span className="text-2xl"> {country
             ? country
               .toUpperCase()
@@ -46,16 +42,21 @@ const TenantHeader: React.FC<TenantHeaderProps> = ({ name, country, badges }) =>
       </div>
 
       <div className="flex gap-3 w-full md:w-auto">
-        <button className="flex-1 md:flex-none border border-gray-200 text-gray-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
+        <Button 
+          variant="outline"
+          className="flex-1 md:flex-none border border-gray-200 text-gray-600 px-4 py-2 h-auto rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+        >
           <HiOutlineArrowUpTray className="w-4 h-4" />
           Export
-        </button>
-        <button className="flex-1 md:flex-none bg-gradient-to-r from-pink-500 to-rose-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-pink-600 hover:to-rose-600 shadow-md shadow-pink-100 transition-all flex items-center justify-center gap-2">
+        </Button>
+        <Button 
+          className="flex-1 md:flex-none bg-gradient-to-r from-pink-500 to-rose-500 text-white px-4 py-2 h-auto rounded-lg text-sm font-semibold hover:from-pink-600 hover:to-rose-600 shadow-md shadow-pink-100 transition-all flex items-center justify-center gap-2 border-none"
+        >
           <HiOutlinePencil className="w-4 h-4" />
           Edit
-        </button>
+        </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

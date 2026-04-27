@@ -1,5 +1,8 @@
 import React from "react";
 import { HiCheckCircle, HiPause, HiStop } from "react-icons/hi2";
+import { Button } from "../ui/Button";
+import { Label } from "../ui/label";
+import { Textarea } from "../ui/textarea";
 
 interface StatusManagementProps {
   currentStatus: string;
@@ -35,11 +38,12 @@ const StatusManagement: React.FC<StatusManagementProps> = ({
         {/* Status Buttons */}
         <div className="flex gap-4">
           {statuses.map((status) => (
-            <button
+            <Button
               key={status.id}
               type="button"
+              variant="outline"
               onClick={() => onStatusChange(status.id)}
-              className={`flex-1 flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-200 ${
+              className={`flex-1 flex flex-col items-center justify-center p-4 h-auto rounded-xl border-2 transition-all duration-200 ${
                 currentStatus === status.id
                   ? `${status.bg} ${status.border} ${status.color} scale-105 shadow-sm`
                   : "border-gray-50 text-gray-400 hover:border-gray-200 hover:bg-gray-50"
@@ -47,17 +51,17 @@ const StatusManagement: React.FC<StatusManagementProps> = ({
             >
               <div className="mb-2">{status.icon}</div>
               <span className="text-xs font-bold uppercase">{status.label}</span>
-            </button>
+            </Button>
           ))}
         </div>
 
         {/* Fields */}
         <div className="space-y-4">
           <div>
-            <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">
+            <Label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">
               Reason for Status Change
-            </label>
-            <textarea
+            </Label>
+            <Textarea
               value={reason}
               onChange={(e) => onReasonChange(e.target.value)}
               placeholder="Provide a reason if changing status..."
@@ -66,9 +70,9 @@ const StatusManagement: React.FC<StatusManagementProps> = ({
           </div>
 
           <div>
-            <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">
+            <Label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">
               Effective Date
-            </label>
+            </Label>
             <input
               type="date"
               value={effectiveDate}

@@ -1,4 +1,7 @@
 import React from "react";
+import { Input } from "./Input";
+import { Label } from "./label";
+import { cn } from "../../lib/utils";
 
 interface FormInputProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -10,25 +13,28 @@ const FormInput: React.FC<FormInputProps> = ({
     label,
     error,
     id,
+    className,
     ...props
 }) => {
     return (
         <div className="flex flex-col gap-1.5 w-full">
-            <label
+            <Label
                 htmlFor={id}
                 className="text-[12px] font-semibold text-gray-600 uppercase tracking-wide"
             >
                 {label}
-            </label>
+            </Label>
 
-            <input
+            <Input
                 id={id}
                 {...props}
-                className={`w-full px-4 py-3 border-2 rounded-xl text-sm outline-none transition-all
-        ${error
-                        ? "border-red-400 bg-red-50 focus:border-red-500"
-                        : "border-gray-200 focus:border-[#e94560]"
-                    }`}
+                className={cn(
+                    "w-full px-4 py-3 border-2 rounded-xl text-sm outline-none transition-all h-auto",
+                    error
+                        ? "border-red-400 bg-red-50 focus-visible:ring-red-500"
+                        : "border-gray-200 focus-visible:ring-[#e94560]",
+                    className
+                )}
             />
 
             {error && <span className="text-xs text-red-500">{error}</span>}

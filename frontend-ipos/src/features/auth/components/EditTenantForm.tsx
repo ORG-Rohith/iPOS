@@ -4,6 +4,8 @@ import FormInput from "../../../components/ui/FormInput";
 import FormSelect from "../../../components/ui/FormSelect";
 import PlanCard from "../../../components/tenants/PlanCard";
 import StatusManagement from "../../../components/tenants/StatusManagement";
+import { Button } from "../../../components/ui/Button";
+import { Card } from "../../../components/ui/card";
 
 interface Props {
   initialData: CreateTenantPayload & { status: string };
@@ -34,7 +36,7 @@ const EditTenantForm: React.FC<Props> = ({ initialData, onSubmit }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* 🔥 BUSINESS */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <Card className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
         <h2 className="text-lg font-semibold text-[#1a1a2e]">Business Information</h2>
         <p className="text-sm text-gray-400 mb-4">Core details about the tenant's business entity</p>
 
@@ -83,10 +85,10 @@ const EditTenantForm: React.FC<Props> = ({ initialData, onSubmit }) => {
             onChange={handleChange}
           />
         </div>
-      </div>
+      </Card>
 
       {/* 🔥 CONTACT */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <Card className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
         <h2 className="text-lg font-semibold text-[#1a1a2e]">Contact Details</h2>
         <p className="text-sm text-gray-400 mb-4">Primary contact information for the tenant</p>
 
@@ -127,10 +129,10 @@ const EditTenantForm: React.FC<Props> = ({ initialData, onSubmit }) => {
             onChange={handleChange}
           />
         </div>
-      </div>
+      </Card>
 
       {/* 🔥 LOCATION */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <Card className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
         <h2 className="text-lg font-semibold text-[#1a1a2e]">Location</h2>
         <p className="text-sm text-gray-400 mb-4">Business address and geographical information</p>
 
@@ -180,10 +182,10 @@ const EditTenantForm: React.FC<Props> = ({ initialData, onSubmit }) => {
             onChange={handleChange}
           />
         </div>
-      </div>
+      </Card>
 
       {/* 🔥 PLAN & BILLING */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <Card className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
         <div className="mb-4">
           <h2 className="font-semibold text-lg text-[#1a1a2e]">Plan & Billing</h2>
           <p className="text-[13px] text-gray-400">Manage subscription plan for this tenant</p>
@@ -212,7 +214,7 @@ const EditTenantForm: React.FC<Props> = ({ initialData, onSubmit }) => {
             onClick={() => setForm({ ...form, plan: "Enterprise" })}
           />
         </div>
-      </div>
+      </Card>
 
       {/* 🔥 STATUS MANAGEMENT (Edit Only) */}
       <StatusManagement
@@ -226,12 +228,19 @@ const EditTenantForm: React.FC<Props> = ({ initialData, onSubmit }) => {
 
       {/* 🔥 ACTIONS */}
       <div className="flex justify-end gap-3 mt-8">
-        <button type="button" className="px-6 py-2.5 border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors">
+        <Button 
+          type="button" 
+          variant="outline"
+          className="px-6 py-2.5 h-auto border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
+        >
           Cancel
-        </button>
-        <button type="submit" className="px-8 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl text-sm font-bold shadow-md shadow-pink-100 hover:from-pink-600 hover:to-rose-600 transition-all">
+        </Button>
+        <Button 
+          type="submit" 
+          className="px-8 py-2.5 h-auto bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl text-sm font-bold shadow-md shadow-pink-100 hover:from-pink-600 hover:to-rose-600 transition-all border-none"
+        >
           Save Changes
-        </button>
+        </Button>
       </div>
     </form>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import { Card } from "../ui/card";
 
 interface Activity {
   id: string;
@@ -15,7 +16,7 @@ interface ActivityTimelineProps {
 
 const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities }) => {
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex-1">
+    <Card className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex-1 border-none">
       <h3 className="text-lg font-bold text-gray-800 mb-6">Recent Activity</h3>
       <div className="relative">
         <div className="absolute left-[9px] top-2 bottom-2 w-0.5 bg-gray-100"></div>
@@ -41,7 +42,7 @@ const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities }) => {
           ))}
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
