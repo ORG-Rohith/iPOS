@@ -3,6 +3,8 @@ import { HiOutlineBuildingStorefront, HiOutlineMapPin } from 'react-icons/hi2';
 import { MdOutlineRestaurant } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import type { WeeklyOperatingHours } from '../../features/auth/types/outlet.types';
+import { Button } from '../ui/Button';
+import { Card } from '../ui/card';
 
 export interface Outlet {
   id: string;
@@ -45,9 +47,9 @@ const OutletCard: React.FC<OutletCardProps> = ({ outlet }) => {
   const isFnB = outlet.type === 'F&B';
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col gap-6">
+    <Card className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col gap-6">
       {/* Top Header Section */}
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-start border-none">
         <div className="flex gap-4">
           <div className={`p-3 rounded-xl ${isFnB ? 'bg-blue-50 text-blue-500' : 'bg-pink-50 text-pink-500'}`}>
             {isFnB ? (
@@ -97,21 +99,26 @@ const OutletCard: React.FC<OutletCardProps> = ({ outlet }) => {
 
       {/* Actions Section */}
       <div className="flex gap-3">
-        <button
-          className="px-4 py-2 bg-[#f0f4ff] text-[#4f7cff] font-bold rounded-lg text-sm hover:bg-blue-100 transition-colors"
+        <Button
+          variant="ghost"
+          className="px-4 py-2 bg-[#f0f4ff] text-[#4f7cff] h-auto font-bold rounded-lg text-sm hover:bg-blue-100 transition-colors border-none"
           onClick={() => navigate(`/outlets/edit/${outlet.uuid}`)}
         >
           Edit
-        </button>
-        <button className="px-4 py-2 bg-white text-gray-600 font-bold rounded-lg text-sm hover:bg-gray-50 transition-colors border border-gray-200">
+        </Button>
+        <Button 
+          variant="outline"
+          className="px-4 py-2 bg-white text-gray-600 h-auto font-bold rounded-lg text-sm hover:bg-gray-50 transition-colors border border-gray-200"
+        >
           Devices
-        </button>
-        <button className="px-4 py-2 bg-[#ee445e] text-white font-bold rounded-lg text-sm hover:bg-[#d63d54] transition-colors shadow-sm"
+        </Button>
+        <Button 
+          className="px-4 py-2 bg-[#ee445e] text-white h-auto font-bold rounded-lg text-sm hover:bg-[#d63d54] transition-colors shadow-sm border-none"
           onClick={() => navigate(`/outlets/manage/${outlet.uuid}`)}>
           Manage
-        </button>
+        </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

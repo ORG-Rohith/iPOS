@@ -5,6 +5,7 @@ import OutletForm from "../components/OutletForm";
 import { outletService } from "../services/outlet.service";
 import type { Outlet } from "../../auth/types/outlet.types";
 import { tenantService } from "../../../services/tenantService";
+import { Card } from "../../../components/ui/card";
 
 const OutletFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -96,9 +97,9 @@ const OutletFormPage: React.FC = () => {
     <OutletsLayout title={isEditMode ? "Edit Outlet" : "Create Outlet"}>
       <div className="p-7">
         {error && (
-          <div className="bg-red-50 text-red-600 p-4 rounded-xl border border-red-100 mb-6">
+          <Card className="bg-red-50 text-red-600 p-4 rounded-xl border border-red-100 mb-6 border-none shadow-none">
             {error}
-          </div>
+          </Card>
         )}
 
         {loading && !initialData && isEditMode ? (

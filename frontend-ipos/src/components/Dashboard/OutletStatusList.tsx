@@ -1,5 +1,6 @@
 import React from "react";
 import type { OutletStatus } from "../../../src/features/auth/types/dashboard";
+import { Card } from "../ui/card";
 
 interface OutletStatusListProps {
   outlets: OutletStatus[];
@@ -7,7 +8,7 @@ interface OutletStatusListProps {
 
 const OutletStatusList: React.FC<OutletStatusListProps> = ({ outlets }) => {
   return (
-    <div className="bg-white rounded-[14px] p-6 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+    <Card className="bg-white rounded-[14px] p-6 shadow-[0_2px_12px_rgba(0,0,0,0.06)] border-none">
       <div className="flex justify-between items-center mb-5">
         <h3 className="text-[15px] font-bold text-[#1a1a2e]">Outlet Status</h3>
         <a href="#" className="text-[12px] text-[#e94560] font-semibold">
@@ -55,7 +56,7 @@ const OutletStatusList: React.FC<OutletStatusListProps> = ({ outlets }) => {
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   );
 };
 

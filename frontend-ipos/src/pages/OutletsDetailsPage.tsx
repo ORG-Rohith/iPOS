@@ -7,6 +7,7 @@ import StatCard from "../components/Dashboard/StatCard";
 import { useParams } from "react-router-dom";
 import OutletsDetailsLayout from "../layout/OutletsDetailsLayout";
 import { useOutletDetails } from "../hooks/useOutletDetails";
+import { Card } from "../components/ui/card";
 
 interface Activity {
     id: string;
@@ -133,7 +134,7 @@ export const OutletsDetailsPage: React.FC = () => {
                         </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div className="lg:col-span-2 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                            <Card className="lg:col-span-2 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                                 <h3 className="text-lg font-bold text-gray-800 mb-6">Outlet Details</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
                                     <div>
@@ -185,7 +186,7 @@ export const OutletsDetailsPage: React.FC = () => {
                                         <p className="text-sm text-gray-700">{outlet.number_of_registers}</p>
                                     </div>
                                 </div>
-                            </div>
+                            </Card>
 
                             <ActivityTimeline activities={activities} />
                         </div>
@@ -193,13 +194,13 @@ export const OutletsDetailsPage: React.FC = () => {
                 )}
 
                 {activeTab !== "overview" && (
-                    <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
+                    <Card className="bg-white rounded-xl p-12 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
                         <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
                             <span className="text-2xl text-gray-300">🚧</span>
                         </div>
                         <h3 className="text-lg font-bold text-gray-800 mb-2">{tabs.find(t => t.id === activeTab)?.label} Section</h3>
                         <p className="text-sm text-gray-500 max-w-xs">This section is currently under development and will be available soon.</p>
-                    </div>
+                    </Card>
                 )}
             </div>
         </OutletsDetailsLayout>

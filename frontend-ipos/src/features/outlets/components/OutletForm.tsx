@@ -3,6 +3,10 @@ import FormInput from "../../../components/ui/FormInput";
 import FormSelect from "../../../components/ui/FormSelect";
 import { Button } from "../../../components/ui/Button";
 import type { Outlet, WeeklyOperatingHours, OperatingHours } from "../../../features/auth/types/outlet.types";
+import { Card } from "../../../components/ui/card";
+import { Label } from "../../../components/ui/label";
+import { Switch } from "../../../components/ui/switch";
+import { Textarea } from "../../../components/ui/textarea";
 
 interface OutletFormProps {
   initialData?: Partial<Outlet>;
@@ -129,7 +133,7 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
         {step === 1 && (
           <div className="flex flex-col gap-6">
             {/* Basic Information Section */}
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <Card className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h3 className="text-lg font-bold text-gray-800 mb-2">Basic Information</h3>
               <p className="text-xs text-gray-400 mb-6 font-medium">General details about this outlet</p>
 
@@ -145,14 +149,14 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
                   options={tenantOptions}
                 />
                 <div className="md:col-span-2 flex flex-col gap-1.5">
-                  <label className="text-[12px] font-semibold text-gray-600 uppercase tracking-wide">Description</label>
-                  <textarea name="description" value={formData.description} onChange={handleChange} className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm outline-none transition-all focus:border-[#e94560] min-h-[100px]" placeholder="Tell us about this outlet..." />
+                  <Label className="text-[12px] font-semibold text-gray-600 uppercase tracking-wide">Description</Label>
+                  <Textarea name="description" value={formData.description} onChange={handleChange} className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm outline-none transition-all focus:border-[#e94560] min-h-[100px]" placeholder="Tell us about this outlet..." />
                 </div>
               </div>
-            </div>
+            </Card>
 
             {/* Address Section */}
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <Card className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h3 className="text-lg font-bold text-gray-800 mb-2">Address</h3>
               <p className="text-xs text-gray-400 mb-6 font-medium">Physical location of the outlet</p>
 
@@ -168,14 +172,14 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
                   <FormSelect label="Timezone" name="timezone" value={formData.timezone} onChange={handleChange} options={[{ label: "Australia/Melbourne", value: "Australia/Melbourne" }, { label: "Asia/Kolkata", value: "Asia/Kolkata" }]} />
                 </div>
               </div>
-            </div>
+            </Card>
           </div>
         )}
 
         {step === 2 && (
           <div className="flex flex-col gap-6">
             {/* Operating Hours Section */}
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <Card className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h3 className="text-lg font-bold text-gray-800 mb-2">Operating Hours</h3>
               <p className="text-xs text-gray-400 mb-6 font-medium">Set opening and closing times for each day</p>
 
@@ -192,10 +196,10 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
                     <input type="time" value={formData.operating_hours[day].open} onChange={(e) => handleOperatingHoursChange(day, "open", e.target.value)} disabled={formData.operating_hours[day].isClosed} className="bg-white border border-gray-200 rounded-lg px-2 py-1 text-sm outline-none focus:border-[#e94560] disabled:bg-gray-100 disabled:text-gray-400" />
                     <input type="time" value={formData.operating_hours[day].close} onChange={(e) => handleOperatingHoursChange(day, "close", e.target.value)} disabled={formData.operating_hours[day].isClosed} className="bg-white border border-gray-200 rounded-lg px-2 py-1 text-sm outline-none focus:border-[#e94560] disabled:bg-gray-100 disabled:text-gray-400" />
                     <div className="flex justify-end">
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" checked={formData.operating_hours[day].isClosed} onChange={(e) => handleOperatingHoursChange(day, "isClosed", e.target.checked)} className="sr-only peer" />
-                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#e94560]"></div>
-                      </label>
+                      <Switch 
+                        checked={formData.operating_hours[day].isClosed} 
+                        onCheckedChange={(checked) => handleOperatingHoursChange(day, "isClosed", checked)} 
+                      />
                     </div>
                   </div>
                 ))}
@@ -203,10 +207,10 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
                   📋 Copy Monday hours to all days
                 </button>
               </div>
-            </div>
+            </Card>
 
             {/* Contact Section */}
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <Card className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h3 className="text-lg font-bold text-gray-800 mb-2">Contact</h3>
               <p className="text-xs text-gray-400 mb-6 font-medium">Primary contact information for this outlet</p>
 
@@ -217,14 +221,14 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
                   <FormSelect label="Manager" name="manager_id" value={formData.manager_id} onChange={handleChange} options={[{ label: "James Ryan — Outlet Manager", value: "1" }]} />
                 </div>
               </div>
-            </div>
+            </Card>
           </div>
         )}
 
         {step === 3 && (
           <div className="flex flex-col gap-6">
             {/* iPOS Configuration Section */}
-            <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <Card className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
               <h3 className="text-lg font-bold text-gray-800 mb-2">iPOS Configuration</h3>
               <p className="text-xs text-gray-400 mb-6 font-medium">Point of sale settings for this outlet</p>
 
@@ -241,21 +245,21 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
                   <FormInput label="Number of Registers" name="number_of_registers" type="number" value={formData.number_of_registers} onChange={handleChange} min="1" />
                 </div>
               </div>
-            </div>
+            </Card>
           </div>
         )}
 
         {/* Action Buttons */}
         <div className="flex items-center justify-between pt-6 border-t border-gray-100">
-          <button type="button" onClick={prevStep} disabled={step === 1 || isLoading} className={`px-8 py-3 rounded-xl font-bold text-sm transition-all ${step === 1 ? "opacity-0 pointer-events-none" : "bg-white text-gray-500 border-2 border-gray-200 hover:bg-gray-50"}`}>
+          <Button type="button" onClick={prevStep} disabled={step === 1 || isLoading} variant="outline" className={`px-8 py-3 h-auto rounded-xl font-bold text-sm transition-all ${step === 1 ? "opacity-0 pointer-events-none" : "bg-white text-gray-500 border-2 border-gray-200 hover:bg-gray-50"}`}>
             Previous
-          </button>
+          </Button>
 
           <div className="flex items-center gap-3">
-            <button type="button" onClick={() => window.history.back()} className="px-8 py-3 rounded-xl font-bold text-sm bg-white text-gray-400 border-2 border-gray-100 hover:bg-gray-50">
+            <Button type="button" variant="outline" onClick={() => window.history.back()} className="px-8 py-3 h-auto rounded-xl font-bold text-sm bg-white text-gray-400 border-2 border-gray-100 hover:bg-gray-50">
               Cancel
-            </button>
-            <Button type="submit" isLoading={isLoading} className="px-8 py-3 rounded-xl font-bold text-sm bg-[#e94560] text-white shadow-lg shadow-pink-100 hover:bg-[#d63d54]">
+            </Button>
+            <Button type="submit" isLoading={isLoading} className="px-8 py-3 h-auto rounded-xl font-bold text-sm bg-[#e94560] text-white shadow-lg shadow-pink-100 hover:bg-[#d63d54] border-none">
               {step === 3 ? (mode === "edit" ? "Save Changes" : "Create Outlet") : "Next Step"}
             </Button>
           </div>
