@@ -1,5 +1,6 @@
-import Input from "../../../components/ui/Input";
-import Button from "../../../components/ui/Button";
+import { Input } from "../../../components/ui/Input";
+import { Button } from "../../../components/ui/Button";
+import { Label } from "../../../components/ui/label";;
 import { LABELS } from "../../../contants/messages";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -56,70 +57,79 @@ const ForgetPasswordForm = () => {
         Enter your email to receive password reset link
       </p>
 
-      {/* Login Error Banner
-      {onerror && (
-        <div className="w-full mb-4 px-4 py-3 rounded-xl bg-[#fff0f3] border border-[#ffccd5] text-[#c73652] text-sm">
-          {onerror}
-        </div>
-      )} */}
-
-      <form noValidate className="w-full">
+      <form noValidate className="w-full space-y-6">
         {/* EMAIL STEP */}
         {step === "email" && (
-          <>
-            <Input
-              id="email"
-              label={LABELS.email}
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="admin@yourbusiness.com"
-              error={errors.email}
-              required
-            />
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+                {LABELS.email}
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="admin@yourbusiness.com"
+                className={errors.email ? "border-red-400 focus-visible:ring-red-400" : "border-gray-200 focus-visible:ring-[#e94560]"}
+                required
+              />
+              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+            </div>
 
-            <Button type="button" onClick={handleSendOtp}>
+            <Button
+              type="button"
+              onClick={handleSendOtp}
+              className="w-full bg-gradient-to-r from-[#e94560] to-[#c73652] text-white font-bold py-6 rounded-xl hover:opacity-90 transition-opacity"
+            >
               Send OTP
             </Button>
-          </>
+          </div>
         )}
 
         {/* OTP STEP */}
         {step === "otp" && (
-          <>
-            <Input
-              id="otp"
-              label="Enter OTP"
-              type="text"
-              name="otp"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              placeholder="Enter 6-digit OTP"
-            />
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="otp" className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+                Enter OTP
+              </Label>
+              <Input
+                id="otp"
+                type="text"
+                name="otp"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                placeholder="Enter 6-digit OTP"
+                className="border-gray-200 focus-visible:ring-[#e94560]"
+              />
+            </div>
 
-            <Button type="button" onClick={handleVerifyOtp}>
+            <Button
+              type="button"
+              onClick={handleVerifyOtp}
+              className="w-full bg-gradient-to-r from-[#e94560] to-[#c73652] text-white font-bold py-6 rounded-xl hover:opacity-90 transition-opacity"
+            >
               Verify OTP
             </Button>
-          </>
+          </div>
         )}
 
         {/* VERIFIED STEP */}
         {step === "verified" && (
-          <>
-            <Button type="button" onClick={handleSendResetLink}>
+          <div className="space-y-4">
+            <Button
+              type="button"
+              onClick={handleSendResetLink}
+              className="w-full bg-gradient-to-r from-[#e94560] to-[#c73652] text-white font-bold py-6 rounded-xl hover:opacity-90 transition-opacity"
+            >
               Send Reset Link
             </Button>
-          </>
+          </div>
         )}
       </form>
 
-      {/* Divider */}
-      {/* <div className="flex items-center gap-2 my-5">
-        <span className="bg-gradient-to-r from-[#e94560] to-[#c73652] bg-clip-text text-transparent font-bold">
-          Back to Login
-        </span>
-      </div> */}
       <div className="flex items-center gap-2 my-5">
         <Link to="/login">
           <span className="bg-gradient-to-r from-[#e94560] to-[#c73652] bg-clip-text text-transparent font-bold">

@@ -1,49 +1,22 @@
-import { useState } from "react";
+import * as React from "react"
 
+import { cn } from "../../lib/utils"
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  error?: string;
-}
-
-const Input = ({ label, error, id, type, ...props }: InputProps) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const isPassword = type === "password";
-
-  return (
-    <div className="w-full mb-5">
-      <label
-        htmlFor={id}
-        className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1.5"
-      >
-        {label}
-      </label>
-
-      <div className="relative">
-        <input
-          id={id}
-          {...props}
-          type={isPassword ? (showPassword ? "text" : "password") : type}
-          className={`w-full px-4 py-3 pr-10 border-2 rounded-xl text-sm text-gray-700 outline-none transition-all duration-200
-          ${error
-              ? "border-red-400 focus:border-red-500 bg-red-50"
-              : "border-gray-200 focus:border-[#e94560]"
-            }`}
-        />
-
-        {isPassword && (
-          <span
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400"
-          >
-            {showPassword ? "🙈" : "👁️"}
-          </span>
+const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
+  ({ className, type, ...props }, ref) => {
+    return (
+      <input
+        type={type}
+        className={cn(
+          "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          className
         )}
-      </div>
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Input.displayName = "Input"
 
-      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
-    </div>
-  );
-};
-
-export default Input;
+export { Input }

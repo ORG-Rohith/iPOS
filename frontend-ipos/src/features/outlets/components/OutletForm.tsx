@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FormInput from "../../../components/ui/FormInput";
 import FormSelect from "../../../components/ui/FormSelect";
-import Button from "../../../components/ui/Button";
+import { Button } from "../../../components/ui/Button";
 import type { Outlet, WeeklyOperatingHours, OperatingHours } from "../../../features/auth/types/outlet.types";
 
 interface OutletFormProps {
