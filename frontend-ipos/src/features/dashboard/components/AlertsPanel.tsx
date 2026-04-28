@@ -9,11 +9,11 @@ const AlertsPanel: React.FC<AlertsPanelProps> = ({ alerts }) => {
   const getAlertStyles = (type: string) => {
     switch (type) {
       case "warning":
-        return "bg-[#fff8e6] text-[#d4a000]";
+        return "bg-alert-light text-alert";
       case "info":
-        return "bg-[#f0f4ff] text-[#4361ee]";
+        return "bg-secondary-light text-secondary";
       case "danger":
-        return "bg-[#fff0f3] text-[#e94560]";
+        return "bg-primary-light text-primary";
       default:
         return "bg-gray-50 text-gray-600";
     }
@@ -22,10 +22,10 @@ const AlertsPanel: React.FC<AlertsPanelProps> = ({ alerts }) => {
   return (
     <div className="bg-white rounded-[14px] p-6 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
       <div className="flex justify-between items-center mb-5">
-        <h3 className="text-[15px] font-bold text-[#1a1a2e]">
+        <h3 className="text-[15px] font-bold text-app-text">
           Alerts & Notifications
         </h3>
-        <a href="#" className="text-[12px] text-[#e94560] font-semibold ">
+        <a href="#" className="text-[12px] text-primary font-semibold ">
           Dismiss All
         </a>
       </div>

@@ -30,7 +30,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
             <select
                 id={id}
                 {...props}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm outline-none focus:border-[#e94560]"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm outline-none focus:border-primary"
             >
                 <option value="">Select {label}</option>
                 {options.map((opt, idx) => {

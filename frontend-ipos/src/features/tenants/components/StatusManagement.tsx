@@ -30,7 +30,7 @@ const StatusManagement: React.FC<StatusManagementProps> = ({
   return (
     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mt-6">
       <div className="mb-6">
-        <h2 className="text-lg font-bold text-[#1a1a2e]">Status Management</h2>
+        <h2 className="text-lg font-bold text-app-text">Status Management</h2>
         <p className="text-xs text-gray-400">Control the operational status of this tenant</p>
       </div>
 

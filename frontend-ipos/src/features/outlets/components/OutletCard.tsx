@@ -101,7 +101,7 @@ const OutletCard: React.FC<OutletCardProps> = ({ outlet }) => {
       <div className="flex gap-3">
         <Button
           variant="ghost"
-          className="px-4 py-2 bg-[#f0f4ff] text-[#4f7cff] h-auto font-bold rounded-lg text-sm hover:bg-blue-100 transition-colors border-none"
+          className="px-4 py-2 bg-secondary-light text-secondary-alt h-auto font-bold rounded-lg text-sm hover:bg-blue-100 transition-colors border-none"
           onClick={() => navigate(`/outlets/edit/${outlet.uuid}`)}
         >
           Edit
@@ -113,7 +113,7 @@ const OutletCard: React.FC<OutletCardProps> = ({ outlet }) => {
           Devices
         </Button>
         <Button 
-          className="px-4 py-2 bg-[#ee445e] text-white h-auto font-bold rounded-lg text-sm hover:bg-[#d63d54] transition-colors shadow-sm border-none"
+          className="px-4 py-2 bg-primary-alt text-white h-auto font-bold rounded-lg text-sm hover:bg-primary-hover transition-colors shadow-sm border-none"
           onClick={() => navigate(`/outlets/manage/${outlet.uuid}`)}>
           Manage
         </Button>

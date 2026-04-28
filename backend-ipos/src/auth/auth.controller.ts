@@ -45,6 +45,17 @@ export class AuthController {
     return { user };
   }
 
+  // POST /api/v1/auth/logout
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  logout(@CurrentUser() user: RequestUser) {
+    this.logger.log(`User logged out: ${user.email}`);
+    // In a stateless JWT setup, logout is primarily handled client-side by destroying the token.
+    // If you add a token blacklist or Redis session store in the future, invalidate it here.
+    return { message: 'Logged out successfully' };
+  }
+
   // to send otp to the user email for passwordless login or 2FA
   @Post('send-otp')
   async sendOtp(@Body('email') email: string) {

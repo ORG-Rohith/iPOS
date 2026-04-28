@@ -5,6 +5,21 @@ import { Label } from "../../../shared/components/ui/label";
 import { useLoginForm } from "../hooks/useLoginForm";
 import { LABELS, BRAND } from "../../../shared/constants/messages";
 import { Eye, EyeOff } from "lucide-react";
+import {
+  AUTH_FORM_FIELDS,
+  SHARED_FORM_CLASSES,
+} from "../constants/auth.constants";
+import { cn } from "../../../shared/utils/utils";
+import { LOGIN_FORM_CLASSES } from "../constants/loginForm/loginForm.classes";
+import { LOGIN_TEST_IDS } from "../constants/id's/loginForm.ids";
+
+const LOGIN_CONTENT = {
+  title: "Welcome Back",
+  subtitle: "Sign in to your back office account",
+  emailPlaceholder: "Enter your email address",
+  passwordPlaceholder: "Enter your password",
+  demoAccountsTitle: "Demo accounts",
+};
 
 const LoginForm = () => {
   const {
@@ -19,113 +34,164 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="flex-1 bg-white flex flex-col items-center justify-center px-10 py-12">
+    <div className={LOGIN_FORM_CLASSES.container}>
       {/* Header */}
-      <h2 className="text-2xl font-bold text-[#1a1a2e] mb-1">Welcome Back</h2>
-      <p className="text-sm text-gray-400 mb-8">
-        Sign in to your back office account
+      <h2 className={LOGIN_FORM_CLASSES.heading}>
+        {LOGIN_CONTENT.title}
+      </h2>
+      <p className={LOGIN_FORM_CLASSES.subheading}>
+        {LOGIN_CONTENT.subtitle}
       </p>
 
-      {/* Login Error Banner */}
+      {/* Error Banner */}
       {loginError && (
-        <div className="w-full mb-4 px-4 py-3 rounded-xl bg-[#fff0f3] border border-[#ffccd5] text-[#c73652] text-sm">
+        <div
+          id={LOGIN_TEST_IDS.ERROR_BANNER}
+          className={LOGIN_FORM_CLASSES.errorBanner}
+        >
           {loginError}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} noValidate className="w-full space-y-4">
+      <form
+        onSubmit={handleSubmit}
+        noValidate
+        className={LOGIN_FORM_CLASSES.form}
+      >
         {/* Email */}
-        <div className="space-y-2">
-          <Label htmlFor="email" className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+        <div className={LOGIN_FORM_CLASSES.fieldGroup}>
+          <Label
+            htmlFor={LOGIN_TEST_IDS.EMAIL_INPUT}
+            className={SHARED_FORM_CLASSES.label}
+          >
             {LABELS.email}
           </Label>
+
           <Input
-            id="email"
+            id={LOGIN_TEST_IDS.EMAIL_INPUT}
+            data-testid={LOGIN_TEST_IDS.EMAIL_INPUT}
             type="email"
-            name="email"
+            name={AUTH_FORM_FIELDS.EMAIL}
             value={formData.email}
             onChange={handleChange}
-            placeholder="admin@yourbusiness.com"
-            className={errors.email ? "border-red-400 focus-visible:ring-red-400" : "border-gray-200 focus-visible:ring-[#e94560]"}
+            placeholder={LOGIN_CONTENT.emailPlaceholder}
+            className={cn(
+              errors.email
+                ? SHARED_FORM_CLASSES.inputError
+                : SHARED_FORM_CLASSES.inputNormal
+            )}
             autoComplete="email"
           />
-          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+
+          {errors.email && (
+            <p className={SHARED_FORM_CLASSES.errorText}>
+              {errors.email}
+            </p>
+          )}
         </div>
 
         {/* Password */}
-        <div className="space-y-2">
-          <Label htmlFor="password" className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+        <div className={LOGIN_FORM_CLASSES.fieldGroup}>
+          <Label
+            htmlFor={LOGIN_TEST_IDS.PASSWORD_INPUT}
+            className={SHARED_FORM_CLASSES.label}
+          >
             {LABELS.password}
           </Label>
+
           <div className="relative">
             <Input
-              id="password"
+              id={LOGIN_TEST_IDS.PASSWORD_INPUT}
               type={showPassword ? "text" : "password"}
-              name="password"
+              name={AUTH_FORM_FIELDS.PASSWORD}
               value={formData.password}
               onChange={handleChange}
-              placeholder="Enter your password"
-              className={errors.password ? "border-red-400 focus-visible:ring-red-400 pr-10" : "border-gray-200 focus-visible:ring-[#e94560] pr-10"}
+              placeholder={LOGIN_CONTENT.passwordPlaceholder}
+              className={cn(
+                SHARED_FORM_CLASSES.inputPasswordPadding,
+                errors.password
+                  ? SHARED_FORM_CLASSES.inputError
+                  : SHARED_FORM_CLASSES.inputNormal
+              )}
               autoComplete="current-password"
             />
+
             <button
+              id={LOGIN_TEST_IDS.TOGGLE_PASSWORD}
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className={LOGIN_FORM_CLASSES.passwordToggle}
+              aria-label={showPassword ? "Hide password" : "Show password"}
             >
-              {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              {showPassword ? (
+                <EyeOff size={16} />
+              ) : (
+                <Eye size={16} />
+              )}
             </button>
           </div>
-          {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+
+          {errors.password && (
+            <p className={SHARED_FORM_CLASSES.errorText}>
+              {errors.password}
+            </p>
+          )}
         </div>
 
-        {/* Remember Me + Forgot Password */}
-        <div className="flex items-center justify-between py-2">
-          <div className="flex items-center space-x-2">
+        {/* Remember + Forgot */}
+        <div className={LOGIN_FORM_CLASSES.rememberWrapper}>
+          <div className={LOGIN_FORM_CLASSES.checkboxWrapper}>
             <input
               type="checkbox"
-              id="rememberMe"
-              name="rememberMe"
+              id={LOGIN_TEST_IDS.REMEMBER_ME}
+              name={AUTH_FORM_FIELDS.REMEMBER_ME}
               checked={formData.rememberMe}
               onChange={handleChange}
-              className="accent-[#e94560] w-4 h-4 rounded border-gray-300"
+              className={LOGIN_FORM_CLASSES.checkbox}
             />
-            <Label htmlFor="rememberMe" className="text-sm text-gray-500 cursor-pointer select-none font-normal">
+
+            <Label
+              htmlFor={LOGIN_TEST_IDS.REMEMBER_ME}
+              className={LOGIN_FORM_CLASSES.rememberLabel}
+            >
               {LABELS.rememberMe}
             </Label>
           </div>
+
           <a
-            href="/forgotpasword"
-            className="text-sm text-[#e94560] font-semibold hover:underline"
+            id={LOGIN_TEST_IDS.FORGOT_PASSWORD}
+            href="/forgot-password"
+            className={LOGIN_FORM_CLASSES.forgotPassword}
           >
             {LABELS.forgotPassword}
           </a>
         </div>
 
-        {/* Submit Button */}
+        {/* Submit */}
         <Button
+          id={LOGIN_TEST_IDS.SUBMIT_BUTTON}
           type="submit"
           isLoading={isLoading}
-          className="w-full bg-gradient-to-r from-[#e94560] to-[#c73652] text-white font-bold py-6 rounded-xl hover:opacity-90 transition-opacity"
+
+          variant="customPrimary"
         >
           {isLoading ? LABELS.signingIn : LABELS.signIn}
         </Button>
       </form>
 
       {/* Divider */}
-      <div className="flex items-center gap-3 my-6 w-full">
-        <hr className="flex-1 border-gray-200" />
-        <span className="text-xs text-gray-400">Demo accounts</span>
-        <hr className="flex-1 border-gray-200" />
+      <div className={LOGIN_FORM_CLASSES.divider}>
+        <hr className={LOGIN_FORM_CLASSES.dividerLine} />
+        <span className={LOGIN_FORM_CLASSES.dividerText}>
+          {LOGIN_CONTENT.demoAccountsTitle}
+        </span>
+        <hr className={LOGIN_FORM_CLASSES.dividerLine} />
       </div>
 
-      {/* Demo Role Badges */}
+      {/* Demo Roles */}
       <div className="flex flex-wrap gap-2 justify-center">
         {BRAND.demoRoles.map((role, index) => (
-          <span
-            key={index}
-            className="px-3 py-1 rounded-full text-xs font-semibold bg-[#f0f4ff] text-[#0f3460]"
-          >
+          <span key={index} className={LOGIN_FORM_CLASSES.demoBadge}>
             {role}
           </span>
         ))}

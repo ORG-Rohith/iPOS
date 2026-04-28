@@ -32,7 +32,7 @@ const FormInput: React.FC<FormInputProps> = ({
                     "w-full px-4 py-3 border-2 rounded-xl text-sm outline-none transition-all h-auto",
                     error
                         ? "border-red-400 bg-red-50 focus-visible:ring-red-500"
-                        : "border-gray-200 focus-visible:ring-[#e94560]",
+                        : "border-gray-200 focus-visible:ring-primary",
                     className
                 )}
             />

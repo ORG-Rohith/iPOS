@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import TenantDetailsLayout from "../../../layouts/TenantDetailsLayout";
 import Breadcrumbs from "../../../shared/components/ui/Breadcrumbs";
-import TenantHeader from "../components/TenantHeader";
 import Tabs from "../../../shared/components/ui/Tabs";
 import ActivityTimeline from "../components/ActivityTimeline";
 import StatCard from "../../dashboard/components/StatCard";
 import { useParams } from "react-router-dom";
 import { useTenantDetails } from "../hooks/useTenantDetails";
+import CommonHeader from "../../../shared/components/CommonHeader";
 
 interface Activity {
     id: string;
@@ -24,7 +24,7 @@ const activities: Activity[] = [
         title: "New outlet added — CBD Flagship",
         description: "2 hours ago by James Richardson",
         time: "2 HOURS AGO",
-        color: "#e94560",
+        color: "var(--tw-color-primary, #e94560)",
     },
     {
         id: "2",
@@ -32,7 +32,7 @@ const activities: Activity[] = [
         title: "User role updated — Sarah Chen → Store Manager",
         description: "1 day ago by Super Admin",
         time: "1 DAY AGO",
-        color: "#4361ee",
+        color: "var(--tw-color-secondary, #4361ee)",
     },
 ];
 
@@ -125,9 +125,9 @@ export const TenantDetailsPage: React.FC = () => {
                     <p className="text-sm text-gray-500">View and manage information for {tenant.name}</p>
                 </div>
 
-                <TenantHeader
+                <CommonHeader
                     name={tenant.name}
-                    country={tenant.country_code}
+                    country={tenant.country}
                     badges={[tenant.status, tenant.settings?.plan || "Standard"]}
                 />
 

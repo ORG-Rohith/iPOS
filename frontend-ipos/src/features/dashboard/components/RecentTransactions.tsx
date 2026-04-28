@@ -11,10 +11,10 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({
   return (
     <div className="bg-white rounded-[14px] p-6 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
       <div className="flex justify-between items-center mb-5">
-        <h3 className="text-[15px] font-bold text-[#1a1a2e]">
+        <h3 className="text-[15px] font-bold text-app-text">
           Recent Transactions
         </h3>
-        <a href="#" className="text-[12px] text-[#e94560] font-semibold ">
+        <a href="#" className="text-[12px] text-primary font-semibold ">
           View All
         </a>
       </div>
@@ -55,17 +55,17 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({
                 <td className="py-3 px-3 text-[13px] text-gray-700">
                   {tx.cashier}
                 </td>
-                <td className="py-3 px-3 text-[13px] font-bold text-[#1a1a2e]">
+                <td className="py-3 px-3 text-[13px] font-bold text-app-text">
                   {tx.amount}
                 </td>
                 <td className="py-3 px-3">
                   <span
                     className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${
                       tx.paymentType === "Card"
-                        ? "bg-[#f0f4ff] text-[#4361ee]"
+                        ? "bg-secondary-light text-secondary"
                         : tx.paymentType === "Cash"
-                          ? "bg-[#e6faf8] text-[#2ec4b6]"
-                          : "bg-[#fff5e6] text-[#f77f00]"
+                          ? "bg-success-light text-success"
+                          : "bg-warning-light text-warning"
                     }`}
                   >
                     {tx.paymentType}

@@ -19,12 +19,12 @@ const PlanCard: React.FC<PlanCardProps> = ({
         <Card
             onClick={onClick}
             className={`border rounded-xl p-5 cursor-pointer transition-all ${selected
-                ? "border-[#e94560] bg-[#fff5f6]"
-                : "border-gray-200 hover:border-[#e94560]"
+                ? "border-primary bg-primary-light"
+                : "border-gray-200 hover:border-primary"
                 }`}
         >
             <h3 className="font-semibold text-lg">{name}</h3>
-            <p className="text-[#e94560] font-bold mt-1">{price}</p>
+            <p className="text-primary font-bold mt-1">{price}</p>
 
             <ul className="mt-4 space-y-2 text-sm text-gray-600">
                 {features.map((f, i) => (

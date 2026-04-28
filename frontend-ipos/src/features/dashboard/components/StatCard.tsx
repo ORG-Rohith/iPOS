@@ -10,20 +10,20 @@ const StatCard: React.FC<StatCardProps> = ({ stat }) => {
   const getBorderColor = () => {
     switch (stat.type) {
       case "sales":
-        return "border-t-[#e94560]";
+        return "border-t-primary";
       case "orders":
-        return "border-t-[#4361ee]";
+        return "border-t-secondary";
       case "customers":
-        return "border-t-[#2ec4b6]";
+        return "border-t-success";
       case "revenue":
-        return "border-t-[#f77f00]";
+        return "border-t-warning";
       default:
         return "border-t-gray-200";
     }
   };
 
   const getTrendColor =
-    stat.trend === "up" ? "text-[#2ec4b6]" : "text-[#e94560]";
+    stat.trend === "up" ? "text-success" : "text-primary";
 
   return (
     <Card

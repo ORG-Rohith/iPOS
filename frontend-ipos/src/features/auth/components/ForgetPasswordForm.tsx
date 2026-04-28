@@ -1,19 +1,40 @@
+
+import { useState } from "react";
 import { Input } from "../../../shared/components/ui/Input";
 import { Button } from "../../../shared/components/ui/Button";
 import { Label } from "../../../shared/components/ui/label";
 import { LABELS } from "../../../shared/constants/messages";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { useForgetPasswordForm } from "../../../features/auth/hooks/useForgetPasswordForm";
+import {
+  AUTH_FORM_FIELDS,
+  SHARED_FORM_CLASSES,
+} from "../constants/auth.constants";
+import { cn } from "../../../shared/utils/utils";
+import { FORGET_PASSWORD_FORM_CLASSES } from "../constants/forgetPasswordForm/forgetPasswordForm.classes";
+import { FORGET_PASSWORD_TEST_IDS } from "../constants/id's/forgetPasswordForm.ids";
+
+const FORGET_PASSWORD_CONTENT = {
+  title: "Reset Password",
+  subtitle: "Enter your email to receive password reset link",
+  emailPlaceholder: "admin@yourbusiness.com",
+  otpLabel: "Enter OTP",
+  otpPlaceholder: "Enter 6-digit OTP",
+  sendOtpButton: "Send OTP",
+  verifyOtpButton: "Verify OTP",
+  sendResetLinkButton: "Send Reset Link",
+  backToLogin: "Back to Login",
+};
 
 const ForgetPasswordForm = () => {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const { formData, errors, handleChange, validateEmail } =
     useForgetPasswordForm();
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const [step, setStep] = useState<"email" | "otp" | "verified">("email");
   const [otp, setOtp] = useState("");
+
   const handleSendOtp = async () => {
     if (!validateEmail()) return;
 
@@ -46,94 +67,121 @@ const ForgetPasswordForm = () => {
       body: JSON.stringify({ email: formData.email }),
       headers: { "Content-Type": "application/json" },
     });
-    navigator("/login");
+
+    navigate("/login");
   };
 
   return (
-    <div className="flex-1 bg-white flex flex-col items-center justify-center px-10 py-12">
+    <div className={FORGET_PASSWORD_FORM_CLASSES.container}>
       {/* Header */}
-      <h2 className="text-2xl font-bold text-[#1a1a2e] mb-1">Reset Password</h2>
-      <p className="text-sm text-gray-400 mb-8">
-        Enter your email to receive password reset link
+      <h2 className={FORGET_PASSWORD_FORM_CLASSES.heading}>
+        {FORGET_PASSWORD_CONTENT.title}
+      </h2>
+      <p className={FORGET_PASSWORD_FORM_CLASSES.subheading}>
+        {FORGET_PASSWORD_CONTENT.subtitle}
       </p>
 
-      <form noValidate className="w-full space-y-6">
+      <form noValidate className={FORGET_PASSWORD_FORM_CLASSES.form}>
         {/* EMAIL STEP */}
         {step === "email" && (
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+          <div className={FORGET_PASSWORD_FORM_CLASSES.section}>
+            <div className={FORGET_PASSWORD_FORM_CLASSES.fieldGroup}>
+              <Label
+                htmlFor={FORGET_PASSWORD_TEST_IDS.EMAIL_INPUT}
+                className={SHARED_FORM_CLASSES.label}
+              >
                 {LABELS.email}
               </Label>
+
               <Input
-                id="email"
+                id={FORGET_PASSWORD_TEST_IDS.EMAIL_INPUT}
                 type="email"
-                name="email"
+                name={AUTH_FORM_FIELDS.EMAIL}
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="admin@yourbusiness.com"
-                className={errors.email ? "border-red-400 focus-visible:ring-red-400" : "border-gray-200 focus-visible:ring-[#e94560]"}
+                placeholder={FORGET_PASSWORD_CONTENT.emailPlaceholder}
+                className={cn(
+                  errors.email
+                    ? SHARED_FORM_CLASSES.inputError
+                    : SHARED_FORM_CLASSES.inputNormal
+                )}
                 required
               />
-              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+
+              {errors.email && (
+                <p className={SHARED_FORM_CLASSES.errorText}>
+                  {errors.email}
+                </p>
+              )}
             </div>
 
             <Button
+              id={FORGET_PASSWORD_TEST_IDS.SEND_OTP_BUTTON}
               type="button"
               onClick={handleSendOtp}
-              className="w-full bg-gradient-to-r from-[#e94560] to-[#c73652] text-white font-bold py-6 rounded-xl hover:opacity-90 transition-opacity"
+              variant="customPrimary"
             >
-              Send OTP
+              {FORGET_PASSWORD_CONTENT.sendOtpButton}
             </Button>
           </div>
         )}
 
         {/* OTP STEP */}
         {step === "otp" && (
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="otp" className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
-                Enter OTP
+          <div className={FORGET_PASSWORD_FORM_CLASSES.section}>
+            <div className={FORGET_PASSWORD_FORM_CLASSES.fieldGroup}>
+              <Label
+                htmlFor={FORGET_PASSWORD_TEST_IDS.OTP_INPUT}
+                className={SHARED_FORM_CLASSES.label}
+              >
+                {FORGET_PASSWORD_CONTENT.otpLabel}
               </Label>
+
               <Input
-                id="otp"
+                id={FORGET_PASSWORD_TEST_IDS.OTP_INPUT}
                 type="text"
                 name="otp"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
-                placeholder="Enter 6-digit OTP"
-                className="border-gray-200 focus-visible:ring-[#e94560]"
+                placeholder={FORGET_PASSWORD_CONTENT.otpPlaceholder}
+                className={SHARED_FORM_CLASSES.inputNormal}
               />
             </div>
 
             <Button
+              id={FORGET_PASSWORD_TEST_IDS.VERIFY_OTP_BUTTON}
               type="button"
               onClick={handleVerifyOtp}
-              className="w-full bg-gradient-to-r from-[#e94560] to-[#c73652] text-white font-bold py-6 rounded-xl hover:opacity-90 transition-opacity"
+              variant="customPrimary"
             >
-              Verify OTP
+              {FORGET_PASSWORD_CONTENT.verifyOtpButton}
             </Button>
           </div>
         )}
 
         {/* VERIFIED STEP */}
         {step === "verified" && (
-          <div className="space-y-4">
+          <div className={FORGET_PASSWORD_FORM_CLASSES.section}>
             <Button
+              id={FORGET_PASSWORD_TEST_IDS.SEND_RESET_LINK_BUTTON}
               type="button"
               onClick={handleSendResetLink}
-              className="w-full bg-gradient-to-r from-[#e94560] to-[#c73652] text-white font-bold py-6 rounded-xl hover:opacity-90 transition-opacity"
+              variant="customPrimary"
             >
-              Send Reset Link
+              {FORGET_PASSWORD_CONTENT.sendResetLinkButton}
             </Button>
           </div>
         )}
       </form>
 
-      <div className="flex items-center gap-2 my-5">
-        <Link to="/login">
-          <span className="bg-gradient-to-r from-[#e94560] to-[#c73652] bg-clip-text text-transparent font-bold">
-            Back to Login
+      {/* Back to Login */}
+      <div className={FORGET_PASSWORD_FORM_CLASSES.backWrapper}>
+        <Link
+          to="/login"
+          id={FORGET_PASSWORD_TEST_IDS.BACK_TO_LOGIN_LINK}
+        >
+          <span className={FORGET_PASSWORD_FORM_CLASSES.backText}>
+            {FORGET_PASSWORD_CONTENT.backToLogin}
           </span>
         </Link>
       </div>

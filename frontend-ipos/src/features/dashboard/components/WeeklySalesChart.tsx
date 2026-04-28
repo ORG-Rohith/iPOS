@@ -9,10 +9,10 @@ const WeeklySalesChart: React.FC<WeeklySalesChartProps> = ({ data }) => {
   return (
     <div className="bg-white rounded-[14px] p-6 shadow-[0_2px_12px_rgba(0,0,0,0.06)] h-full">
       <div className="flex justify-between items-center mb-5">
-        <h3 className="text-[15px] font-bold text-[#1a1a2e]">
+        <h3 className="text-[15px] font-bold text-app-text">
           Weekly Sales Overview
         </h3>
-        <a href="#" className="text-[12px] text-[#e94560] font-semibold ">
+        <a href="#" className="text-[12px] text-primary font-semibold ">
           View Full Report
         </a>
       </div>
@@ -25,7 +25,7 @@ const WeeklySalesChart: React.FC<WeeklySalesChartProps> = ({ data }) => {
           >
             <div
               className={`w-full rounded-t-md transition-opacity group-hover:opacity-80 ${
-                item.type === "primary" ? "bg-[#e94560]" : "bg-[#4361ee]"
+                item.type === "primary" ? "bg-primary" : "bg-secondary"
               }`}
               style={{ height: `${item.value}%` }}
             ></div>
@@ -36,11 +36,11 @@ const WeeklySalesChart: React.FC<WeeklySalesChartProps> = ({ data }) => {
 
       <div className="flex gap-4 mt-4">
         <div className="flex items-center gap-1.5 text-[12px] text-gray-600">
-          <div className="w-2 h-2 rounded-full bg-[#e94560]"></div>
+          <div className="w-2 h-2 rounded-full bg-primary"></div>
           Weekday
         </div>
         <div className="flex items-center gap-1.5 text-[12px] text-gray-600">
-          <div className="w-2 h-2 rounded-full bg-[#4361ee]"></div>
+          <div className="w-2 h-2 rounded-full bg-secondary"></div>
           Weekend
         </div>
       </div>

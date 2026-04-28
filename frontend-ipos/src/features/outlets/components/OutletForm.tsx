@@ -118,7 +118,7 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
       <div className="flex items-center gap-4 mb-8">
         {[1, 2, 3].map((s) => (
           <div key={s} className="flex items-center gap-2">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${step === s ? "bg-[#e94560] text-white" : step > s ? "bg-green-500 text-white" : "bg-gray-200 text-gray-500"}`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${step === s ? "bg-primary text-white" : step > s ? "bg-green-500 text-white" : "bg-gray-200 text-gray-500"}`}>
               {step > s ? "✓" : s}
             </div>
             <span className={`text-sm font-semibold ${step === s ? "text-gray-900" : "text-gray-400"}`}>
@@ -150,7 +150,7 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
                 />
                 <div className="md:col-span-2 flex flex-col gap-1.5">
                   <Label className="text-[12px] font-semibold text-gray-600 uppercase tracking-wide">Description</Label>
-                  <Textarea name="description" value={formData.description} onChange={handleChange} className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm outline-none transition-all focus:border-[#e94560] min-h-[100px]" placeholder="Tell us about this outlet..." />
+                  <Textarea name="description" value={formData.description} onChange={handleChange} className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm outline-none transition-all focus:border-primary min-h-[100px]" placeholder="Tell us about this outlet..." />
                 </div>
               </div>
             </Card>
@@ -193,8 +193,8 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
                 {DAYS.map((day) => (
                   <div key={day} className="grid grid-cols-4 items-center gap-4 bg-gray-50/50 p-3 rounded-xl border border-gray-100">
                     <span className="text-sm font-bold text-gray-700 capitalize">{day}</span>
-                    <input type="time" value={formData.operating_hours[day].open} onChange={(e) => handleOperatingHoursChange(day, "open", e.target.value)} disabled={formData.operating_hours[day].isClosed} className="bg-white border border-gray-200 rounded-lg px-2 py-1 text-sm outline-none focus:border-[#e94560] disabled:bg-gray-100 disabled:text-gray-400" />
-                    <input type="time" value={formData.operating_hours[day].close} onChange={(e) => handleOperatingHoursChange(day, "close", e.target.value)} disabled={formData.operating_hours[day].isClosed} className="bg-white border border-gray-200 rounded-lg px-2 py-1 text-sm outline-none focus:border-[#e94560] disabled:bg-gray-100 disabled:text-gray-400" />
+                    <input type="time" value={formData.operating_hours[day].open} onChange={(e) => handleOperatingHoursChange(day, "open", e.target.value)} disabled={formData.operating_hours[day].isClosed} className="bg-white border border-gray-200 rounded-lg px-2 py-1 text-sm outline-none focus:border-primary disabled:bg-gray-100 disabled:text-gray-400" />
+                    <input type="time" value={formData.operating_hours[day].close} onChange={(e) => handleOperatingHoursChange(day, "close", e.target.value)} disabled={formData.operating_hours[day].isClosed} className="bg-white border border-gray-200 rounded-lg px-2 py-1 text-sm outline-none focus:border-primary disabled:bg-gray-100 disabled:text-gray-400" />
                     <div className="flex justify-end">
                       <Switch 
                         checked={formData.operating_hours[day].isClosed} 
@@ -203,7 +203,7 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
                     </div>
                   </div>
                 ))}
-                <button type="button" onClick={copyMondayHours} className="mt-4 text-xs font-bold text-[#e94560] flex items-center gap-2 hover:underline">
+                <button type="button" onClick={copyMondayHours} className="mt-4 text-xs font-bold text-primary flex items-center gap-2 hover:underline">
                   📋 Copy Monday hours to all days
                 </button>
               </div>
@@ -259,7 +259,7 @@ const OutletForm: React.FC<OutletFormProps> = ({ initialData, onSubmit, isLoadin
             <Button type="button" variant="outline" onClick={() => window.history.back()} className="px-8 py-3 h-auto rounded-xl font-bold text-sm bg-white text-gray-400 border-2 border-gray-100 hover:bg-gray-50">
               Cancel
             </Button>
-            <Button type="submit" isLoading={isLoading} className="px-8 py-3 h-auto rounded-xl font-bold text-sm bg-[#e94560] text-white shadow-lg shadow-pink-100 hover:bg-[#d63d54] border-none">
+            <Button type="submit" isLoading={isLoading} className="px-8 py-3 h-auto rounded-xl font-bold text-sm bg-primary text-white shadow-lg shadow-pink-100 hover:bg-primary-hover border-none">
               {step === 3 ? (mode === "edit" ? "Save Changes" : "Create Outlet") : "Next Step"}
             </Button>
           </div>

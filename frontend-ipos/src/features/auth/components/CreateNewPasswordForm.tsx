@@ -6,12 +6,24 @@ import { LABELS } from "../../../shared/constants/messages";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useCreateNewPasswordForm } from "../hooks/useCreateNewPasswordForm";
 import { Eye, EyeOff } from "lucide-react";
+import { cn } from "../../../shared/utils/utils";
+import { CREATE_NEW_PASSWORD_FORM_CLASSES } from "../constants/createNewPasswordForm/createNewPasswordForm.classes";
+import { CREATE_NEW_PASSWORD_TEST_IDS } from "../constants/id's/createNewPasswordForm.ids";
+import { SHARED_FORM_CLASSES } from "../constants/auth.constants";
+
+const CREATE_PASSWORD_CONTENT = {
+  title: "Create New Password",
+  subtitle: "Choose a strong password to secure your account",
+  newPasswordPlaceholder: "Enter new password",
+  confirmPasswordPlaceholder: "Re-enter new password",
+};
 
 const CreateNewPasswordForm = () => {
   const { formData, errors, isLoading, handleChange, validate } =
     useCreateNewPasswordForm();
+
   const [searchParams] = useSearchParams();
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const [showPassword, setShowPassword] = useState(false);
@@ -32,11 +44,13 @@ const CreateNewPasswordForm = () => {
     e.preventDefault();
 
     if (!validate()) return;
-    const token = searchParams.get("token"); // ✅ get token from URL
+
+    const token = searchParams.get("token");
     if (!token) {
       alert("Invalid or missing token");
       return;
     }
+
     try {
       const res = await fetch(`${baseUrl}/auth/reset-password`, {
         method: "POST",
@@ -44,7 +58,7 @@ const CreateNewPasswordForm = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token, // ✅ IMPORTANT
+          token,
           newPassword: formData.newPassword,
         }),
       });
@@ -56,84 +70,137 @@ const CreateNewPasswordForm = () => {
       }
 
       alert("Password reset successful");
-      navigator("/login");
+      navigate("/login");
     } catch (error: any) {
       alert(error.message);
     }
   };
 
   return (
-    <div className="flex-1 bg-white flex flex-col items-center justify-center px-10 py-12">
+    <div className={CREATE_NEW_PASSWORD_FORM_CLASSES.container}>
       {/* Header */}
-      <h2 className="text-2xl font-bold text-[#1a1a2e] mb-1">
-        Create New Password
+      <h2 className={CREATE_NEW_PASSWORD_FORM_CLASSES.heading}>
+        {CREATE_PASSWORD_CONTENT.title}
       </h2>
-      <p className="text-sm text-gray-400 mb-8">
-        Choose a strong password to secure your account
+      <p className={CREATE_NEW_PASSWORD_FORM_CLASSES.subheading}>
+        {CREATE_PASSWORD_CONTENT.subtitle}
       </p>
 
-      <form onSubmit={handleSubmit} noValidate className="w-full space-y-4">
-        {/* Password */}
-        <div className="space-y-2">
-          <Label htmlFor="newPassword" className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+      <form
+        onSubmit={handleSubmit}
+        noValidate
+        className={CREATE_NEW_PASSWORD_FORM_CLASSES.form}
+      >
+        {/* New Password */}
+        <div className={CREATE_NEW_PASSWORD_FORM_CLASSES.fieldGroup}>
+          <Label
+            htmlFor={CREATE_NEW_PASSWORD_TEST_IDS.NEW_PASSWORD_INPUT}
+            className={SHARED_FORM_CLASSES.label}
+          >
             {LABELS.newPassword}
           </Label>
-          <div className="relative">
+
+          <div className={CREATE_NEW_PASSWORD_FORM_CLASSES.inputWrapper}>
             <Input
-              id="newPassword"
+              id={CREATE_NEW_PASSWORD_TEST_IDS.NEW_PASSWORD_INPUT}
               type={showPassword ? "text" : "password"}
               name="newPassword"
               value={formData.newPassword}
               onChange={handleChange}
-              placeholder="Enter new password"
-              className={errors.newPassword ? "border-red-400 focus-visible:ring-red-400 pr-10" : "border-gray-200 focus-visible:ring-[#e94560] pr-10"}
+              placeholder={CREATE_PASSWORD_CONTENT.newPasswordPlaceholder}
+              className={cn(
+                SHARED_FORM_CLASSES.inputPasswordPadding,
+                errors.newPassword
+                  ? SHARED_FORM_CLASSES.inputError
+                  : SHARED_FORM_CLASSES.inputNormal
+              )}
               autoComplete="new-password"
             />
+
             <button
+              id={CREATE_NEW_PASSWORD_TEST_IDS.TOGGLE_NEW_PASSWORD}
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className={CREATE_NEW_PASSWORD_FORM_CLASSES.passwordToggle}
             >
               {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
           </div>
-          {errors.newPassword && <p className="text-red-500 text-xs mt-1">{errors.newPassword}</p>}
+
+          {errors.newPassword && (
+            <p className={SHARED_FORM_CLASSES.errorText}>
+              {errors.newPassword}
+            </p>
+          )}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="confirmPassword" className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+        {/* Confirm Password */}
+        <div className={CREATE_NEW_PASSWORD_FORM_CLASSES.fieldGroup}>
+          <Label
+            htmlFor={CREATE_NEW_PASSWORD_TEST_IDS.CONFIRM_PASSWORD_INPUT}
+            className={SHARED_FORM_CLASSES.label}
+          >
             {LABELS.confirmPassword}
           </Label>
-          <div className="relative">
+
+          <div className={CREATE_NEW_PASSWORD_FORM_CLASSES.inputWrapper}>
             <Input
-              id="confirmPassword"
+              id={CREATE_NEW_PASSWORD_TEST_IDS.CONFIRM_PASSWORD_INPUT}
               type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              placeholder="Re-enter new password"
-              className={errors.confirmPassword ? "border-red-400 focus-visible:ring-red-400 pr-10" : "border-gray-200 focus-visible:ring-[#e94560] pr-10"}
+              placeholder={
+                CREATE_PASSWORD_CONTENT.confirmPasswordPlaceholder
+              }
+              className={cn(
+                SHARED_FORM_CLASSES.inputPasswordPadding,
+                errors.confirmPassword
+                  ? SHARED_FORM_CLASSES.inputError
+                  : SHARED_FORM_CLASSES.inputNormal
+              )}
               autoComplete="new-password"
             />
+
             <button
+              id={CREATE_NEW_PASSWORD_TEST_IDS.TOGGLE_CONFIRM_PASSWORD}
               type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              onClick={() =>
+                setShowConfirmPassword(!showConfirmPassword)
+              }
+              className={CREATE_NEW_PASSWORD_FORM_CLASSES.passwordToggle}
             >
-              {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              {showConfirmPassword ? (
+                <EyeOff size={16} />
+              ) : (
+                <Eye size={16} />
+              )}
             </button>
           </div>
-          {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+
+          {errors.confirmPassword && (
+            <p className={SHARED_FORM_CLASSES.errorText}>
+              {errors.confirmPassword}
+            </p>
+          )}
         </div>
 
+        {/* Password Rules + Submit */}
         <div className="space-y-6">
-          {/* Password Requirements */}
-          <div className="bg-gray-100 rounded-xl p-4 text-sm">
-            <p className="font-semibold mb-2 text-gray-600">
+          <div className={CREATE_NEW_PASSWORD_FORM_CLASSES.requirementsBox}>
+            <p
+              className={
+                CREATE_NEW_PASSWORD_FORM_CLASSES.requirementsTitle
+              }
+            >
               PASSWORD REQUIREMENTS
             </p>
 
-            <ul className="space-y-1">
+            <ul
+              className={
+                CREATE_NEW_PASSWORD_FORM_CLASSES.requirementsList
+              }
+            >
               <li className={getClass(checks.length)}>
                 {checks.length ? "✅" : "⭕"} At least 8 characters
               </li>
@@ -152,11 +219,11 @@ const CreateNewPasswordForm = () => {
             </ul>
           </div>
 
-          {/* Submit Button */}
           <Button
+            id={CREATE_NEW_PASSWORD_TEST_IDS.SUBMIT_BUTTON}
             type="submit"
             isLoading={isLoading}
-            className="w-full bg-gradient-to-r from-[#e94560] to-[#c73652] text-white font-bold py-6 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+            className="w-full bg-gradient-to-r from-primary to-primary-dark text-white font-bold py-6 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
             disabled={
               !(
                 checks.length &&
@@ -168,14 +235,20 @@ const CreateNewPasswordForm = () => {
               )
             }
           >
-            {isLoading ? LABELS.resettingPassword : LABELS.resetPassword}
+            {isLoading
+              ? LABELS.resettingPassword
+              : LABELS.resetPassword}
           </Button>
         </div>
       </form>
 
-      <div className="flex items-center gap-2 my-5">
-        <Link to="/login">
-          <span className="bg-gradient-to-r from-[#e94560] to-[#c73652] bg-clip-text text-transparent font-bold">
+      {/* Back */}
+      <div className={CREATE_NEW_PASSWORD_FORM_CLASSES.backWrapper}>
+        <Link
+          to="/login"
+          id={CREATE_NEW_PASSWORD_TEST_IDS.BACK_TO_LOGIN_LINK}
+        >
+          <span className={CREATE_NEW_PASSWORD_FORM_CLASSES.backText}>
             ⭠ Back to Login
           </span>
         </Link>

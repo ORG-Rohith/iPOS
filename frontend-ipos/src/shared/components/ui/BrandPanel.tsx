@@ -1,7 +1,7 @@
 import { BRAND } from "../../constants/messages";
 
 const BrandPanel = () => (
-  <div className="flex-1 bg-gradient-to-br from-[#e94560] to-[#0f3460] flex flex-col items-center justify-center p-10 text-white">
+  <div className="flex-1 bg-gradient-to-br from-primary to-brand-light flex flex-col items-center justify-center p-10 text-white">
     {/* Logo */}
     <div className="text-6xl mb-4">{BRAND.logo}</div>
     <h1 className="text-3xl font-bold mb-2">{BRAND.name}</h1>

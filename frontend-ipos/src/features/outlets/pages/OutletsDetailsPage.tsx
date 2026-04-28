@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Breadcrumbs from "../../../shared/components/ui/Breadcrumbs";
-import TenantHeader from "../../tenants/components/TenantHeader";
 import Tabs from "../../../shared/components/ui/Tabs";
 import ActivityTimeline from "../../tenants/components/ActivityTimeline";
 import StatCard from "../../dashboard/components/StatCard";
@@ -8,6 +7,7 @@ import { useParams } from "react-router-dom";
 import OutletsDetailsLayout from "../../../layouts/OutletsDetailsLayout";
 import { useOutletDetails } from "../hooks/useOutletDetails";
 import { Card } from "../../../shared/components/ui/card";
+import CommonHeader from "../../../shared/components/CommonHeader";
 
 interface Activity {
     id: string;
@@ -25,13 +25,14 @@ const activities: Activity[] = [
         title: "User role updated — Sarah Chen → Store Manager",
         description: "1 day ago by Super Admin",
         time: "1 DAY AGO",
-        color: "#4361ee",
+        color: "var(--tw-color-secondary, #4361ee)",
     },
 ];
 
 export const OutletsDetailsPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { outlet, loading, error } = useOutletDetails(id);
+    console.log("outlet -> ", outlet);
     const [activeTab, setActiveTab] = useState("overview");
 
     if (loading) {
@@ -117,7 +118,7 @@ export const OutletsDetailsPage: React.FC = () => {
                     <p className="text-sm text-gray-500">View and manage information for {outlet.name}</p>
                 </div>
 
-                <TenantHeader
+                <CommonHeader
                     name={outlet.name}
                     country={outlet.country}
                     badges={[outlet.status, outlet.type]}

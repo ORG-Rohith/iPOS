@@ -47,7 +47,7 @@ export const OutletsPage: React.FC = () => {
         <OutletsLayout title="Outlets">
             {loading ? (
                 <div className="flex items-center justify-center h-64">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#e94560]"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
                 </div>
             ) : error ? (
                 <Card className="bg-red-50 text-red-600 p-6 rounded-xl border border-red-100 text-center">
@@ -68,7 +68,7 @@ export const OutletsPage: React.FC = () => {
                     <p className="text-sm text-gray-500 mb-6">You haven't added any outlets yet.</p>
                     <Button 
                         onClick={() => navigate("/outlets/create")}
-                        className="px-6 py-2 h-auto bg-[#e94560] text-white rounded-lg font-bold hover:bg-[#d63d54] transition-colors shadow-lg shadow-pink-100 border-none"
+                        className="px-6 py-2 h-auto bg-primary text-white rounded-lg font-bold hover:bg-primary-hover transition-colors shadow-lg shadow-pink-100 border-none"
                     >
                         Add Your First Outlet
                     </Button>

@@ -28,7 +28,7 @@ const Topbar: React.FC<TopbarProps> = ({
       case "dashboard":
         return (
           <>
-            <h1 className="text-xl font-bold text-[#1a1a2e] truncate">
+            <h1 className="text-xl font-bold text-app-text truncate">
               Dashboard
             </h1>
             <p className="text-[13px] text-gray-400 mt-0.5 truncate">
@@ -40,7 +40,7 @@ const Topbar: React.FC<TopbarProps> = ({
       case "tenants":
         return (
           <>
-            <h1 className="text-xl font-bold text-[#1a1a2e] truncate">
+            <h1 className="text-xl font-bold text-app-text truncate">
               Tenants
             </h1>
             <p className="text-[13px] text-gray-400 mt-0.5 truncate">
@@ -52,7 +52,7 @@ const Topbar: React.FC<TopbarProps> = ({
       case "outlets":
         return (
           <>
-            <h1 className="text-xl font-bold text-[#1a1a2e] truncate">
+            <h1 className="text-xl font-bold text-app-text truncate">
               Outlet Management
             </h1>
             <p className="text-[13px] text-gray-400 mt-0.5 truncate">
@@ -64,7 +64,7 @@ const Topbar: React.FC<TopbarProps> = ({
       case "createTenant":
         return (
           <>
-            <h1 className="text-xl font-bold text-[#1a1a2e] truncate">
+            <h1 className="text-xl font-bold text-app-text truncate">
               Create Tenant
             </h1>
             <p className="text-[13px] text-gray-400 mt-0.5 truncate">
@@ -76,7 +76,7 @@ const Topbar: React.FC<TopbarProps> = ({
       case "tenantDetails":
         return (
           <>
-            <h1 className="text-xl font-bold text-[#1a1a2e] truncate">
+            <h1 className="text-xl font-bold text-app-text truncate">
               Tenant Details
             </h1>
             <p className="text-[13px] text-gray-400 mt-0.5 truncate">
@@ -87,7 +87,7 @@ const Topbar: React.FC<TopbarProps> = ({
       case "outletsDetails":
         return (
           <>
-            <h1 className="text-xl font-bold text-[#1a1a2e] truncate">
+            <h1 className="text-xl font-bold text-app-text truncate">
               Outlet Details
             </h1>
             <p className="text-[13px] text-gray-400 mt-0.5 truncate">
@@ -99,7 +99,7 @@ const Topbar: React.FC<TopbarProps> = ({
       default:
         return (
           <>
-            <h1 className="text-xl font-bold text-[#1a1a2e] truncate">
+            <h1 className="text-xl font-bold text-app-text truncate">
               {title}
             </h1>
             <p className="text-[13px] text-gray-400 mt-0.5 truncate">
@@ -124,7 +124,7 @@ const Topbar: React.FC<TopbarProps> = ({
             </select>
 
             <Button
-              className="px-[18px] py-2 h-auto bg-[#e94560] text-white rounded-lg text-[13px] font-semibold hover:opacity-90 border-none"
+              className="px-[18px] py-2 h-auto bg-primary text-white rounded-lg text-[13px] font-semibold hover:opacity-90 border-none"
             >
               + New Sale
             </Button>
@@ -135,7 +135,7 @@ const Topbar: React.FC<TopbarProps> = ({
         return (
           <Button
             onClick={() => navigate("/tenants/create")}
-            className="px-[18px] py-2 h-auto bg-[#e94560] text-white rounded-lg text-[13px] font-semibold hover:opacity-90 border-none"
+            className="px-[18px] py-2 h-auto bg-primary text-white rounded-lg text-[13px] font-semibold hover:opacity-90 border-none"
           >
             + Add Tenant
           </Button>
@@ -144,7 +144,7 @@ const Topbar: React.FC<TopbarProps> = ({
         return (
           <Button
             onClick={() => navigate("/outlets/create")}
-            className="px-[18px] py-2 h-auto bg-[#e94560] text-white rounded-lg text-[13px] font-semibold hover:opacity-90 border-none"
+            className="px-[18px] py-2 h-auto bg-primary text-white rounded-lg text-[13px] font-semibold hover:opacity-90 border-none"
           >
             + Add New Outlet
           </Button>
