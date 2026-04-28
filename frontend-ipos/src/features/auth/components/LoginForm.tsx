@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Input } from "../../../components/ui/Input";
-import { Button } from "../../../components/ui/Button";
-import { Label } from "../../../components/ui/label";
+import { Input } from "../../../shared/components/ui/Input";
+import { Button } from "../../../shared/components/ui/Button";
+import { Label } from "../../../shared/components/ui/label";
 import { useLoginForm } from "../hooks/useLoginForm";
-import { LABELS, BRAND } from "../../../contants/messages";
+import { LABELS, BRAND } from "../../../shared/constants/messages";
 import { Eye, EyeOff } from "lucide-react";
 
 const LoginForm = () => {

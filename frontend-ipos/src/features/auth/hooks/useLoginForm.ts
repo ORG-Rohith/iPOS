@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { LoginFormData, LoginFormErrors } from "../types/auth.types";
 import { validateLoginForm } from "../validations/login.validation";
-import { DEMO_CREDENTIALS } from "../../../contants/messages";
+import { DEMO_CREDENTIALS } from "../../../shared/constants/messages";
 import { useNavigate } from "react-router-dom";
 
 const INITIAL_FORM_DATA: LoginFormData = {

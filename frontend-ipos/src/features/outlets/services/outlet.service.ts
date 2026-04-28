@@ -1,5 +1,5 @@
-import { apiTenantService } from "../../../services/apiService";
-import type { Outlet, CreateOutletPayload, UpdateOutletPayload } from "../../auth/types/outlet.types";
+import { apiTenantService } from "../../auth/services/apiService";
+import type { Outlet, CreateOutletPayload, UpdateOutletPayload } from "../types/outlet.types";
 
 export const outletService = {
   getAll: async (tenantId?: number): Promise<Outlet[]> => {

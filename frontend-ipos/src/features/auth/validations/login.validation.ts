@@ -1,5 +1,5 @@
 import type { LoginFormData, LoginFormErrors } from "../types/auth.types";
-import { VALIDATION_MESSAGES } from "../../../contants/messages";
+import { VALIDATION_MESSAGES } from "../../../shared/constants/messages";
 
 export const validateLoginForm = (formData: LoginFormData): LoginFormErrors => {
   const errors: LoginFormErrors = {};

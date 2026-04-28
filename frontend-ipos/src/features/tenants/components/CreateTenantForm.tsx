@@ -1,10 +1,10 @@
+import type { CreateTenantPayload } from "../types/tenant.types";
 import FormInput from "../../../shared/components/ui/FormInput";
 import FormSelect from "../../../shared/components/ui/FormSelect";
-import PlanCard from "../../tenants/components/PlanCard";
+import PlanCard from "./PlanCard";
 import { Button } from "../../../shared/components/ui/Button";
 import { Card } from "../../../shared/components/ui/card";
 import { useState } from "react";
-import type { CreateTenantPayload } from "../../tenants/types/tenant.types";
 
 interface Props {
     onSubmit: (data: CreateTenantPayload) => void;

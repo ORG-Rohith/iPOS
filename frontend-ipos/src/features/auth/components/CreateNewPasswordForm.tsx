@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Input } from "../../../components/ui/Input";
-import { Button } from "../../../components/ui/Button";
-import { Label } from "../../../components/ui/label";
-import { LABELS } from "../../../contants/messages";
+import { Input } from "../../../shared/components/ui/Input";
+import { Button } from "../../../shared/components/ui/Button";
+import { Label } from "../../../shared/components/ui/label";
+import { LABELS } from "../../../shared/constants/messages";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useCreateNewPasswordForm } from "../hooks/useCreateNewPasswordForm";
 import { Eye, EyeOff } from "lucide-react";

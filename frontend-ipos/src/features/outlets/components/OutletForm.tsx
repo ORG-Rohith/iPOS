@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import FormInput from "../../../components/ui/FormInput";
-import FormSelect from "../../../components/ui/FormSelect";
-import { Button } from "../../../components/ui/Button";
-import type { Outlet, WeeklyOperatingHours, OperatingHours } from "../../../features/auth/types/outlet.types";
-import { Card } from "../../../components/ui/card";
-import { Label } from "../../../components/ui/label";
-import { Switch } from "../../../components/ui/switch";
-import { Textarea } from "../../../components/ui/textarea";
+import FormInput from "../../../shared/components/ui/FormInput";
+import FormSelect from "../../../shared/components/ui/FormSelect";
+import { Button } from "../../../shared/components/ui/Button";
+import type { Outlet, WeeklyOperatingHours, OperatingHours } from "../types/outlet.types";
+import { Card } from "../../../shared/components/ui/card";
+import { Label } from "../../../shared/components/ui/label";
+import { Switch } from "../../../shared/components/ui/switch";
+import { Textarea } from "../../../shared/components/ui/textarea";
 
 interface OutletFormProps {
   initialData?: Partial<Outlet>;

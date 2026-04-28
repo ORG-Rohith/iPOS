@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import OutletsLayout from "../../../layout/OutletsLayout";
+import OutletsLayout from "../../../layouts/OutletsLayout";
 import OutletForm from "../components/OutletForm";
 import { outletService } from "../services/outlet.service";
-import type { Outlet } from "../../auth/types/outlet.types";
-import { tenantService } from "../../../services/tenantService";
-import { Card } from "../../../components/ui/card";
+import type { Outlet } from "../types/outlet.types";
+import { tenantService } from "../../tenants/services/tenant.service";
+import { Card } from "../../../shared/components/ui/card";
 
 const OutletFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
