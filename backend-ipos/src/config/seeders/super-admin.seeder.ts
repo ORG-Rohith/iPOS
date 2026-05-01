@@ -21,7 +21,7 @@ export class SuperAdminSeeder implements OnApplicationBootstrap {
 
     @InjectRepository(UserRole)
     private readonly userRoleRepo: Repository<UserRole>,
-  ) {}
+  ) { }
 
   async onApplicationBootstrap() {
     const role = await this.seedSuperAdminRole();
@@ -59,9 +59,9 @@ export class SuperAdminSeeder implements OnApplicationBootstrap {
   // SEED SUPER ADMIN USER
   // ─────────────────────────────────────────
   private async seedSuperAdminUser(role: Role): Promise<void> {
-    const email    = process.env.SUPER_ADMIN_EMAIL    || 'superadmin@platform.com';
-    const password = process.env.SUPER_ADMIN_PASSWORD || 'SuperAdmin@123';
-    const name     = process.env.SUPER_ADMIN_NAME     || 'Super Admin';
+    const email = process.env.SUPER_ADMIN_EMAIL || 'alekyaallu0518@gmail.com';
+    const password = process.env.SUPER_ADMIN_PASSWORD || 'Alekya@123';
+    const name = process.env.SUPER_ADMIN_NAME || 'Super Admin';
 
     // CHECK: Already exists?
     const existingUser = await this.userRepo.findOne({ where: { email } });
@@ -76,11 +76,11 @@ export class SuperAdminSeeder implements OnApplicationBootstrap {
 
     // ✅ Create user using only fields from your User entity
     const user = new User();
-    user.uuid          = uuidv4();
-    user.email         = email;
+    user.uuid = uuidv4();
+    user.email = email;
     user.password_hash = passwordHash;
-    user.name          = name;
-    user.is_active     = true;
+    user.name = name;
+    user.is_active = true;
     // user.tenant_id     = null; // null = Platform Super Admin
 
     const savedUser = await this.userRepo.save(user);
@@ -88,8 +88,8 @@ export class SuperAdminSeeder implements OnApplicationBootstrap {
 
     // ✅ Assign role using only fields from your UserRole entity
     const userRole = new UserRole();
-    userRole.user_id   = savedUser.id;
-    userRole.role_id   = role.id;
+    userRole.user_id = savedUser.id;
+    userRole.role_id = role.id;
     // userRole.outlet_id = null; // null = platform-wide, no outlet restriction
 
     await this.userRoleRepo.save(userRole);
