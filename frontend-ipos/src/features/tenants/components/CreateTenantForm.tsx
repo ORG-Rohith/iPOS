@@ -2,12 +2,14 @@ import type { CreateTenantPayload } from "../types/tenant.types";
 import { Button } from "../../../shared/components/ui/Button";
 import { useState } from "react";
 import { BusinessInfoSection, ContactDetailsSection, LocationSection, PlanBillingSection } from "./TenantFormShared";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     onSubmit: (data: CreateTenantPayload) => void;
 }
 
 const CreateTenantForm: React.FC<Props> = ({ onSubmit }) => {
+    const navigate = useNavigate();
     const [form, setForm] = useState<CreateTenantPayload>({
         businessName: "",
         legalName: "",
@@ -65,6 +67,7 @@ const CreateTenantForm: React.FC<Props> = ({ onSubmit }) => {
                     type="button"
                     variant="outline"
                     className="px-4 py-2 border rounded-lg"
+                    onClick={() => navigate("/tenants")}
                 >
                     Cancel
                 </Button>

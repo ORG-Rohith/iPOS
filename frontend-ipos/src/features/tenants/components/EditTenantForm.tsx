@@ -3,6 +3,7 @@ import type { CreateTenantPayload } from "../types/tenant.types";
 import StatusManagement from "./StatusManagement";
 import { Button } from "../../../shared/components/ui/Button";
 import { BusinessInfoSection, ContactDetailsSection, LocationSection, PlanBillingSection } from "./TenantFormShared";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   initialData: CreateTenantPayload & { status: string };
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const EditTenantForm: React.FC<Props> = ({ initialData, onSubmit }) => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     ...initialData,
     statusReason: "",
@@ -56,15 +58,16 @@ const EditTenantForm: React.FC<Props> = ({ initialData, onSubmit }) => {
 
       {/* 🔥 ACTIONS */}
       <div className="flex justify-end gap-3 mt-8">
-        <Button 
-          type="button" 
+        <Button
+          type="button"
           variant="outline"
           className="px-6 py-2.5 h-auto border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
+          onClick={() => navigate("/tenants")}
         >
           Cancel
         </Button>
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           className="px-8 py-2.5 h-auto bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl text-sm font-bold shadow-md shadow-pink-100 hover:from-pink-600 hover:to-rose-600 transition-all border-none"
         >
           Save Changes
