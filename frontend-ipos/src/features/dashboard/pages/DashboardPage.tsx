@@ -1,11 +1,11 @@
 import React from 'react';
-import DashboardLayout from '../../../layouts/DashboardLayout';
+import DashboardLayout from './DashboardLayout';
 import StatCard from '../components/StatCard';
 import WeeklySalesChart from '../components/WeeklySalesChart';
 import OutletStatusList from '../components/OutletStatusList';
 import RecentTransactions from '../components/RecentTransactions';
 import AlertsPanel from '../components/AlertsPanel';
-import { useDashboard } from '../hooks/useDashboard';
+import { useDashboard } from './useDashboard';
 
 export const SuperAdminDashboard: React.FC = () => {
   const { data, loading, error } = useDashboard();
