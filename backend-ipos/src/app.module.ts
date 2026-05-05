@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import databaseConfig from './config/database.config';
+import databaseConfig from './infrastructure/database/database.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Type } from 'class-transformer';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TenantsModule } from './core/tenants/tenants.module';
-import { OutletsModule } from './core/outlets/outlets.module';
-import { UsersModule } from './auth/users/users.module';
-import { AuthModule } from './auth/auth.module';
-import { EmailModule } from './common/email/email.module';
-import { SeederModule } from './config/seeders/seeder.module';
+import { TenantsModule } from './modules/tenants/tenants.module';
+import { OutletsModule } from './modules/outlets/outlets.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { EmailModule } from './infrastructure/email/email.module';
+import { SeederModule } from './infrastructure/seeders/seeder.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -44,4 +44,4 @@ import { SeederModule } from './config/seeders/seeder.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

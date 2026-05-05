@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
-import { SeederService } from './config/seeders/seeder.service'; // ✅ add this
+import { SeederService } from './infrastructure/seeders/seeder.service'; // ✅ add this
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
