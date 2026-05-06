@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsString,
   IsBoolean,
+  IsNumber,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -29,4 +30,12 @@ export class CreateUserDto {
   @IsBoolean()
   @IsOptional()
   is_active?: boolean;
+
+  @IsNumber()
+  @IsOptional()
+  role_id?: number;
+
+  @IsNumber()
+  @IsOptional()
+  outlet_id?: number;
 }

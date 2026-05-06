@@ -20,6 +20,12 @@ import { OutletsPage } from "../../features/outlets/list/OutletsPage";
 import OutletFormPage from "../../features/outlets/form/OutletFormPage";
 import OutletsDetailsPage from "../../features/outlets/details/OutletsDetailsPage";
 
+// Users and Roles pages
+import { UsersPage } from "../../features/users/list/UsersPage";
+import UserFormPage from "../../features/users/form/UserFormPage";
+import { RolesPage } from "../../features/roles/list/RolesPage";
+import RoleFormPage from "../../features/roles/form/RoleFormPage";
+
 const ProtectedRoute = () => {
   const token = localStorage.getItem("accessToken");
   if (!token) {
@@ -59,6 +65,14 @@ const AppRoutes = () => (
         <Route path="/outlets/create" element={<OutletFormPage />} />
         <Route path="/outlets/edit/:id" element={<OutletFormPage />} />
         <Route path="/outlets/manage/:id" element={<OutletsDetailsPage />} />
+        
+        {/* Users & Roles */}
+        <Route path="/users" element={<UsersPage />} />
+        <Route path="/users/create" element={<UserFormPage />} />
+        <Route path="/users/edit/:id" element={<UserFormPage />} />
+        <Route path="/roles" element={<RolesPage />} />
+        <Route path="/roles/create" element={<RoleFormPage />} />
+        <Route path="/roles/edit/:id" element={<RoleFormPage />} />
       </Route>
     </Routes>
   </BrowserRouter>

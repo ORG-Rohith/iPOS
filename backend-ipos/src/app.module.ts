@@ -11,6 +11,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { EmailModule } from './infrastructure/email/email.module';
 import { SeederModule } from './infrastructure/seeders/seeder.module';
 import { UsersModule } from './modules/users/users.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { UsersModule } from './modules/users/users.module';
     AuthModule,
     EmailModule,
     SeederModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -5,7 +5,7 @@ import { Button } from "../components/ui/Button";
 interface TopbarProps {
   title?: string;
   subtitle?: string;
-  variant?: "dashboard" | "tenants" | "createTenant" | "tenantDetails" | "outlets" | "outletsDetails";
+  variant?: "dashboard" | "tenants" | "createTenant" | "tenantDetails" | "outlets" | "outletsDetails" | "users" | "roles";
 }
 
 const Topbar: React.FC<TopbarProps> = ({
@@ -92,6 +92,28 @@ const Topbar: React.FC<TopbarProps> = ({
             </h1>
             <p className="text-[13px] text-gray-400 mt-0.5 truncate">
               Outlet details
+            </p>
+          </>
+        );
+      case "users":
+        return (
+          <>
+            <h1 className="text-xl font-bold text-app-text truncate">
+              Users Management
+            </h1>
+            <p className="text-[13px] text-gray-400 mt-0.5 truncate">
+              Manage users and their role assignments
+            </p>
+          </>
+        );
+      case "roles":
+        return (
+          <>
+            <h1 className="text-xl font-bold text-app-text truncate">
+              Roles Management
+            </h1>
+            <p className="text-[13px] text-gray-400 mt-0.5 truncate">
+              Manage system and custom roles
             </p>
           </>
         );

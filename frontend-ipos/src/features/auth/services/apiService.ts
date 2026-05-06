@@ -10,6 +10,13 @@ async function handleResponse<T>(response: Response): Promise<T> {
   const data = isJson ? await response.json() : await response.text();
 
   if (!response.ok) {
+    if (response.status === 401) {
+      // Token expired or invalid
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("tokenType");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
+    }
     const error = (data && data.message) || response.statusText;
     return Promise.reject(error);
   }

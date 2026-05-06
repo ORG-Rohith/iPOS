@@ -2,8 +2,12 @@ import { Controller, Get, Post, Body, Put, Param, Delete, Query, UseGuards } fro
 import { OutletsService } from './outlets.service';
 import { CreateOutletDto } from './dto/create-outlet.dto';
 import { UpdateOutletDto } from './dto/update-outlet.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CurrentUser } from '../../shared/decorators/current-user.decorator';
+import { RequestUser } from '../users/types/jwt-payload.type';
 
 @Controller('outlets')
+@UseGuards(JwtAuthGuard)
 export class OutletsController {
   constructor(private readonly outletsService: OutletsService) { }
 
@@ -13,8 +17,13 @@ export class OutletsController {
   }
 
   @Get()
-  findAll(@Query('tenant_id') tenantId?: string) {
-    return this.outletsService.findAll(tenantId);
+  findAll(
+    @Query('tenant_id') queryTenantId: string,
+    @CurrentUser() user: RequestUser
+  ) {
+    // If the user belongs to a tenant, they can ONLY see their tenant's outlets
+    const effectiveTenantId = user.tenantId ? String(user.tenantId) : queryTenantId;
+    return this.outletsService.findAll(effectiveTenantId);
   }
 
   @Get(':idOrUuid')

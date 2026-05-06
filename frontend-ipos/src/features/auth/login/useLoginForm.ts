@@ -96,12 +96,17 @@ export const useLoginForm = () => {
       const isSuperAdmin = roleNames.some(
         (r) =>
           r.toLowerCase().includes("support admin") ||
-          r.toLowerCase().includes("super admin"),
+          r.toLowerCase().includes("super admin") ||
+          r.toLowerCase().includes("platform admin")
       );
 
-      if (!isSuperAdmin) {
+      const isTenantAdmin = roleNames.some(
+        (r) => r.toLowerCase().includes("tenant admin")
+      );
+
+      if (!isSuperAdmin && !isTenantAdmin) {
         setLoginError(
-          "Access denied. Only Super Admin can access this dashboard.",
+          "Access denied. Only Super Admin or Tenant Admin can access this dashboard.",
         );
         // optionally clear stored auth
         localStorage.removeItem("accessToken");
@@ -111,7 +116,11 @@ export const useLoginForm = () => {
       }
 
       console.log("Login successful:", data);
-      navigate("/dashboard"); // uncomment with react-router
+      if (isTenantAdmin && !isSuperAdmin) {
+        navigate("/outlets");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       setLoginError("Something went wrong. Please try again.");
       console.error(error);

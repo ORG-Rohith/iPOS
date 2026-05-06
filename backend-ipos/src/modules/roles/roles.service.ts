@@ -11,6 +11,7 @@ import { Role } from './entity/roles.entity';
 import { RolePermission } from './role-permissions.entity';
 import { Permission } from 'src/modules/permissions/entity/permissions.entity';
 import { CreateRoleDto } from './dto/create-role.dto';
+import { RequestUser } from '../users/types/jwt-payload.type';
 
 @Injectable()
 export class RolesService {
@@ -61,8 +62,26 @@ export class RolesService {
   }
 
   // ─── GET ALL ROLES ────────────────────────────────────────
-  async findAll(): Promise<Role[]> {
+  async findAll(user: RequestUser): Promise<Role[]> {
+    const isPlatformAdmin = user.roles.some(r =>
+      r.roleName.toLowerCase().includes('platform') ||
+      r.roleName.toLowerCase().includes('super')
+    );
+
+    const whereCondition: any[] = [{ is_system: true }];
+
+    if (!isPlatformAdmin && user.tenantId) {
+      whereCondition.push({ tenant_id: user.tenantId });
+    } else if (isPlatformAdmin) {
+      // Platform admin sees everything
+      return this.roleRepo.find({
+        relations: ['permissions', 'permissions.permission'],
+        order: { created_on: 'DESC' },
+      });
+    }
+
     return this.roleRepo.find({
+      where: whereCondition,
       relations: ['permissions', 'permissions.permission'],
       order: { created_on: 'DESC' },
     });

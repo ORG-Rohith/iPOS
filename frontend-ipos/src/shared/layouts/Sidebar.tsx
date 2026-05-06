@@ -46,6 +46,23 @@ const SidebarFooter: React.FC = () => {
   const navigate = useNavigate();
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
+  // Retrieve user from localStorage
+  const userStr = localStorage.getItem("user");
+  let user: any = null;
+  let initials = "TA";
+  let displayRole = "Tenant Admin";
+  if (userStr) {
+    try {
+      user = JSON.parse(userStr);
+      if (user.name) {
+        initials = user.name.substring(0, 2).toUpperCase();
+      }
+      if (user.roles && user.roles.length > 0) {
+        displayRole = user.roles[0].roleName;
+      }
+    } catch (e) { }
+  }
+
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("accessToken");
@@ -76,11 +93,15 @@ const SidebarFooter: React.FC = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center font-bold text-sm text-white">
-            TA
+            {initials}
           </div>
-          <div className="text-white">
-            <p className="text-[13px] font-semibold">Tenant Admin</p>
-            <span className="text-[11px] text-white/50">admin@demo.com</span>
+          <div className="text-white overflow-hidden">
+            <p className="text-[13px] font-semibold truncate" title={user?.name || displayRole}>
+              {user?.name || displayRole}
+            </p>
+            <span className="text-[11px] text-white/50 block truncate" title={displayRole}>
+              {user?.email || "admin@demo.com"}
+            </span>
           </div>
         </div>
         <button

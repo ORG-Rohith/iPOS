@@ -14,14 +14,17 @@ import { RolesService } from './roles.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PlatformAdminGuard } from '../../shared/guards/platform-admin.guard';
+import { RequestUser } from '../users/types/jwt-payload.type';
+import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 
 @Controller('roles')
-@UseGuards(JwtAuthGuard, PlatformAdminGuard)
+@UseGuards(JwtAuthGuard)
 export class RolesController {
   constructor(private readonly rolesService: RolesService) { }
 
   // POST /api/v1/roles
   @Post()
+  @UseGuards(PlatformAdminGuard)
   @HttpCode(HttpStatus.CREATED)
   create(@Body() dto: CreateRoleDto) {
     return this.rolesService.create(dto);
@@ -29,8 +32,8 @@ export class RolesController {
 
   // GET /api/v1/roles
   @Get()
-  findAll() {
-    return this.rolesService.findAll();
+  findAll(@CurrentUser() user: RequestUser) {
+    return this.rolesService.findAll(user);
   }
 
   // GET /api/v1/roles/:id
