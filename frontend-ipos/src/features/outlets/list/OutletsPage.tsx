@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import OutletCard from "../components/OutletCard";
 import type { Outlet } from "../types/outlet.types";
-import { outletService } from "../services/outlet.service";
 import { Button } from "../../../shared/components/ui/Button";
 import { Card } from "../../../shared/components/ui/card";
 import OutletsLayout from "../form/OutletsLayout";
+import { outletService } from "../services/outlet.service";
 
 export const OutletsPage: React.FC = () => {
     const navigate = useNavigate();
@@ -19,11 +19,70 @@ export const OutletsPage: React.FC = () => {
 
     const fetchOutlets = async () => {
         try {
-            setLoading(true);
-            const data = await outletService.getAll();
 
-            // Map backend fields to frontend interface if necessary
+            setLoading(true);
+
+            const user = JSON.parse(localStorage.getItem("user") || '{}');
+
+            if (!user) {
+                setError("User not found");
+                return;
+            }
+
+            let data: any[] = [];
+
+            const isSuperAdmin = user.roles?.some(
+                (r: any) => r.roleName === "Super Admin"
+            );
+
+            const isTenantAdmin = user.roles?.some(
+                (r: any) => r.roleName === "Tenant Admin"
+            );
+
+
+            // SUPER ADMIN
+            if (isSuperAdmin) {
+
+                data = await outletService.getAllOutlets();
+
+
+            }
+
+            // TENANT ADMIN
+            else if (isTenantAdmin) {
+
+                data = await outletService.getOutletsByTenantId(user.tenantId);
+
+                console.log("outlet data tenant admin  by id ===>", data);
+
+            }
+
+
+            // MAP DATA
             const mappedData = data.map((item: any) => ({
+                // ...item,
+                // address:
+                //     item.address ||
+                //     item.address_line1 ||
+                //     "No address provided",
+
+                // devicesCount:
+                //     item.devicesCount || "0",
+
+                // todaySales:
+                //     item.todaySales || "$0",
+
+                // staffCount:
+                //     item.staffCount || "0",
+
+                // status:
+                //     item.status ||
+                //     (item.is_active ? "Active" : "Inactive"),
+
+                // tablesCount:
+                //     item.tablesCount || "0",
+                //     // Map backend fields to frontend interface if necessary
+                //     const mappedData = data.map((item: any) => ({
                 ...item,
                 address: item.address || item.address_line1 || "No address provided",
                 devicesCount: item.devicesCount || "0",
@@ -31,16 +90,52 @@ export const OutletsPage: React.FC = () => {
                 staffCount: item.staffCount || "0",
                 status: item.status || (item.is_active ? "Active" : "Inactive"),
                 tablesCount: item.tablesCount || "0",
+                //     }));
             }));
 
             setOutlets(mappedData);
+
             setError(null);
+
         } catch (err: any) {
-            console.error("Failed to fetch outlets:", err);
-            setError("Failed to load outlets. Please try again later.");
+
+            console.error(
+                "Failed to fetch outlets:",
+                err
+            );
+
+            setError(
+                "Failed to load outlets. Please try again later."
+            );
+
         } finally {
+
             setLoading(false);
         }
+        // try {
+        //     setLoading(true);
+
+        //     const data = await outletService.getAllOutlets();
+
+        //     // Map backend fields to frontend interface if necessary
+        //     const mappedData = data.map((item: any) => ({
+        //         ...item,
+        //         address: item.address || item.address_line1 || "No address provided",
+        //         devicesCount: item.devicesCount || "0",
+        //         todaySales: item.todaySales || "$0",
+        //         staffCount: item.staffCount || "0",
+        //         status: item.status || (item.is_active ? "Active" : "Inactive"),
+        //         tablesCount: item.tablesCount || "0",
+        //     }));
+
+        //     setOutlets(mappedData);
+        //     setError(null);
+        // } catch (err: any) {
+        //     console.error("Failed to fetch outlets:", err);
+        //     setError("Failed to load outlets. Please try again later.");
+        // } finally {
+        //     setLoading(false);
+        // }
     };
 
     return (

@@ -147,3 +147,27 @@ export const apiOutletService = {
 
 };
 
+export const apiBusinessOwnerService = {
+
+  post: async <T>(
+    endpoint: string,
+    body: any,
+    options: RequestOptions = {},
+  ): Promise<T> => {
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...apiTenantService.getHeaders(),
+        ...options.headers,
+      },
+      body: JSON.stringify(body),
+      ...options,
+    });
+    return handleResponse<T>(response);
+  },
+
+
+
+};
+

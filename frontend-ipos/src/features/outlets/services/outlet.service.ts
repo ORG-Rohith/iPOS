@@ -2,12 +2,15 @@ import { apiTenantService } from "../../auth/services/apiService";
 import type { Outlet, CreateOutletPayload, UpdateOutletPayload } from "../types/outlet.types";
 
 export const outletService = {
-  getAll: async (tenantId?: number): Promise<Outlet[]> => {
+  getAllOutlets: async (tenantId?: number): Promise<Outlet[]> => {
     const endpoint = tenantId ? `/outlets?tenant_id=${tenantId}` : "/outlets";
     return apiTenantService.get<Outlet[]>(endpoint);
   },
 
-  getById: async (idOrUuid: string | number): Promise<Outlet> => {
+  getOutletsByTenantId: async (idOrUuid: string | number): Promise<Outlet[]> => {
+    return apiTenantService.get<Outlet[]>(`/outlets/tenant/${idOrUuid}`);
+  },
+  getOutletById: async (idOrUuid: string | number): Promise<Outlet> => {
     return apiTenantService.get<Outlet>(`/outlets/${idOrUuid}`);
   },
 
@@ -22,4 +25,6 @@ export const outletService = {
   delete: async (idOrUuid: string | number): Promise<void> => {
     return apiTenantService.delete(`/outlets/${idOrUuid}`);
   },
+
+
 };

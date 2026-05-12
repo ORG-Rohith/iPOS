@@ -6,9 +6,12 @@ import {
   UpdateDateColumn,
   OneToMany,
   Index,
+  ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { User } from "src/modules/users/entity/users.entity";
 import { Outlet } from "src/modules/outlets/entity/outlets.entity";
+import { BusinessOwner } from "../../business-owners/entity/business-owner.entity";
 
 @Entity("core_tenants")
 export class Tenant {
@@ -112,6 +115,13 @@ export class Tenant {
   updated_on: Date;
 
   // 🔥 RELATIONS
+  @Column({ nullable: true })
+  business_owner_id: number;
+
+  @ManyToOne(() => BusinessOwner, (businessOwner) => businessOwner.tenants, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'business_owner_id' })
+  business_owner: BusinessOwner;
+
   @OneToMany(() => Outlet, (outlet) => outlet.tenant)
   outlets: Outlet[];
 

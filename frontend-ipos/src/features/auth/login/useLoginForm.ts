@@ -90,6 +90,7 @@ export const useLoginForm = () => {
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("tokenType", data.tokenType);
       localStorage.setItem("user", JSON.stringify(data.user));
+      console.log("data.user data === ", localStorage.getItem("user"));
 
       // check super admin role
       const roleNames = data.user.roles.map((r) => r.roleName);

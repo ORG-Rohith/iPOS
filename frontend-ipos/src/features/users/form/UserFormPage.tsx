@@ -3,13 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import UsersLayout from "../components/UsersLayout";
 import { getUserById, createUser, updateUser } from "../services/userService";
 import { getRoles } from "../../roles/services/roleService";
-import { outletService } from "../../outlets/services/outlet.service";
 import { Button } from "../../../shared/components/ui/Button";
 import { Card } from "../../../shared/components/ui/card";
 import FormSelect from "../../../shared/components/ui/FormSelect";
-import type { Outlet } from "../../outlets/types/outlet.types";
 import type { Role } from "../../roles/types/role.types";
 import FormInput from "../../../shared/components/ui/FormInput";
+import { tenantService } from "../../tenants/services/tenant.service";
+import type { Tenant } from "../../tenants/types/tenant.types";
 
 export const UserFormPage: React.FC = () => {
   const { id } = useParams();
@@ -22,11 +22,11 @@ export const UserFormPage: React.FC = () => {
     password: "",
     is_active: true,
     role_id: "",
-    outlet_id: "",
+    tenant_id: "",
   });
 
   const [roles, setRoles] = useState<Role[]>([]);
-  const [outlets, setOutlets] = useState<Outlet[]>([]);
+  const [tenants, setTenants] = useState<Tenant[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,12 +38,12 @@ export const UserFormPage: React.FC = () => {
   const loadDependencies = async () => {
     try {
       setLoading(true);
-      const [fetchedRoles, fetchedOutlets] = await Promise.all([
+      const [fetchedRoles, tenants] = await Promise.all([
         getRoles(),
-        outletService.getAll()
+        tenantService.getAllTenants()
       ]);
       setRoles(fetchedRoles);
-      setOutlets(fetchedOutlets);
+      setTenants(tenants);
 
       if (isEditing && id) {
         const user = await getUserById(id);
@@ -54,7 +54,7 @@ export const UserFormPage: React.FC = () => {
             password: "",
             is_active: user.is_active,
             role_id: user.role_id || "",
-            outlet_id: user.outlet_id || "",
+            tenant_id: user.tenant_id || "",
           });
         } else {
           setError("User not found");
@@ -83,12 +83,12 @@ export const UserFormPage: React.FC = () => {
     setSaving(true);
     setError(null);
     try {
-      const submitData: any = { 
-        ...formData, 
+      const submitData: any = {
+        ...formData,
         role_id: formData.role_id ? parseInt(formData.role_id as string, 10) : undefined,
-        outlet_id: formData.outlet_id ? parseInt(formData.outlet_id as string, 10) : null 
+        tenant_id: formData.tenant_id ? parseInt(formData.tenant_id as string, 10) : null
       };
-      
+
       if (isEditing && id) {
         // Exclude password if empty on edit
         const { password, ...rest } = submitData;
@@ -155,12 +155,12 @@ export const UserFormPage: React.FC = () => {
                   required
                 />
                 <FormSelect
-                  label="Assigned Outlet (Optional)"
-                  name="outlet_id"
-                  id="outlet_id"
-                  value={formData.outlet_id}
+                  label="Assigned Tenant (Optional)"
+                  name="tenant_id"
+                  id="tenant_id"
+                  value={formData.tenant_id}
                   onChange={handleChange}
-                  options={outlets.map(o => ({ label: o.name, value: o.id }))}
+                  options={tenants.map(t => ({ label: t.name, value: t.id }))}
                 />
               </div>
 

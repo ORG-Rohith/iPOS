@@ -1,0 +1,35 @@
+# Refactor Explanation: Tenant Management & Shadcn/UI Integration
+
+I have refactored the Tenant Management module to use professional UI primitives from the shadcn/ui library. Here is a simple breakdown of what was changed:
+
+### 1. New UI Components Added
+I added several "atomic" components to the project. Think of these as building blocks that make the app look consistent and professional:
+- **Card**: Used for containers, stats, and tenant list items.
+- **Button**: A consistent button style with different variants (Primary, Outline, Ghost).
+- **Input & Label**: Clean, accessible text fields for forms.
+- **Select**: Professional dropdown menus.
+- **Textarea**: For longer text inputs (like status change reasons).
+- **Table**: For organized data lists.
+- **Switch**: A professional toggle switch used for "Closed" status in outlet hours.
+
+### 2. Pages Updated
+The following pages and modules were updated to use these new building blocks:
+
+**Tenant Management:**
+- **Tenants List**: The cards and "Add Tenant" button now use the new system.
+- **Create/Edit Tenant**: All form fields, layout sections (Cards), and action buttons were refactored.
+- **Tenant Details**: The header, stats, and activity timeline now follow the new design language.
+
+**Outlet Management:**
+- **Outlets List**: Replaced custom outlet cards with `Card` and `Button` primitives.
+- **Create/Edit Outlet (3-Step Form)**: Refactored the entire multi-step process. Used `Switch` for operating hours and `Textarea` for descriptions.
+- **Outlet Details**: Integrated `Card` for the details overview and placeholder sections.
+- **Dashboard Widgets**: Updated the "Outlet Status" list to use the `Card` primitive.
+
+### 3. Code Cleanup
+- **Simplified Forms**: Updated `FormInput` and `FormSelect` so that all forms in the app (both Tenants and Outlets) automatically benefit from the new design.
+- **Modern Toggles**: Replaced old checkbox-based toggles with the modern shadcn `Switch` component in the operating hours section.
+- **Removed Dead Code**: I removed large blocks of commented-out code in files like `StatCard.tsx`, `CreateTenantForm.tsx`, and `Topbar.tsx` to make the files easier to read and maintain.
+
+### Summary
+The app looks exactly the same as before but is now built with high-quality, reusable components. This makes it much easier to add new features in the future while keeping a premium look and feel.

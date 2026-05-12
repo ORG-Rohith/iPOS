@@ -35,7 +35,4 @@ export class CreateUserDto {
   @IsOptional()
   role_id?: number;
 
-  @IsNumber()
-  @IsOptional()
-  outlet_id?: number;
 }

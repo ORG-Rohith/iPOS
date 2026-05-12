@@ -24,7 +24,9 @@ export class OutletsService {
   }
 
   async findAll(tenantId?: string): Promise<Outlet[]> {
+    console.log(tenantId)
     const where = tenantId ? { tenant_id: tenantId } : {};
+
     const outlets = await this.outletsRepository.find({
       where,
       relations: ['manager', 'tenant'],
@@ -94,5 +96,19 @@ export class OutletsService {
     }
 
     return result;
+  }
+
+  async findOutletByTenantId(tenantId: string): Promise<Outlet[]> {
+    const outlets = await this.outletsRepository.find({
+      where: { tenant_id: tenantId }
+    });
+    if (!outlets) {
+      throw new NotFoundException(`Outlet with tenant ID ${tenantId} not found`);
+    }
+    return await Promise.all(
+      outlets.map(outlet =>
+        this.decryptPII(outlet)
+      )
+    );
   }
 }

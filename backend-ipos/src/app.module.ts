@@ -12,6 +12,9 @@ import { EmailModule } from './infrastructure/email/email.module';
 import { SeederModule } from './infrastructure/seeders/seeder.module';
 import { UsersModule } from './modules/users/users.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { BusinessOwnersModule } from './modules/business-owners/business-owners.module';
+import { PlansModule } from './modules/plans/plans.module';
+import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
 
 @Module({
   imports: [
@@ -42,6 +45,9 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     EmailModule,
     SeederModule,
     DashboardModule,
+    BusinessOwnersModule,
+    PlansModule,
+    SubscriptionsModule
   ],
   controllers: [AppController],
   providers: [AppService],

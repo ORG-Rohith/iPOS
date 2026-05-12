@@ -42,7 +42,7 @@ const OutletFormPage: React.FC = () => {
   const fetchOutlet = async () => {
     setLoading(true);
     try {
-      const data = await outletService.getById(id!);
+      const data = await outletService.getOutletById(id!);
       setInitialData(data);
     } catch (err: any) {
       setError(err.message || "Failed to fetch outlet details");

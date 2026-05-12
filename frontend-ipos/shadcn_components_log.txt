@@ -1,0 +1,12 @@
+# Shadcn/UI Components Added
+
+The following shadcn/ui components have been implemented in the project:
+
+- Button (src/components/ui/button.tsx)
+- Input (src/components/ui/input.tsx)
+- Label (src/components/ui/label.tsx)
+- Card (src/components/ui/card.tsx)
+- Table (src/components/ui/table.tsx)
+- Select (src/components/ui/select.tsx)
+- Textarea (src/components/ui/textarea.tsx)
+

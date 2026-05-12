@@ -25,6 +25,10 @@ import { UsersPage } from "../../features/users/list/UsersPage";
 import UserFormPage from "../../features/users/form/UserFormPage";
 import { RolesPage } from "../../features/roles/list/RolesPage";
 import RoleFormPage from "../../features/roles/form/RoleFormPage";
+import { BusinessOwnersPage } from "../../features/businessOwners/list/businessOwnerPage";
+import { CreateBusinessOwnerPage } from "../../features/businessOwners/create/CreateBusinessOwnerPage";
+import { EditBusinessOwnerPage } from "../../features/businessOwners/edit/EditBusinessOwnerPage";
+import { BusinessOwnerDetailsPage } from "../../features/businessOwners/details/BusinessOwnerDetailsPage";
 
 const ProtectedRoute = () => {
   const token = localStorage.getItem("accessToken");
@@ -65,7 +69,7 @@ const AppRoutes = () => (
         <Route path="/outlets/create" element={<OutletFormPage />} />
         <Route path="/outlets/edit/:id" element={<OutletFormPage />} />
         <Route path="/outlets/manage/:id" element={<OutletsDetailsPage />} />
-        
+
         {/* Users & Roles */}
         <Route path="/users" element={<UsersPage />} />
         <Route path="/users/create" element={<UserFormPage />} />
@@ -73,6 +77,12 @@ const AppRoutes = () => (
         <Route path="/roles" element={<RolesPage />} />
         <Route path="/roles/create" element={<RoleFormPage />} />
         <Route path="/roles/edit/:id" element={<RoleFormPage />} />
+
+        {/* Business Owners */}
+        <Route path="/businessOwners" element={<BusinessOwnersPage />} />
+        <Route path="/business-owners/create" element={<CreateBusinessOwnerPage />} />
+        <Route path="/business-owners/edit/:id" element={<EditBusinessOwnerPage />} />
+        <Route path="/business-owners/manage/:id" element={<BusinessOwnerDetailsPage />} />
       </Route>
     </Routes>
   </BrowserRouter>

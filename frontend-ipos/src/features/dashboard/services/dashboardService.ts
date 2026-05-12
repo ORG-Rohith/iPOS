@@ -19,7 +19,7 @@ export const fetchSidebarData = async (): Promise<SidebarData> => {
           isTenantAdmin = roleNames.some(r => r.toLowerCase().includes("tenant admin"));
           const isSuperAdmin = roleNames.some(r => r.toLowerCase().includes("super admin") || r.toLowerCase().includes("platform admin") || r.toLowerCase().includes("support admin"));
           if (isSuperAdmin) isTenantAdmin = false; // Super admin sees everything
-        } catch(e) {}
+        } catch (e) { }
       }
 
       let managementItems = [
@@ -27,6 +27,7 @@ export const fetchSidebarData = async (): Promise<SidebarData> => {
         { label: "Users", icon: "👥", path: "/users" },
         { label: "Roles", icon: "🛡️", path: "/roles" },
         { label: "Tenants", icon: "🌍", path: "/tenants" },
+        { label: "BusinessOwners", icon: "🏬", path: "/businessOwners" },
         { label: "Devices", icon: "📱", path: "/devices" },
       ];
 

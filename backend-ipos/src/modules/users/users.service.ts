@@ -140,17 +140,16 @@ export class UsersService {
     }
     user.name = dto.name;
     user.is_active = dto.is_active ?? true;
-    user.tenant_id = dto.tenant_id;
-
+    if (dto.tenant_id) {
+      user.tenant_id = dto.tenant_id;
+    }
     const savedUser = await this.userRepo.save(user);
 
     if (dto.role_id) {
       const userRole = new UserRole();
       userRole.user_id = savedUser.id;
       userRole.role_id = dto.role_id;
-      if (dto.outlet_id) {
-        userRole.outlet_id = dto.outlet_id;
-      }
+
       await this.userRoleRepo.save(userRole);
     }
 
@@ -167,6 +166,7 @@ export class UsersService {
     if (dto.password) {
       user.password_hash = await bcrypt.hash(dto.password, 10);
     }
+    user.tenant_id = dto.tenant_id;
 
     await this.userRepo.save(user);
 
@@ -178,7 +178,6 @@ export class UsersService {
         userRole.user_id = id;
       }
       userRole.role_id = dto.role_id;
-      userRole.outlet_id = dto.outlet_id || null;
       await this.userRoleRepo.save(userRole);
     }
 

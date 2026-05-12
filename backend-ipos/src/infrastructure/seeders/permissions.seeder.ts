@@ -11,6 +11,11 @@ export const DEFAULT_PERMISSIONS = [
   { code: 'TENANT_UPDATE', name: 'Update Tenant', module: 'TENANT' },
   { code: 'TENANT_DELETE', name: 'Delete Tenant', module: 'TENANT' },
 
+  { code: 'BUSINESS_OWNER_VIEW', name: 'View Business Owner', module: 'BUSINESS_OWNER' },
+  { code: 'BUSINESS_OWNER_CREATE', name: 'Create Business Owner', module: 'BUSINESS_OWNER' },
+  { code: 'BUSINESS_OWNER_UPDATE', name: 'Update Business Owner', module: 'BUSINESS_OWNER' },
+  { code: 'BUSINESS_OWNER_DELETE', name: 'Delete Business Owner', module: 'BUSINESS_OWNER' },
+
   { code: 'OUTLET_VIEW', name: 'View Outlet', module: 'OUTLET' },
   { code: 'OUTLET_CREATE', name: 'Create Outlet', module: 'OUTLET' },
   { code: 'OUTLET_UPDATE', name: 'Update Outlet', module: 'OUTLET' },

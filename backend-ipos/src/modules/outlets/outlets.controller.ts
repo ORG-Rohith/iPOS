@@ -26,6 +26,7 @@ export class OutletsController {
     return this.outletsService.findAll(effectiveTenantId);
   }
 
+
   @Get(':idOrUuid')
   findOne(@Param('idOrUuid') idOrUuid: string) {
     return this.outletsService.findOne(idOrUuid);
@@ -39,5 +40,10 @@ export class OutletsController {
   @Delete(':idOrUuid')
   remove(@Param('idOrUuid') idOrUuid: string) {
     return this.outletsService.remove(idOrUuid);
+  }
+  @Get('/tenant/:id')
+  outletByTenantId(@Param('id') id: string) {
+    console.log("iam here outletbyTenantId ===> method ===> outlet.controller ", id)
+    return this.outletsService.findOutletByTenantId(id);
   }
 }

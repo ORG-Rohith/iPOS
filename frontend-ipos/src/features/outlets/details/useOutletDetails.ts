@@ -13,7 +13,7 @@ export const useOutletDetails = (uuid?: string) => {
         const loadOutlet = async () => {
             try {
                 setLoading(true);
-                const data = await outletService.getById(uuid);
+                const data = await outletService.getOutletById(uuid);
                 setOutlet(data);
             } catch (err: any) {
                 setError(err || "Failed to load outlet details");

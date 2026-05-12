@@ -5,7 +5,7 @@ import { Button } from "../components/ui/Button";
 interface TopbarProps {
   title?: string;
   subtitle?: string;
-  variant?: "dashboard" | "tenants" | "createTenant" | "tenantDetails" | "outlets" | "outletsDetails" | "users" | "roles";
+  variant?: "dashboard" | "tenants" | "createTenant" | "tenantDetails" | "outlets" | "outletsDetails" | "users" | "roles" | "businessOwners";
 }
 
 const Topbar: React.FC<TopbarProps> = ({
@@ -48,6 +48,18 @@ const Topbar: React.FC<TopbarProps> = ({
             </p>
           </>
         );
+      case "businessOwners":
+        return (
+          <>
+            <h1 className="text-xl font-bold text-app-text truncate">
+              Business Owners
+            </h1>
+            <p className="text-[13px] text-gray-400 mt-0.5 truncate">
+              all business owners across the platform
+            </p>
+          </>
+        );
+
 
       case "outlets":
         return (
@@ -118,6 +130,7 @@ const Topbar: React.FC<TopbarProps> = ({
           </>
         );
 
+
       default:
         return (
           <>
@@ -160,6 +173,16 @@ const Topbar: React.FC<TopbarProps> = ({
             className="px-[18px] py-2 h-auto bg-primary text-white rounded-lg text-[13px] font-semibold hover:opacity-90 border-none"
           >
             + Add Tenant
+          </Button>
+        );
+
+      case "businessOwners":
+        return (
+          <Button
+            onClick={() => navigate("/business-owners/create")}
+            className="px-[18px] py-2 h-auto bg-primary text-white rounded-lg text-[13px] font-semibold hover:opacity-90 border-none"
+          >
+            + Add Business Owner
           </Button>
         );
       case "outlets":
