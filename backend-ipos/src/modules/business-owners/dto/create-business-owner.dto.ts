@@ -5,22 +5,10 @@ import {
   IsEnum,
   IsArray,
   ValidateNested,
-  IsNumber,
   IsBoolean,
-  Min,
-} from 'class-validator';
-
-import { Type } from 'class-transformer';
-
-export class SubscriptionDto {
-
-  @IsNumber()
-  plan_id: number;
-
-  @IsNumber()
-  @Min(1)
-  quantity: number;
-}
+} from "class-validator";
+import { Type } from "class-transformer";
+import { SubscriptionDto } from "../../subscriptions/dto/subscription.dto";
 
 export class CreateBusinessOwnerDto {
 
@@ -55,11 +43,13 @@ export class CreateBusinessOwnerDto {
   // LOCATION
   // ================================
 
+  @IsOptional()
   @IsString()
-  country: string;
+  country?: string;
 
+  @IsOptional()
   @IsString()
-  country_code: string;
+  country_code?: string;
 
   @IsOptional()
   @IsString()

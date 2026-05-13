@@ -66,7 +66,15 @@ export const useEditBusinessOwner = (id: string | undefined) => {
                     onboarding_complete: data.onboarding_complete || false,
                     subscriptions: (data.subscriptions || []).map(s => ({
                         plan_id: s.plan_id,
-                        quantity: s.quantity
+                        quantity: s.quantity,
+                        custom_max_tenants: s.custom_max_tenants ?? undefined,
+                        custom_max_outlets: s.custom_max_outlets ?? undefined,
+                        custom_max_users: s.custom_max_users ?? undefined,
+                        custom_max_devices: s.custom_max_devices ?? undefined,
+                        status: s.status ?? 'active',
+                        start_date: s.start_date ?? undefined,
+                        end_date: s.end_date ?? undefined,
+                        auto_renew: s.auto_renew ?? true,
                     })),
                 });
             } catch (err: any) {

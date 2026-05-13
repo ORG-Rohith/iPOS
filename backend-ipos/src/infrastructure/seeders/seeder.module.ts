@@ -6,10 +6,12 @@ import { SeederService } from './seeder.service';
 import { RolePermission } from 'src/modules/roles/role-permissions.entity';
 import { Role } from 'src/modules/roles/entity/roles.entity';
 import { RolesSeeder } from './roles.seeder';
+import { PlansModule } from 'src/modules/plans/plans.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Permission, Role, RolePermission]), // ✅ include all
+    TypeOrmModule.forFeature([Permission, Role, RolePermission]),
+    PlansModule,
   ],
   providers: [PermissionsSeeder, SeederService, RolesSeeder],
   exports: [SeederService],

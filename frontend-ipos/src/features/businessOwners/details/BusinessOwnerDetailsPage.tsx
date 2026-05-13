@@ -125,24 +125,80 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
                         <div className="flex justify-between items-center mb-4 border-b pb-2">
                             <h2 className="text-lg font-semibold text-app-text">Subscriptions</h2>
                             <span className="text-xs font-bold bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
-                                {owner.subscriptions?.reduce((acc, sub) => acc + sub.quantity, 0) || 0} Total Plans
+                                {owner.subscriptions?.length || 0} Subscription{(owner.subscriptions?.length || 0) !== 1 ? 's' : ''}
                             </span>
                         </div>
                         
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                             {owner.subscriptions && owner.subscriptions.length > 0 ? (
-                                owner.subscriptions.map((sub, idx) => (
-                                    <div key={idx} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg border border-gray-100">
-                                        <div>
-                                            <p className="font-semibold text-gray-800">{sub.plan?.name || `Plan #${sub.plan_id}`}</p>
-                                            <p className="text-xs text-gray-500">Plan ID: {sub.plan_id}</p>
+                                owner.subscriptions.map((sub, idx) => {
+                                    const isEnterprise = sub.plan?.is_custom;
+
+                                    // Effective limits: custom ?? plan default
+                                    const effectiveTenants = sub.custom_max_tenants ?? sub.plan?.max_tenants ?? null;
+                                    const effectiveOutlets = sub.custom_max_outlets ?? sub.plan?.max_outlets ?? null;
+                                    const effectiveUsers = sub.custom_max_users ?? sub.plan?.max_users ?? null;
+                                    const effectiveDevices = sub.custom_max_devices ?? sub.plan?.max_devices ?? null;
+
+                                    const hasCustomOverrides = sub.custom_max_tenants != null || sub.custom_max_outlets != null || sub.custom_max_users != null || sub.custom_max_devices != null;
+
+                                    return (
+                                        <div key={idx} className="p-4 bg-gray-50 rounded-lg border border-gray-100 space-y-3">
+                                            {/* Header: Plan name + Status */}
+                                            <div className="flex justify-between items-center">
+                                                <div className="flex items-center gap-2">
+                                                    <p className="font-semibold text-gray-800">{sub.plan?.name || `Plan #${sub.plan_id}`}</p>
+                                                    {isEnterprise && (
+                                                        <span className="text-xs font-semibold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Enterprise</span>
+                                                    )}
+                                                    {hasCustomOverrides && (
+                                                        <span className="text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Custom Limits</span>
+                                                    )}
+                                                </div>
+                                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                                    sub.status === 'active' ? 'bg-green-100 text-green-700' :
+                                                    sub.status === 'trial' ? 'bg-blue-100 text-blue-700' :
+                                                    sub.status === 'expired' ? 'bg-gray-100 text-gray-600' :
+                                                    'bg-red-100 text-red-700'
+                                                }`}>
+                                                    {sub.status?.charAt(0).toUpperCase() + sub.status?.slice(1)}
+                                                </span>
+                                            </div>
+
+                                            {/* Quantity + Dates */}
+                                            <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                                                <span>Qty: <strong>{sub.quantity}</strong></span>
+                                                {sub.start_date && (
+                                                    <span>Start: <strong>{new Date(sub.start_date).toLocaleDateString()}</strong></span>
+                                                )}
+                                                {sub.end_date && (
+                                                    <span>End: <strong>{new Date(sub.end_date).toLocaleDateString()}</strong></span>
+                                                )}
+                                                <span>Auto Renew: <strong>{sub.auto_renew ? '✅ Yes' : '❌ No'}</strong></span>
+                                            </div>
+
+                                            {/* Effective Limits */}
+                                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-gray-200">
+                                                {[
+                                                    { label: 'Tenants', value: effectiveTenants, isCustom: sub.custom_max_tenants != null },
+                                                    { label: 'Outlets', value: effectiveOutlets, isCustom: sub.custom_max_outlets != null },
+                                                    { label: 'Users', value: effectiveUsers, isCustom: sub.custom_max_users != null },
+                                                    { label: 'Devices', value: effectiveDevices, isCustom: sub.custom_max_devices != null },
+                                                ].map((limit) => (
+                                                    <div key={limit.label} className="text-center bg-white rounded-lg p-2 border border-gray-100">
+                                                        <p className="text-xs text-gray-500 mb-1 flex items-center justify-center gap-1">
+                                                            {limit.label}
+                                                            {limit.isCustom && (
+                                                                <span className="text-[10px] bg-orange-100 text-orange-600 px-1 rounded">Custom</span>
+                                                            )}
+                                                        </p>
+                                                        <p className="font-bold text-gray-800">{limit.value ?? '∞'}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-                                        <div className="text-right">
-                                            <p className="text-sm text-gray-500 mb-1">Quantity</p>
-                                            <p className="font-bold text-primary bg-pink-50 px-3 py-1 rounded-full">{sub.quantity}</p>
-                                        </div>
-                                    </div>
-                                ))
+                                    );
+                                })
                             ) : (
                                 <p className="text-gray-500 text-center py-4 border border-dashed rounded-lg">No subscriptions found.</p>
                             )}

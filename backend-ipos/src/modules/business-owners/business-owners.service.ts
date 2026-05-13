@@ -21,36 +21,68 @@ export class BusinessOwnersService {
     private dataSource: DataSource
   ) { }
 
-  // =========================
-  // CREATE (SAFE TRANSACTION)
-  // =========================
+
   async create(dto: CreateBusinessOwnerDto): Promise<BusinessOwner> {
     return await this.dataSource.transaction(async (manager) => {
       const ownerRepo = manager.getRepository(BusinessOwner);
       const subRepo = manager.getRepository(Subscription);
 
-      const owner = ownerRepo.create(dto);
+      // ================================
+      // 1. CHECK IF OWNER EXISTS
+      // ================================
+      let owner = await ownerRepo.findOne({
+        where: { email: dto.email },
+        relations: ["subscriptions", "subscriptions.plan", "tenants"],
+      });
+
+      // ================================
+      // 2. IF EXISTS → RETURN DIRECTLY
+      // ================================
+      if (owner) {
+        return owner;
+      }
+
+      // ================================
+      // 3. CREATE OWNER
+      // ================================
+      owner = ownerRepo.create(dto);
       const savedOwner = await ownerRepo.save(owner);
 
+      // ================================
+      // 4. CREATE SUBSCRIPTIONS (IF ANY)
+      // ================================
       if (dto.subscriptions?.length) {
         const subscriptions = dto.subscriptions.map((sub) =>
           subRepo.create({
-            plan_id: sub.plan_id,
-            quantity: sub.quantity,
-            business_owner: savedOwner, // ✅ FIXED (IMPORTANT)
+            plan: { id: sub.plan_id },
+            quantity: sub.quantity ?? 1,
+
+            custom_max_tenants: sub.custom_max_tenants ?? null,
+            custom_max_outlets: sub.custom_max_outlets ?? null,
+            custom_max_users: sub.custom_max_users ?? null,
+            custom_max_devices: sub.custom_max_devices ?? null,
+
+            status: sub.status ?? "active",
+            start_date: sub.start_date ? new Date(sub.start_date) : new Date(),
+            end_date: sub.end_date ? new Date(sub.end_date) : null,
+            auto_renew: sub.auto_renew ?? true,
+
+            business_owner: savedOwner,
           })
         );
 
         await subRepo.save(subscriptions);
       }
 
+      // ================================
+      // 5. RETURN FULL DATA
+      // ================================
       return ownerRepo.findOne({
         where: { id: savedOwner.id },
         relations: ["subscriptions", "subscriptions.plan", "tenants"],
       });
     });
   }
-
   // =========================
   // GET ALL
   // =========================
@@ -142,8 +174,16 @@ export class BusinessOwnersService {
 
         const newSubs = dto.subscriptions.map((sub) =>
           subRepo.create({
-            plan_id: sub.plan_id,
+            plan: { id: sub.plan_id },   // ✅ FIXED (IMPORTANT)
             quantity: sub.quantity,
+            custom_max_tenants: sub.custom_max_tenants ?? null,
+            custom_max_outlets: sub.custom_max_outlets ?? null,
+            custom_max_users: sub.custom_max_users ?? null,
+            custom_max_devices: sub.custom_max_devices ?? null,
+            status: sub.status ?? 'active',
+            start_date: sub.start_date ? new Date(sub.start_date) : new Date(),
+            end_date: sub.end_date ? new Date(sub.end_date) : null,
+            auto_renew: sub.auto_renew ?? true,
             business_owner: owner,
           })
         );

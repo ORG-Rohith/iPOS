@@ -1,5 +1,5 @@
 import { FaFlask, FaStore, FaUser, FaUserCheck } from "react-icons/fa";
-import type { BusinessOwner, BusinessOwnersStatsData, CreateBusinessOwnerPayload } from "../types/businessOwers.types";
+import type { BusinessOwner, BusinessOwnersStatsData, CreateBusinessOwnerPayload, Plan } from "../types/businessOwers.types";
 import { apiTenantService } from "../../auth/services/apiService";
 
 export const businessOwnerService = {
@@ -13,6 +13,9 @@ export const businessOwnerService = {
         return apiTenantService.get<{ data: BusinessOwner[]; total: number; page: number; limit: number }>(
             `/business-owners?${queryParams.toString()}`
         );
+    },
+    getPlans: async (): Promise<Plan[]> => {
+        return apiTenantService.get<Plan[]>("/plans");
     },
     getBusinessOwnerById: async (id: string): Promise<BusinessOwner> => {
         return apiTenantService.get<BusinessOwner>(`/business-owners/${id}`);
@@ -57,6 +60,14 @@ export const businessOwnerService = {
             subscriptions: (data.subscriptions ?? []).map((sub) => ({
                 plan_id: sub.plan_id,
                 quantity: sub.quantity,
+                custom_max_tenants: sub.custom_max_tenants || undefined,
+                custom_max_outlets: sub.custom_max_outlets || undefined,
+                custom_max_users: sub.custom_max_users || undefined,
+                custom_max_devices: sub.custom_max_devices || undefined,
+                status: sub.status || undefined,
+                start_date: sub.start_date || undefined,
+                end_date: sub.end_date || undefined,
+                auto_renew: sub.auto_renew,
             })),
         };
 

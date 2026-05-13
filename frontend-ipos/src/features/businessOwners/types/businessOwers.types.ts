@@ -78,22 +78,21 @@ export interface BusinessOwner {
 
 export interface Plan {
     id: number;
-    uuid: string;
-
-    name: "Standard" | "Plus" | "Pro" | "Enterprise";
+    name: string;
     code: string;
     description: string | null;
 
-    monthly_price: number;
-    yearly_price: number;
-    currency: string;
+    price: number;
+    billing_cycle: "Monthly" | "Yearly";
 
+    // Resource Limits
     max_tenants: number | null;
     max_outlets: number | null;
     max_users: number | null;
     max_devices: number | null;
 
-    features?: Record<string, any>;
+    // Enterprise
+    is_custom: boolean;
     is_active: boolean;
 
     created_on: string;
@@ -106,37 +105,33 @@ export interface Plan {
 
 export interface Subscription {
     id: number;
-    uuid: string;
 
-    business_owner_id: number;
     plan_id: number;
-
     quantity: number;
 
-    billing_cycle: "monthly" | "yearly";
+    // Enterprise Custom Overrides
+    custom_max_tenants: number | null;
+    custom_max_outlets: number | null;
+    custom_max_users: number | null;
+    custom_max_devices: number | null;
 
-    amount: number;
-    currency: string;
-
+    // Lifecycle
+    status: "active" | "trial" | "expired" | "cancelled";
     start_date: string;
     end_date: string | null;
-    renewal_date: string | null;
-
-    status: "active" | "expired" | "cancelled" | "trial";
-
     auto_renew: boolean;
 
-    payment_status: "paid" | "pending" | "failed";
-
+    // Audit
     created_on: string;
     updated_on: string;
 
+    // Relations
     business_owner?: BusinessOwner;
     plan?: Plan;
 }
 
 /* =========================
-   CREATE PAYLOAD (IMPORTANT FIX)
+   CREATE PAYLOAD
 ========================= */
 
 export interface CreateBusinessOwnerPayload {
@@ -186,4 +181,16 @@ export interface CreateBusinessOwnerPayload {
 export interface SubscriptionPayload {
     plan_id: number;
     quantity: number;
+
+    // Enterprise Custom Overrides
+    custom_max_tenants?: number;
+    custom_max_outlets?: number;
+    custom_max_users?: number;
+    custom_max_devices?: number;
+
+    // Lifecycle
+    status?: "active" | "trial" | "expired" | "cancelled";
+    start_date?: string;
+    end_date?: string;
+    auto_renew?: boolean;
 }
