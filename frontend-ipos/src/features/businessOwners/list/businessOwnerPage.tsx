@@ -11,27 +11,27 @@ import { businessOwnerService } from "../services/businessOwnerService";
 
 export const BusinessOwnersPage: React.FC = () => {
     const navigate = useNavigate();
-    const { 
-        stats, 
-        businessOwners, 
-        loading, 
-        error, 
-        page, 
-        setPage, 
-        limit, 
-        search, 
-        setSearch, 
-        status, 
-        setStatus, 
+    const {
+        stats,
+        businessOwners,
+        loading,
+        error,
+        page,
+        setPage,
+        limit,
+        search,
+        setSearch,
+        status,
+        setStatus,
         total,
-        refetch 
+        refetch
     } = useBusinessOwners();
 
     const totalPages = Math.ceil(total / limit);
 
     const handleDelete = async (id: number) => {
         if (window.confirm("Are you sure you want to delete this business owner?")) {
-            await businessOwnerService.updateBusinessOwner(id.toString(), { is_deleted: true } as any);
+            await businessOwnerService.deleteBusinessOwner(id);
             refetch();
         }
     };
@@ -74,16 +74,16 @@ export const BusinessOwnersPage: React.FC = () => {
             {/* Filters */}
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
                 <div className="flex-1">
-                    <Input 
-                        type="text" 
-                        placeholder="Search by name or email..." 
+                    <Input
+                        type="text"
+                        placeholder="Search by name or email..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         className="bg-white"
                     />
                 </div>
                 <div className="w-full sm:w-48">
-                    <select 
+                    <select
                         className="w-full h-9 rounded-md border border-gray-200 bg-white px-3 py-1 text-sm outline-none focus:border-primary"
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
@@ -132,16 +132,14 @@ export const BusinessOwnersPage: React.FC = () => {
                                         <span className="capitalize text-gray-700">{owner.business_type}</span>
                                     </TableCell>
                                     <TableCell>
-                                        <span className={`px-2 py-1 rounded-full text-xs font-medium flex items-center w-max ${
-                                            owner.status === 'Active' ? 'bg-green-100 text-green-700' : 
-                                            owner.status === 'Suspended' ? 'bg-red-100 text-red-700' : 
-                                            'bg-gray-100 text-gray-700'
-                                        }`}>
-                                            <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
-                                                owner.status === 'Active' ? 'bg-green-500' : 
-                                                owner.status === 'Suspended' ? 'bg-red-500' : 
-                                                'bg-gray-500'
-                                            }`}></span>
+                                        <span className={`px-2 py-1 rounded-full text-xs font-medium flex items-center w-max ${owner.status === 'Active' ? 'bg-green-100 text-green-700' :
+                                                owner.status === 'Suspended' ? 'bg-red-100 text-red-700' :
+                                                    'bg-gray-100 text-gray-700'
+                                            }`}>
+                                            <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${owner.status === 'Active' ? 'bg-green-500' :
+                                                    owner.status === 'Suspended' ? 'bg-red-500' :
+                                                        'bg-gray-500'
+                                                }`}></span>
                                             {owner.status}
                                         </span>
                                     </TableCell>
@@ -177,7 +175,7 @@ export const BusinessOwnersPage: React.FC = () => {
                         </TableBody>
                     </Table>
                 </div>
-                
+
                 {/* Pagination */}
                 {!loading && totalPages > 1 && (
                     <div className="flex items-center justify-between border-t border-gray-100 px-4 py-3">
@@ -185,17 +183,17 @@ export const BusinessOwnersPage: React.FC = () => {
                             Showing {(page - 1) * limit + 1} to {Math.min(page * limit, total)} of {total} entries
                         </span>
                         <div className="flex gap-2">
-                            <Button 
-                                variant="outline" 
-                                size="sm" 
+                            <Button
+                                variant="outline"
+                                size="sm"
                                 onClick={() => setPage(p => Math.max(1, p - 1))}
                                 disabled={page === 1}
                             >
                                 Previous
                             </Button>
-                            <Button 
-                                variant="outline" 
-                                size="sm" 
+                            <Button
+                                variant="outline"
+                                size="sm"
                                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                                 disabled={page === totalPages}
                             >

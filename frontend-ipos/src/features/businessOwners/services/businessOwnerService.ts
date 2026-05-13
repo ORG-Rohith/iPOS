@@ -9,7 +9,7 @@ export const businessOwnerService = {
         if (params?.limit) queryParams.append("limit", params.limit.toString());
         if (params?.search) queryParams.append("search", params.search);
         if (params?.status) queryParams.append("status", params.status);
-        
+
         return apiTenantService.get<{ data: BusinessOwner[]; total: number; page: number; limit: number }>(
             `/business-owners?${queryParams.toString()}`
         );
@@ -68,7 +68,7 @@ export const businessOwnerService = {
     updateBusinessOwner: async (id: string, data: Partial<CreateBusinessOwnerPayload> | { is_deleted: boolean }): Promise<BusinessOwner> => {
         return apiTenantService.patch<BusinessOwner>(`/business-owners/${id}`, data);
     },
-    deleteBusinessOwner: async (id: string): Promise<{ message: string }> => {
+    deleteBusinessOwner: async (id: number): Promise<{ message: string }> => {
         return apiTenantService.delete<{ message: string }>(`/business-owners/${id}`);
     },
 }

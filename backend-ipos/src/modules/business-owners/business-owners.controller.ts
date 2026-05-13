@@ -5,7 +5,7 @@ import { UpdateBusinessOwnerDto } from './dto/update-business-owner.dto';
 
 @Controller('business-owners')
 export class BusinessOwnersController {
-  constructor(private readonly businessOwnersService: BusinessOwnersService) {}
+  constructor(private readonly businessOwnersService: BusinessOwnersService) { }
 
   @Post()
   create(@Body() createBusinessOwnerDto: CreateBusinessOwnerDto) {
@@ -38,7 +38,7 @@ export class BusinessOwnersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.businessOwnersService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.businessOwnersService.remove(id);
   }
 }
