@@ -1,5 +1,5 @@
 import { FaFlask, FaStore, FaUser, FaUserCheck } from "react-icons/fa";
-import type { BusinessOwner, BusinessOwnersStatsData, CreateBusinessOwnerPayload, Plan } from "../types/businessOwers.types";
+import type { BusinessOwner, BusinessOwnersStatsData, CreateBusinessOwnerPayload, Plan } from "../types/CompanyOwers.types";
 import { apiTenantService } from "../../auth/services/apiService";
 
 export const businessOwnerService = {

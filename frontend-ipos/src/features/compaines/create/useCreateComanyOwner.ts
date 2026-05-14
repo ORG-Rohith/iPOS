@@ -32,8 +32,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import type { CreateBusinessOwnerPayload } from "../types/businessOwers.types";
-import { businessOwnerService } from "../services/businessOwnerService";
+import type { CreateBusinessOwnerPayload } from "../types/CompanyOwers.types";
+import { businessOwnerService } from "../services/CompanyOwnerService";
 
 export const useCreateBusinessOwner = () => {
     const [loading, setLoading] = useState(false);

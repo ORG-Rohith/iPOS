@@ -4,7 +4,7 @@ import React from "react";
 import FormInput from "../../../shared/components/ui/FormInput";
 import FormSelect from "../../../shared/components/ui/FormSelect";
 import { Card } from "../../../shared/components/ui/card";
-import type { CreateBusinessOwnerPayload } from "../types/businessOwers.types";
+import type { CreateBusinessOwnerPayload } from "../types/CompanyOwers.types";
 
 interface Props {
     form: CreateBusinessOwnerPayload;
@@ -20,11 +20,11 @@ const BusinessOwnerInfoSection: React.FC<Props> = ({
     return (
         <Card className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <h2 className="text-lg font-semibold text-app-text">
-                Business Owner Information
+                Company Owner Information
             </h2>
 
             <p className="text-sm text-gray-400 mb-4">
-                Core details about the business owner
+                Core details about the company owner
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

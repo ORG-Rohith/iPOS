@@ -1,9 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import Breadcrumbs from "../../../shared/components/ui/Breadcrumbs";
-import EditBusinessOwnerForm from "./EditBusinessOwnerForm";
-import BusinessOwnerLayout from "../list/businessOwnerLayout";
-import { useEditBusinessOwner } from "./useEditBusinessOwner";
+import EditBusinessOwnerForm from "./EditCompanyOwnerForm";
+import BusinessOwnerLayout from "../list/CompanyOwnerLayout";
+import { useEditBusinessOwner } from "./useEditCompanyOwner";
 
 export const EditBusinessOwnerPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();

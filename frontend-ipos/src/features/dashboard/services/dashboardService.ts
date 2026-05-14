@@ -27,7 +27,7 @@ export const fetchSidebarData = async (): Promise<SidebarData> => {
         { label: "Users", icon: "👥", path: "/users" },
         { label: "Roles", icon: "🛡️", path: "/roles" },
         { label: "Tenants", icon: "🌍", path: "/tenants" },
-        { label: "BusinessOwners", icon: "🏬", path: "/businessOwners" },
+        { label: "Companies", icon: "🏬", path: "/businessOwners" },
         { label: "Devices", icon: "📱", path: "/devices" },
       ];
 

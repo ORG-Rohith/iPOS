@@ -1,13 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import StatCard from "../../dashboard/components/StatCard";
-import BusinessOwnerLayout from "./businessOwnerLayout";
-import { useBusinessOwners } from "./useBusinessOwner";
+import BusinessOwnerLayout from "./CompanyOwnerLayout";
+import { useBusinessOwners } from "./useCompanyOwner";
 import { Button } from "../../../shared/components/ui/Button";
 import { Card } from "../../../shared/components/ui/card";
 import { Input } from "../../../shared/components/ui/Input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../shared/components/ui/table";
-import { businessOwnerService } from "../services/businessOwnerService";
+import { businessOwnerService } from "../services/CompanyOwnerService";
 
 export const BusinessOwnersPage: React.FC = () => {
     const navigate = useNavigate();
@@ -133,12 +133,12 @@ export const BusinessOwnersPage: React.FC = () => {
                                     </TableCell>
                                     <TableCell>
                                         <span className={`px-2 py-1 rounded-full text-xs font-medium flex items-center w-max ${owner.status === 'Active' ? 'bg-green-100 text-green-700' :
-                                                owner.status === 'Suspended' ? 'bg-red-100 text-red-700' :
-                                                    'bg-gray-100 text-gray-700'
+                                            owner.status === 'Suspended' ? 'bg-red-100 text-red-700' :
+                                                'bg-gray-100 text-gray-700'
                                             }`}>
                                             <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${owner.status === 'Active' ? 'bg-green-500' :
-                                                    owner.status === 'Suspended' ? 'bg-red-500' :
-                                                        'bg-gray-500'
+                                                owner.status === 'Suspended' ? 'bg-red-500' :
+                                                    'bg-gray-500'
                                                 }`}></span>
                                             {owner.status}
                                         </span>

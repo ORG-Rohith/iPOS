@@ -89,9 +89,9 @@
 // pages/CreateBusinessOwnerPage.tsx
 
 import Breadcrumbs from "../../../shared/components/ui/Breadcrumbs";
-import CreateBusinessOwnerForm from "./CreateBusinessOwnerForm";
-import CreateBusinessOwnerLayout from "./CreateBusinessOwnerLayout";
-import { useCreateBusinessOwner } from "./useCreateBusinessOwner";
+import CreateBusinessOwnerForm from "./CreateCompanyOwnerForm";
+import CreateBusinessOwnerLayout from "./CreateCompanyOwnerLayout";
+import { useCreateBusinessOwner } from "./useCreateComanyOwner";
 
 
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import type { BusinessOwner, BusinessOwnersStatsData } from "../types/businessOwers.types";
-import { businessOwnerService, fetchBusinessOwnersStatsData } from "../services/businessOwnerService";
+import type { BusinessOwner, BusinessOwnersStatsData } from "../types/CompanyOwers.types";
+import { businessOwnerService, fetchBusinessOwnersStatsData } from "../services/CompanyOwnerService";
 
 export const useBusinessOwners = () => {
     const [stats, setStats] = useState<BusinessOwnersStatsData | null>(null);
@@ -41,19 +41,19 @@ export const useBusinessOwners = () => {
         loadData();
     };
 
-    return { 
-        stats, 
-        businessOwners, 
-        loading, 
-        error, 
-        page, 
-        setPage, 
-        limit, 
-        setLimit, 
-        search, 
-        setSearch, 
-        status, 
-        setStatus, 
+    return {
+        stats,
+        businessOwners,
+        loading,
+        error,
+        page,
+        setPage,
+        limit,
+        setLimit,
+        search,
+        setSearch,
+        status,
+        setStatus,
         total,
         refetch
     };

@@ -12,10 +12,10 @@ interface SectionProps {
 
 export const BusinessInfoSection: React.FC<SectionProps> = ({ form, handleChange }) => (
   <Card className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-    <h2 className="text-lg font-semibold text-app-text">Business Information</h2>
-    <p className="text-sm text-gray-400 mb-4">Core details about the tenant's business entity</p>
+    <h2 className="text-lg font-semibold text-app-text">Company Information</h2>
+    <p className="text-sm text-gray-400 mb-4">Core details about the company</p>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-      <FormInput id="businessName" name="businessName" label="Business Name" value={form.businessName} placeholder="Business Name" onChange={handleChange} />
+      <FormInput id="businessName" name="businessName" label="Company Name" value={form.businessName} placeholder="Company Name" onChange={handleChange} />
       <FormInput id="legalName" name="legalName" label="Legal Name" placeholder="Legal Name" value={form.legalName} onChange={handleChange} />
       <FormSelect id="businessType" name="businessType" label="Business Type" options={["Retail", "F&B"]} value={form.businessType} onChange={handleChange} />
       <FormInput id="registrationNumber" name="registrationNumber" label="Registration Number" value={form.registrationNumber} onChange={handleChange} />
@@ -59,8 +59,8 @@ interface PlanSectionProps {
 export const PlanBillingSection: React.FC<PlanSectionProps> = ({ form, setForm }) => (
   <Card className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
     <div className="mb-4">
-      <h2 className="font-semibold text-lg text-app-text">Plan & Billing</h2>
-      <p className="text-[13px] text-gray-400">Choose a subscription plan for this tenant</p>
+      <h2 className="font-semibold text-lg text-app-text">Plans & Billing</h2>
+      <p className="text-[13px] text-gray-400">Choose a License plan for this tenant</p>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
       <PlanCard
@@ -109,29 +109,29 @@ export const PlanBillingSection: React.FC<PlanSectionProps> = ({ form, setForm }
 
     {/* BILLING TOGGLE */}
     <div className="mt-6 flex items-center gap-3">
-        <span className="text-sm text-gray-600">Billing Cycle:</span>
-        <Button
-            type="button"
-            variant={form.billingCycle === "Monthly" ? "default" : "outline"}
-            onClick={() => setForm({ ...form, billingCycle: "Monthly" })}
-            className={`px-4 py-1.5 h-auto rounded-lg text-sm ${form.billingCycle === "Monthly"
-                ? "bg-primary text-white"
-                : "bg-gray-100 border-none"
-                }`}
-        >
-            Monthly
-        </Button>
-        <Button
-            type="button"
-            variant={form.billingCycle === "Yearly" ? "default" : "outline"}
-            onClick={() => setForm({ ...form, billingCycle: "Yearly" })}
-            className={`px-4 py-1.5 h-auto rounded-lg text-sm ${form.billingCycle === "Yearly"
-                ? "bg-primary text-white"
-                : "bg-gray-100 border-none"
-                }`}
-        >
-            Yearly
-        </Button>
+      <span className="text-sm text-gray-600">Billing Cycle:</span>
+      <Button
+        type="button"
+        variant={form.billingCycle === "Monthly" ? "default" : "outline"}
+        onClick={() => setForm({ ...form, billingCycle: "Monthly" })}
+        className={`px-4 py-1.5 h-auto rounded-lg text-sm ${form.billingCycle === "Monthly"
+          ? "bg-primary text-white"
+          : "bg-gray-100 border-none"
+          }`}
+      >
+        Monthly
+      </Button>
+      <Button
+        type="button"
+        variant={form.billingCycle === "Yearly" ? "default" : "outline"}
+        onClick={() => setForm({ ...form, billingCycle: "Yearly" })}
+        className={`px-4 py-1.5 h-auto rounded-lg text-sm ${form.billingCycle === "Yearly"
+          ? "bg-primary text-white"
+          : "bg-gray-100 border-none"
+          }`}
+      >
+        Yearly
+      </Button>
     </div>
   </Card>
 );

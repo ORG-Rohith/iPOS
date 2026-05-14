@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import type { BusinessOwner } from "../types/businessOwers.types";
+import type { BusinessOwner } from "../types/CompanyOwers.types";
 import { Button } from "../../../shared/components/ui/Button";
 import { Card } from "../../../shared/components/ui/card";
 
@@ -38,13 +38,13 @@ const BusinessOwnerCard: React.FC<{ owner: BusinessOwner }> = ({ owner }) => {
 
             {/* Actions */}
             <div className="flex gap-2 mt-4">
-                <Button 
+                <Button
                     variant="ghost"
                     className="bg-pink-100 text-pink-600 px-3 py-1.5 h-auto rounded text-sm hover:bg-pink-200 transition-colors"
                     onClick={() => navigate(`/business-owners/manage/${owner.id}`)}>
                     Manage
                 </Button>
-                <Button 
+                <Button
                     variant="outline"
                     className="border border-gray-200 px-3 py-1.5 h-auto rounded text-sm hover:bg-gray-50 transition-colors"
                     onClick={() => navigate(`/business-owners/edit/${owner.id}`)}>

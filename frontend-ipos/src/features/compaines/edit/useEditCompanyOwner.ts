@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import type { CreateBusinessOwnerPayload } from "../types/businessOwers.types";
-import { businessOwnerService } from "../services/businessOwnerService";
+import type { CreateBusinessOwnerPayload } from "../types/CompanyOwers.types";
+import { businessOwnerService } from "../services/CompanyOwnerService";
 
 export const useEditBusinessOwner = (id: string | undefined) => {
     const [loading, setLoading] = useState(false);
@@ -36,12 +36,12 @@ export const useEditBusinessOwner = (id: string | undefined) => {
 
     useEffect(() => {
         if (!id) return;
-        
+
         const fetchBusinessOwner = async () => {
             try {
                 setFetching(true);
                 const data = await businessOwnerService.getBusinessOwnerById(id);
-                
+
                 setForm({
                     name: data.name || "",
                     slug: data.slug || "",

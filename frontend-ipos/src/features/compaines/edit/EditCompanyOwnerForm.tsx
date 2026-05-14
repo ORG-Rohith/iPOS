@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import type { CreateBusinessOwnerPayload } from "../types/businessOwers.types";
+import type { CreateBusinessOwnerPayload } from "../types/CompanyOwers.types";
 import { BusinessInfoSection } from "../../tenants/components/TenantFormShared";
 import { Button } from "../../../shared/components/ui/Button";
-import BusinessOwnerInfoSection from "../components/BusinessOwnerInfoSection";
-import SubscriptionSection from "../components/SubscriptionSection";
+import BusinessOwnerInfoSection from "../components/CompanyOwnerInfoSection";
+import SubscriptionSection from "../components/LicencesSection";
 
 interface Props {
     initialData: CreateBusinessOwnerPayload;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import BusinessOwnerLayout from "../list/businessOwnerLayout";
-import { businessOwnerService } from "../services/businessOwnerService";
-import type { BusinessOwner } from "../types/businessOwers.types";
+import BusinessOwnerLayout from "../list/CompanyOwnerLayout";
+import { businessOwnerService } from "../services/CompanyOwnerService";
+import type { BusinessOwner } from "../types/CompanyOwers.types";
 import { Card } from "../../../shared/components/ui/card";
 import { Button } from "../../../shared/components/ui/Button";
 
@@ -54,14 +54,14 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
             <div className="flex justify-between items-center mb-6">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800">{owner.name}</h1>
-                    <p className="text-gray-500 text-sm">View and manage all details for this business owner.</p>
+                    <p className="text-gray-500 text-sm">View and manage all details for this company owner.</p>
                 </div>
                 <div className="flex gap-2">
                     <Button variant="outline" onClick={() => navigate("/businessOwners")}>
                         Back to List
                     </Button>
                     <Button className="bg-primary text-white" onClick={() => navigate(`/business-owners/edit/${owner.id}`)}>
-                        Edit Business Owner
+                        Edit Company Owner
                     </Button>
                 </div>
             </div>
@@ -70,7 +70,7 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
                 <div className="lg:col-span-2 space-y-6">
                     {/* Basic Info */}
                     <Card className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h2 className="text-lg font-semibold text-app-text mb-4 border-b pb-2">Business Information</h2>
+                        <h2 className="text-lg font-semibold text-app-text mb-4 border-b pb-2">Company Information</h2>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <p className="text-sm text-gray-500 mb-1">Legal Name</p>
@@ -123,12 +123,12 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
                     {/* Subscriptions */}
                     <Card className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                         <div className="flex justify-between items-center mb-4 border-b pb-2">
-                            <h2 className="text-lg font-semibold text-app-text">Subscriptions</h2>
+                            <h2 className="text-lg font-semibold text-app-text">Licenses</h2>
                             <span className="text-xs font-bold bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
-                                {owner.subscriptions?.length || 0} Subscription{(owner.subscriptions?.length || 0) !== 1 ? 's' : ''}
+                                {owner.subscriptions?.length || 0} License{(owner.subscriptions?.length || 0) !== 1 ? 's' : ''}
                             </span>
                         </div>
-                        
+
                         <div className="space-y-4">
                             {owner.subscriptions && owner.subscriptions.length > 0 ? (
                                 owner.subscriptions.map((sub, idx) => {
@@ -155,12 +155,11 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
                                                         <span className="text-xs font-semibold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Custom Limits</span>
                                                     )}
                                                 </div>
-                                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                                    sub.status === 'active' ? 'bg-green-100 text-green-700' :
+                                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${sub.status === 'active' ? 'bg-green-100 text-green-700' :
                                                     sub.status === 'trial' ? 'bg-blue-100 text-blue-700' :
-                                                    sub.status === 'expired' ? 'bg-gray-100 text-gray-600' :
-                                                    'bg-red-100 text-red-700'
-                                                }`}>
+                                                        sub.status === 'expired' ? 'bg-gray-100 text-gray-600' :
+                                                            'bg-red-100 text-red-700'
+                                                    }`}>
                                                     {sub.status?.charAt(0).toUpperCase() + sub.status?.slice(1)}
                                                 </span>
                                             </div>
@@ -200,7 +199,7 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
                                     );
                                 })
                             ) : (
-                                <p className="text-gray-500 text-center py-4 border border-dashed rounded-lg">No subscriptions found.</p>
+                                <p className="text-gray-500 text-center py-4 border border-dashed rounded-lg">No Licences found.</p>
                             )}
                         </div>
                     </Card>
@@ -213,16 +212,14 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
                         <div className="space-y-4">
                             <div>
                                 <p className="text-sm text-gray-500 mb-1">Account Status</p>
-                                <span className={`px-3 py-1 rounded-full text-sm font-medium flex items-center w-max ${
-                                    owner.status === 'Active' ? 'bg-green-100 text-green-700' : 
-                                    owner.status === 'Suspended' ? 'bg-red-100 text-red-700' : 
-                                    'bg-gray-100 text-gray-700'
-                                }`}>
-                                    <span className={`w-2 h-2 rounded-full mr-2 ${
-                                        owner.status === 'Active' ? 'bg-green-500' : 
-                                        owner.status === 'Suspended' ? 'bg-red-500' : 
-                                        'bg-gray-500'
-                                    }`}></span>
+                                <span className={`px-3 py-1 rounded-full text-sm font-medium flex items-center w-max ${owner.status === 'Active' ? 'bg-green-100 text-green-700' :
+                                    owner.status === 'Suspended' ? 'bg-red-100 text-red-700' :
+                                        'bg-gray-100 text-gray-700'
+                                    }`}>
+                                    <span className={`w-2 h-2 rounded-full mr-2 ${owner.status === 'Active' ? 'bg-green-500' :
+                                        owner.status === 'Suspended' ? 'bg-red-500' :
+                                            'bg-gray-500'
+                                        }`}></span>
                                     {owner.status}
                                 </span>
                             </div>

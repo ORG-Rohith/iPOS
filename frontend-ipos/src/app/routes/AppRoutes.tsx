@@ -25,10 +25,10 @@ import { UsersPage } from "../../features/users/list/UsersPage";
 import UserFormPage from "../../features/users/form/UserFormPage";
 import { RolesPage } from "../../features/roles/list/RolesPage";
 import RoleFormPage from "../../features/roles/form/RoleFormPage";
-import { BusinessOwnersPage } from "../../features/businessOwners/list/businessOwnerPage";
-import { CreateBusinessOwnerPage } from "../../features/businessOwners/create/CreateBusinessOwnerPage";
-import { EditBusinessOwnerPage } from "../../features/businessOwners/edit/EditBusinessOwnerPage";
-import { BusinessOwnerDetailsPage } from "../../features/businessOwners/details/BusinessOwnerDetailsPage";
+import { BusinessOwnersPage } from "../../features/compaines/list/CompanyOwnerPage";
+import { CreateBusinessOwnerPage } from "../../features/compaines/create/CreateCompanyOwnerPage";
+import { EditBusinessOwnerPage } from "../../features/compaines/edit/EditCompanyOwnerPage";
+import { BusinessOwnerDetailsPage } from "../../features/compaines/details/CompanyOwnerDetailsPage";
 
 const ProtectedRoute = () => {
   const token = localStorage.getItem("accessToken");
