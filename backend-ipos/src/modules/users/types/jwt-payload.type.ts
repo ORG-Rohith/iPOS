@@ -8,7 +8,9 @@ export interface JwtPayload {
   sub: number;             // user.id
   uuid: string;            // user.uuid
   email: string;
-  tenantId: number | null; // null = Platform Super Admin
+  tenantId: number | null;
+  outletId: number | null;
+  // null = Platform Super Admin
   roles: JwtUserRole[];
   permissions: string[];   // permission codes
 }
@@ -18,6 +20,7 @@ export interface RequestUser {
   uuid: string;
   email: string;
   tenantId: number | null;
+  outletId: number | null;
   roles: JwtUserRole[];
   permissions: string[];
 }

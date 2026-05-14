@@ -15,6 +15,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { BusinessOwnersModule } from './modules/companies/companyOwners.module';
 import { PlansModule } from './modules/plans/plans.module';
 import { SubscriptionsModule } from './modules/licences/licence.module';
+import { DevicesModule } from './modules/devices/device,module';
 
 @Module({
   imports: [
@@ -47,7 +48,8 @@ import { SubscriptionsModule } from './modules/licences/licence.module';
     DashboardModule,
     BusinessOwnersModule,
     PlansModule,
-    SubscriptionsModule
+    SubscriptionsModule,
+    DevicesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

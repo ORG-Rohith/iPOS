@@ -26,6 +26,10 @@ export class User {
   @Column({ nullable: true })
   tenant_id: number;
 
+
+  @Column({ nullable: true })
+  outlet_id: number;
+
   @Column({ unique: true })
   email: string;
 

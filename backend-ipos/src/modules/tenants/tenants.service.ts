@@ -112,6 +112,18 @@ export class TenantsService {
 
     return this.decryptPII(tenant);
   }
+  async findByTenantId(id: number): Promise<Tenant> {
+    const tenant = await this.tenantRepo.findOne({
+      where: { id },
+      relations: ['outlets'],
+    });
+
+    if (!tenant) {
+      throw new NotFoundException(`Tenant #${id} not found`);
+    }
+
+    return this.decryptPII(tenant);
+  }
 
   // ─── UPDATE ───────────────────────────────────────────────
   async update(uuid: string, dto: UpdateTenantDto): Promise<Tenant> {

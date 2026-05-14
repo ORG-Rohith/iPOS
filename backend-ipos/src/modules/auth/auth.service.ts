@@ -69,6 +69,7 @@ export class AuthService {
       uuid: user.uuid,
       email: user.email,
       tenantId: user.tenant_id ?? null,
+      outletId: user.outlet_id ?? null,
       roles,
       permissions,
     };
@@ -97,7 +98,7 @@ export class AuthService {
   // ─────────────────────────────────────────
   // GET USER ROLES
   // ─────────────────────────────────────────
-  private async getUserRoles(userId: number): Promise<JwtUserRole[]> {
+  async getUserRoles(userId: number): Promise<JwtUserRole[]> {
     const userRoles = await this.userRoleRepo.find({
       where: { user_id: userId },
       relations: ['role', 'outlet'],
@@ -113,7 +114,7 @@ export class AuthService {
   // ─────────────────────────────────────────
   // GET USER PERMISSIONS
   // ─────────────────────────────────────────
-  private async getUserPermissions(userId: number): Promise<string[]> {
+  async getUserPermissions(userId: number): Promise<string[]> {
     const userRoles = await this.userRoleRepo.find({
       where: { user_id: userId },
       relations: ['role', 'role.permissions', 'role.permissions.permission'],

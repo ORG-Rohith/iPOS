@@ -8,6 +8,14 @@ import type { BusinessOwner } from "../types/CompanyOwers.types";
 
 import { Card } from "../../../shared/components/ui/card";
 import { Button } from "../../../shared/components/ui/Button";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "../../../shared/components/ui/table";
 
 export const BusinessOwnerDetailsPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -16,6 +24,10 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
     const [owner, setOwner] = useState<BusinessOwner | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    // Pagination for licenses
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
     // =====================================================
     // FETCH DETAILS
@@ -258,273 +270,172 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
                         </div>
 
                         <div className="space-y-4">
-                            {owner.subscriptions &&
-                                owner.subscriptions.length >
-                                0 ? (
-                                owner.subscriptions.map(
-                                    (sub, idx) => {
-                                        const isEnterprise =
-                                            sub.plan
-                                                ?.is_custom;
-
-                                        // Effective limits
-                                        const effectiveTenants =
-                                            sub.custom_max_tenants ??
-                                            sub.plan
-                                                ?.max_tenants ??
-                                            null;
-
-                                        const effectiveOutlets =
-                                            sub.custom_max_outlets ??
-                                            sub.plan
-                                                ?.max_outlets ??
-                                            null;
-
-                                        const effectiveUsers =
-                                            sub.custom_max_users ??
-                                            sub.plan
-                                                ?.max_users ??
-                                            null;
-
-                                        const effectiveDevices =
-                                            sub.custom_max_devices ??
-                                            sub.plan
-                                                ?.max_devices ??
-                                            null;
+                            {owner.subscriptions && owner.subscriptions.length > 0 ? (
+                                owner.subscriptions.length === 1 ? (
+                                    // SINGLE LICENSE FORMAT (EXISTING)
+                                    owner.subscriptions.map((sub, idx) => {
+                                        const isEnterprise = sub.plan?.is_custom;
+                                        const effectiveTenants = sub.custom_max_tenants ?? sub.plan?.max_tenants ?? null;
+                                        const effectiveOutlets = sub.custom_max_outlets ?? sub.plan?.max_outlets ?? null;
+                                        const effectiveUsers = sub.custom_max_users ?? sub.plan?.max_users ?? null;
+                                        const effectiveDevices = sub.custom_max_devices ?? sub.plan?.max_devices ?? null;
 
                                         return (
-                                            <div
-                                                key={idx}
-                                                className="p-5 bg-gray-50 rounded-xl border border-gray-100 space-y-4"
-                                            >
-                                                {/* ================================= */}
-                                                {/* HEADER */}
-                                                {/* ================================= */}
+                                            <div key={idx} className="p-5 bg-gray-50 rounded-xl border border-gray-100 space-y-4">
                                                 <div className="flex justify-between items-start">
                                                     <div className="space-y-2">
                                                         <div className="flex items-center gap-2 flex-wrap">
                                                             <h3 className="font-semibold text-gray-800 text-base">
-                                                                {sub
-                                                                    .plan
-                                                                    ?.name ||
-                                                                    `Plan #${sub.plan_id}`}
+                                                                {sub.plan?.name || `Plan #${sub.plan_id}`}
                                                             </h3>
-
                                                             {isEnterprise && (
                                                                 <span className="text-xs font-semibold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">
                                                                     Enterprise
                                                                 </span>
                                                             )}
                                                         </div>
-
                                                         <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                                                            <span>
-                                                                Qty:{" "}
-                                                                <strong>
-                                                                    {
-                                                                        sub.quantity
-                                                                    }
-                                                                </strong>
-                                                            </span>
-
+                                                            <span>Qty: <strong>{sub.quantity}</strong></span>
                                                             {sub.start_date && (
-                                                                <span>
-                                                                    Start:{" "}
-                                                                    <strong>
-                                                                        {new Date(
-                                                                            sub.start_date
-                                                                        ).toLocaleDateString()}
-                                                                    </strong>
-                                                                </span>
+                                                                <span>Start: <strong>{new Date(sub.start_date).toLocaleDateString()}</strong></span>
                                                             )}
-
                                                             {sub.end_date && (
-                                                                <span>
-                                                                    End:{" "}
-                                                                    <strong>
-                                                                        {new Date(
-                                                                            sub.end_date
-                                                                        ).toLocaleDateString()}
-                                                                    </strong>
-                                                                </span>
+                                                                <span>End: <strong>{new Date(sub.end_date).toLocaleDateString()}</strong></span>
                                                             )}
-
-                                                            <span>
-                                                                Auto
-                                                                Renew:{" "}
-                                                                <strong>
-                                                                    {sub.auto_renew
-                                                                        ? "✅ Yes"
-                                                                        : "❌ No"}
-                                                                </strong>
-                                                            </span>
+                                                            <span>Auto Renew: <strong>{sub.auto_renew ? "✅ Yes" : "❌ No"}</strong></span>
                                                         </div>
                                                     </div>
-
-                                                    {/* STATUS */}
-                                                    <span
-                                                        className={`px-3 py-1 rounded-full text-xs font-semibold ${sub.status ===
-                                                            "active"
-                                                            ? "bg-green-100 text-green-700"
-                                                            : sub.status ===
-                                                                "trial"
-                                                                ? "bg-blue-100 text-blue-700"
-                                                                : sub.status ===
-                                                                    "expired"
-                                                                    ? "bg-gray-100 text-gray-700"
-                                                                    : "bg-red-100 text-red-700"
-                                                            }`}
-                                                    >
-                                                        {sub.status
-                                                            ?.charAt(
-                                                                0
-                                                            )
-                                                            .toUpperCase() +
-                                                            sub.status?.slice(
-                                                                1
-                                                            )}
+                                                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                                        sub.status === "active" ? "bg-green-100 text-green-700" : 
+                                                        sub.status === "trial" ? "bg-blue-100 text-blue-700" : 
+                                                        sub.status === "expired" ? "bg-gray-100 text-gray-700" : "bg-red-100 text-red-700"
+                                                    }`}>
+                                                        {sub.status?.charAt(0).toUpperCase() + sub.status?.slice(1)}
                                                     </span>
                                                 </div>
-
-                                                {/* ================================= */}
-                                                {/* LIMITS */}
-                                                {/* ================================= */}
                                                 <div className="border-t border-gray-200 pt-4">
                                                     <div className="flex items-center gap-2 mb-4">
-                                                        <span
-                                                            className={`text-xs font-semibold px-2 py-1 rounded-full ${isEnterprise
-                                                                ? "bg-purple-100 text-purple-700"
-                                                                : "bg-blue-100 text-blue-700"
-                                                                }`}
-                                                        >
-                                                            {isEnterprise
-                                                                ? "Custom Editable Limits"
-                                                                : "Plan Default Limits"}
-                                                        </span>
-
-                                                        <span className="text-xs text-gray-500">
-                                                            {isEnterprise
-                                                                ? "Enterprise plan with custom resource allocation"
-                                                                : "Read-only limits inherited from selected plan"}
+                                                        <span className={`text-xs font-semibold px-2 py-1 rounded-full ${isEnterprise ? "bg-purple-100 text-purple-700" : "bg-blue-100 text-blue-700"}`}>
+                                                            {isEnterprise ? "Custom Editable Limits" : "Plan Default Limits"}
                                                         </span>
                                                     </div>
-
                                                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                                                        {/* TENANTS */}
                                                         <div className="bg-white rounded-xl border border-gray-100 p-4">
-                                                            <p className="text-xs text-gray-500 mb-2">
-                                                                Max
-                                                                Tenants
-                                                            </p>
-
-                                                            <p className="text-2xl font-bold text-gray-800">
-                                                                {effectiveTenants ??
-                                                                    "∞"}
-                                                            </p>
-
-                                                            {!isEnterprise && (
-                                                                <p className="text-[11px] text-gray-400 mt-1">
-                                                                    Plan
-                                                                    Controlled
-                                                                </p>
-                                                            )}
-
-                                                            {isEnterprise && (
-                                                                <p className="text-[11px] text-purple-600 mt-1">
-                                                                    Custom
-                                                                    Editable
-                                                                </p>
-                                                            )}
+                                                            <p className="text-xs text-gray-500 mb-2">Max Tenants</p>
+                                                            <p className="text-2xl font-bold text-gray-800">{effectiveTenants ?? "∞"}</p>
                                                         </div>
-
-                                                        {/* OUTLETS */}
                                                         <div className="bg-white rounded-xl border border-gray-100 p-4">
-                                                            <p className="text-xs text-gray-500 mb-2">
-                                                                Max
-                                                                Outlets
-                                                            </p>
-
-                                                            <p className="text-2xl font-bold text-gray-800">
-                                                                {effectiveOutlets ??
-                                                                    "∞"}
-                                                            </p>
-
-                                                            {!isEnterprise && (
-                                                                <p className="text-[11px] text-gray-400 mt-1">
-                                                                    Plan
-                                                                    Controlled
-                                                                </p>
-                                                            )}
-
-                                                            {isEnterprise && (
-                                                                <p className="text-[11px] text-purple-600 mt-1">
-                                                                    Custom
-                                                                    Editable
-                                                                </p>
-                                                            )}
+                                                            <p className="text-xs text-gray-500 mb-2">Max Outlets</p>
+                                                            <p className="text-2xl font-bold text-gray-800">{effectiveOutlets ?? "∞"}</p>
                                                         </div>
-
-                                                        {/* USERS */}
                                                         <div className="bg-white rounded-xl border border-gray-100 p-4">
-                                                            <p className="text-xs text-gray-500 mb-2">
-                                                                Max
-                                                                Users
-                                                            </p>
-
-                                                            <p className="text-2xl font-bold text-gray-800">
-                                                                {effectiveUsers ??
-                                                                    "∞"}
-                                                            </p>
-
-                                                            {!isEnterprise && (
-                                                                <p className="text-[11px] text-gray-400 mt-1">
-                                                                    Plan
-                                                                    Controlled
-                                                                </p>
-                                                            )}
-
-                                                            {isEnterprise && (
-                                                                <p className="text-[11px] text-purple-600 mt-1">
-                                                                    Custom
-                                                                    Editable
-                                                                </p>
-                                                            )}
+                                                            <p className="text-xs text-gray-500 mb-2">Max Users</p>
+                                                            <p className="text-2xl font-bold text-gray-800">{effectiveUsers ?? "∞"}</p>
                                                         </div>
-
-                                                        {/* DEVICES */}
                                                         <div className="bg-white rounded-xl border border-gray-100 p-4">
-                                                            <p className="text-xs text-gray-500 mb-2">
-                                                                Max
-                                                                Devices
-                                                            </p>
-
-                                                            <p className="text-2xl font-bold text-gray-800">
-                                                                {effectiveDevices ??
-                                                                    "∞"}
-                                                            </p>
-
-                                                            {!isEnterprise && (
-                                                                <p className="text-[11px] text-gray-400 mt-1">
-                                                                    Plan
-                                                                    Controlled
-                                                                </p>
-                                                            )}
-
-                                                            {isEnterprise && (
-                                                                <p className="text-[11px] text-purple-600 mt-1">
-                                                                    Custom
-                                                                    Editable
-                                                                </p>
-                                                            )}
+                                                            <p className="text-xs text-gray-500 mb-2">Max Devices</p>
+                                                            <p className="text-2xl font-bold text-gray-800">{effectiveDevices ?? "∞"}</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         );
-                                    }
+                                    })
+                                ) : (
+                                    // MULTIPLE LICENSES - TABLE FORMAT
+                                    <div className="space-y-4">
+                                        <div className="rounded-md border border-gray-100 overflow-hidden">
+                                            <Table>
+                                                <TableHeader className="bg-gray-50">
+                                                    <TableRow>
+                                                        <TableHead className="font-semibold">Plan</TableHead>
+                                                        <TableHead className="font-semibold">Status</TableHead>
+                                                        <TableHead className="font-semibold">Qty</TableHead>
+                                                        <TableHead className="font-semibold">Start Date</TableHead>
+                                                        <TableHead className="font-semibold">End Date</TableHead>
+                                                        <TableHead className="font-semibold">Limits (T/O/U/D)</TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
+                                                <TableBody>
+                                                    {owner.subscriptions
+                                                        .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                                                        .map((sub, idx) => {
+                                                            const isEnterprise = sub.plan?.is_custom;
+                                                            return (
+                                                                <TableRow key={idx} className="hover:bg-gray-50/50">
+                                                                    <TableCell className="font-medium">
+                                                                        <div className="flex flex-col">
+                                                                            <span>{sub.plan?.name || `Plan #${sub.plan_id}`}</span>
+                                                                            {isEnterprise && (
+                                                                                <span className="text-[10px] w-fit font-semibold bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded-full mt-1">
+                                                                                    Enterprise
+                                                                                </span>
+                                                                            )}
+                                                                        </div>
+                                                                    </TableCell>
+                                                                    <TableCell>
+                                                                        <span className={`px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                                                                            sub.status === "active" ? "bg-green-100 text-green-700" : 
+                                                                            sub.status === "trial" ? "bg-blue-100 text-blue-700" : 
+                                                                            sub.status === "expired" ? "bg-gray-100 text-gray-700" : "bg-red-100 text-red-700"
+                                                                        }`}>
+                                                                            {sub.status?.charAt(0).toUpperCase() + sub.status?.slice(1)}
+                                                                        </span>
+                                                                    </TableCell>
+                                                                    <TableCell>{sub.quantity}</TableCell>
+                                                                    <TableCell className="text-xs">
+                                                                        {sub.start_date ? new Date(sub.start_date).toLocaleDateString() : "-"}
+                                                                    </TableCell>
+                                                                    <TableCell className="text-xs">
+                                                                        {sub.end_date ? new Date(sub.end_date).toLocaleDateString() : "-"}
+                                                                    </TableCell>
+                                                                    <TableCell>
+                                                                        <div className="flex gap-2 text-[11px]">
+                                                                            <span title="Max Tenants" className="bg-gray-100 px-1.5 py-0.5 rounded">T: {sub.custom_max_tenants ?? sub.plan?.max_tenants ?? "∞"}</span>
+                                                                            <span title="Max Outlets" className="bg-gray-100 px-1.5 py-0.5 rounded">O: {sub.custom_max_outlets ?? sub.plan?.max_outlets ?? "∞"}</span>
+                                                                            <span title="Max Users" className="bg-gray-100 px-1.5 py-0.5 rounded">U: {sub.custom_max_users ?? sub.plan?.max_users ?? "∞"}</span>
+                                                                            <span title="Max Devices" className="bg-gray-100 px-1.5 py-0.5 rounded">D: {sub.custom_max_devices ?? sub.plan?.max_devices ?? "∞"}</span>
+                                                                        </div>
+                                                                    </TableCell>
+                                                                </TableRow>
+                                                            );
+                                                        })}
+                                                </TableBody>
+                                            </Table>
+                                        </div>
+
+                                        {/* Pagination Controls */}
+                                        {(owner.subscriptions?.length || 0) > itemsPerPage && (
+                                            <div className="flex items-center justify-between py-2 px-2 border-t border-gray-100">
+                                                <p className="text-xs text-gray-500">
+                                                    Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(currentPage * itemsPerPage, owner.subscriptions?.length || 0)} of {owner.subscriptions?.length || 0}
+                                                </p>
+                                                <div className="flex gap-2">
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                        className="h-8 text-xs"
+                                                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                                        disabled={currentPage === 1}
+                                                    >
+                                                        Previous
+                                                    </Button>
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                        className="h-8 text-xs"
+                                                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil((owner.subscriptions?.length || 0) / itemsPerPage)))}
+                                                        disabled={currentPage === Math.ceil((owner.subscriptions?.length || 0) / itemsPerPage)}
+                                                    >
+                                                        Next
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                 )
                             ) : (
-                                <p className="text-gray-500 text-center py-4 border border-dashed rounded-lg">
+                                <p className="text-gray-500 text-center py-4 border border-dashed rounded-lg text-sm">
                                     No Licenses found.
                                 </p>
                             )}
