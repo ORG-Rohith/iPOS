@@ -91,7 +91,7 @@ export const fetchBusinessOwnersStatsData = async (): Promise<BusinessOwnersStat
         BusinessOwnersStats: [
             {
                 color: "border-red-500",
-                label: "Total Business Owners",
+                label: "Total Companies",
                 value: "",
                 // value: stats.total.toString(),
                 change: "",
@@ -101,7 +101,7 @@ export const fetchBusinessOwnersStatsData = async (): Promise<BusinessOwnersStat
             },
             {
                 color: "border-green-500",
-                label: "Active Business Owners",
+                label: "Active Companies",
                 value: "",
                 // value: stats.active.toString(),
                 change: "",

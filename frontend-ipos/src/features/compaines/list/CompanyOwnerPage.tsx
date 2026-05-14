@@ -47,11 +47,11 @@ export const BusinessOwnersPage: React.FC = () => {
     }
 
     return (
-        <BusinessOwnerLayout title="Business Owners">
+        <BusinessOwnerLayout title="Companies">
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Business Owners</h1>
-                    <p className="text-gray-500 text-sm">Manage business owners and their subscriptions</p>
+                    <h1 className="text-2xl font-bold text-gray-800">Companies</h1>
+                    <p className="text-gray-500 text-sm">Manage Companies and their subscriptions</p>
                 </div>
                 <Button onClick={() => navigate("/business-owners/create")} className="bg-primary text-white">
                     Create Business Owner
@@ -106,14 +106,15 @@ export const BusinessOwnersPage: React.FC = () => {
                                 <TableHead>Email</TableHead>
                                 <TableHead>Type</TableHead>
                                 <TableHead>Status</TableHead>
-                                <TableHead>Subscriptions</TableHead>
+                                <TableHead>Licenses</TableHead>
+                                <TableHead>Tenants</TableHead>
                                 <TableHead className="text-right">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {loading && businessOwners.length > 0 ? (
                                 <TableRow>
-                                    <TableCell colSpan={6} className="text-center py-12 text-gray-500">
+                                    <TableCell colSpan={7} className="text-center py-12 text-gray-500">
                                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
                                     </TableCell>
                                 </TableRow>
@@ -152,6 +153,15 @@ export const BusinessOwnersPage: React.FC = () => {
                                             <span className="text-sm text-gray-400">None</span>
                                         )}
                                     </TableCell>
+                                    <TableCell>
+                                        {owner.tenants && owner.tenants.length > 0 ? (
+                                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-700">
+                                                🌍 {owner.tenants.length} Tenant{owner.tenants.length !== 1 ? 's' : ''}
+                                            </span>
+                                        ) : (
+                                            <span className="text-sm text-gray-400">None</span>
+                                        )}
+                                    </TableCell>
                                     <TableCell className="text-right space-x-2">
                                         <Button variant="outline" size="sm" className="text-blue-600 hover:bg-blue-50" onClick={() => navigate(`/business-owners/manage/${owner.id}`)}>
                                             View
@@ -167,7 +177,7 @@ export const BusinessOwnersPage: React.FC = () => {
                             ))}
                             {!loading && businessOwners.length === 0 && (
                                 <TableRow>
-                                    <TableCell colSpan={6} className="text-center py-12 text-gray-500">
+                                    <TableCell colSpan={7} className="text-center py-12 text-gray-500">
                                         No Business Owners found.
                                     </TableCell>
                                 </TableRow>

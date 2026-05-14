@@ -105,7 +105,7 @@ export interface Plan {
 
 export interface Subscription {
     id: number;
-
+    plan_name: string;
     plan_id: number;
     quantity: number;
 
@@ -181,6 +181,7 @@ export interface CreateBusinessOwnerPayload {
 export interface SubscriptionPayload {
     plan_id: number;
     quantity: number;
+    plan_name?: string;
 
     // Enterprise Custom Overrides
     custom_max_tenants?: number;
