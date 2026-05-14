@@ -90,6 +90,8 @@ import { Button } from "../../../shared/components/ui/Button";
 
 import BusinessOwnerInfoSection from "../components/CompanyOwnerInfoSection";
 import SubscriptionSection from "../components/LicencesSection";
+import OwnersSection from "../components/OwnersSection";
+import AddressSection from "../components/AddressSection";
 
 interface Props {
     onSubmit: (data: CreateBusinessOwnerPayload) => void;
@@ -132,7 +134,8 @@ const CreateBusinessOwnerForm: React.FC<Props> = ({
         status: "Active",
         onboarding_complete: false,
 
-        subscriptions: [], // ✅ ALWAYS ARRAY
+        subscriptions: [],
+        owners: [],
     });
 
     const handleChange = (
@@ -162,6 +165,16 @@ const CreateBusinessOwnerForm: React.FC<Props> = ({
             />
 
             <BusinessOwnerInfoSection
+                form={form}
+                handleChange={handleChange}
+            />
+
+            <OwnersSection
+                form={form}
+                setForm={setForm}
+            />
+
+            <AddressSection
                 form={form}
                 handleChange={handleChange}
             />

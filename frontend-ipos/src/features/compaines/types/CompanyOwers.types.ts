@@ -70,6 +70,7 @@ export interface BusinessOwner {
     tenants?: any[];
     outlets?: any[];
     devices?: any[];
+    owners?: OwnerPayload[];
 }
 
 /* =========================
@@ -105,7 +106,6 @@ export interface Plan {
 
 export interface Subscription {
     id: number;
-    plan_name: string;
     plan_id: number;
     quantity: number;
 
@@ -172,6 +172,21 @@ export interface CreateBusinessOwnerPayload {
 
     // 💳 Subscriptions (IMPORTANT: ALWAYS ARRAY)
     subscriptions: SubscriptionPayload[];
+
+    // 👥 Multi-Owner Support
+    owners?: OwnerPayload[];
+}
+
+/* =========================
+   OWNER PAYLOAD
+========================= */
+
+export interface OwnerPayload {
+    name: string;
+    email: string;
+    phone?: string;
+    role?: string;
+    is_primary?: boolean;
 }
 
 /* =========================
@@ -181,7 +196,6 @@ export interface CreateBusinessOwnerPayload {
 export interface SubscriptionPayload {
     plan_id: number;
     quantity: number;
-    plan_name?: string;
 
     // Enterprise Custom Overrides
     custom_max_tenants?: number;

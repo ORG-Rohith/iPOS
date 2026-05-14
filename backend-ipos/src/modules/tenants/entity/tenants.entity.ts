@@ -11,7 +11,7 @@ import {
 } from "typeorm";
 import { User } from "src/modules/users/entity/users.entity";
 import { Outlet } from "src/modules/outlets/entity/outlets.entity";
-import { BusinessOwner } from "../../business-owners/entity/business-owner.entity";
+import { BusinessOwner } from "../../companies/entity/companyOwner.entity";
 
 @Entity("core_tenants")
 export class Tenant {

@@ -32,6 +32,7 @@ export const useEditBusinessOwner = (id: string | undefined) => {
         status: "Active",
         onboarding_complete: false,
         subscriptions: [],
+        owners: [],
     });
 
     useEffect(() => {
@@ -66,7 +67,6 @@ export const useEditBusinessOwner = (id: string | undefined) => {
                     onboarding_complete: data.onboarding_complete || false,
                     subscriptions: (data.subscriptions || []).map(s => ({
                         plan_id: s.plan_id ?? s.plan?.id,
-                        plan_name: s.plan_name ?? s.plan?.name,
                         quantity: s.quantity ?? 1,
                         custom_max_tenants: s.custom_max_tenants ?? undefined,
                         custom_max_outlets: s.custom_max_outlets ?? undefined,
@@ -77,6 +77,16 @@ export const useEditBusinessOwner = (id: string | undefined) => {
                         end_date: s.end_date ? String(s.end_date) : undefined,
                         auto_renew: s.auto_renew ?? true,
                     })),
+                    // Map owners from API response
+                    owners: (data as any).owners?.length
+                        ? (data as any).owners.map((o: any) => ({
+                            name: o.name || "",
+                            email: o.email || "",
+                            phone: o.phone || "",
+                            role: o.role || "Owner",
+                            is_primary: o.is_primary ?? false,
+                        }))
+                        : [],
                 });
             } catch (err: any) {
                 setError(err.message || "Failed to fetch business owner details");

@@ -3,11 +3,12 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DataSource, Repository, ILike } from "typeorm";
-import { BusinessOwner } from "./entity/business-owner.entity";
-import { Subscription } from "../subscriptions/entity/subscription.entity";
-import { CreateBusinessOwnerDto } from "./dto/create-business-owner.dto";
-import { UpdateBusinessOwnerDto } from "./dto/update-business-owner.dto";
+import { DataSource, Repository } from "typeorm";
+import { Subscription } from "../licences/entity/licence.entity";
+import { CreateBusinessOwnerDto } from "./dto/createCompanyOwner.dto";
+import { UpdateBusinessOwnerDto } from "../companies/dto/updateCompnayOwner.dto";
+import { BusinessOwner } from "../companies/entity/companyOwner.entity";
+import { BusinessOwnerContact } from "../companies/entity/companyOwnerContact.entity";
 
 @Injectable()
 export class BusinessOwnersService {
@@ -15,24 +16,40 @@ export class BusinessOwnersService {
     @InjectRepository(BusinessOwner)
     private businessOwnerRepository: Repository<BusinessOwner>,
 
+    @InjectRepository(BusinessOwnerContact)
+    private contactRepository: Repository<BusinessOwnerContact>,
+
     @InjectRepository(Subscription)
     private subscriptionRepository: Repository<Subscription>,
 
     private dataSource: DataSource
   ) { }
 
+  // =========================
+  // RELATIONS TO LOAD
+  // =========================
+  private readonly defaultRelations = [
+    "subscriptions",
+    "subscriptions.plan",
+    "tenants",
+    "owners",
+  ];
 
+  // =========================
+  // CREATE
+  // =========================
   async create(dto: CreateBusinessOwnerDto): Promise<BusinessOwner> {
     return await this.dataSource.transaction(async (manager) => {
       const ownerRepo = manager.getRepository(BusinessOwner);
       const subRepo = manager.getRepository(Subscription);
+      const contactRepo = manager.getRepository(BusinessOwnerContact);
 
       // ================================
       // 1. CHECK IF OWNER EXISTS
       // ================================
       let owner = await ownerRepo.findOne({
         where: { email: dto.email },
-        relations: ["subscriptions", "subscriptions.plan", "tenants"],
+        relations: this.defaultRelations,
       });
 
       // ================================
@@ -75,14 +92,33 @@ export class BusinessOwnersService {
       }
 
       // ================================
-      // 5. RETURN FULL DATA
+      // 5. CREATE OWNERS / CONTACTS (IF ANY)
+      // ================================
+      if (dto.owners?.length) {
+        const contacts = dto.owners.map((c) =>
+          contactRepo.create({
+            name: c.name,
+            email: c.email,
+            phone: c.phone ?? null,
+            role: c.role ?? "Owner",
+            is_primary: c.is_primary ?? false,
+            business_owner: savedOwner,
+          })
+        );
+
+        await contactRepo.save(contacts);
+      }
+
+      // ================================
+      // 6. RETURN FULL DATA
       // ================================
       return ownerRepo.findOne({
         where: { id: savedOwner.id },
-        relations: ["subscriptions", "subscriptions.plan", "tenants"],
+        relations: this.defaultRelations,
       });
     });
   }
+
   // =========================
   // GET ALL
   // =========================
@@ -101,6 +137,7 @@ export class BusinessOwnersService {
       .leftJoinAndSelect('businessOwner.subscriptions', 'subscriptions')
       .leftJoinAndSelect('subscriptions.plan', 'plan')
       .leftJoinAndSelect('businessOwner.tenants', 'tenants')
+      .leftJoinAndSelect('businessOwner.owners', 'owners')
       .where('businessOwner.is_deleted = :isDeleted', { isDeleted: false });
 
     if (params?.search) {
@@ -134,7 +171,7 @@ export class BusinessOwnersService {
   async findOne(id: number): Promise<BusinessOwner> {
     const owner = await this.businessOwnerRepository.findOne({
       where: { id, is_deleted: false },
-      relations: ["subscriptions", "subscriptions.plan", "tenants"],
+      relations: this.defaultRelations,
     });
 
     if (!owner) {
@@ -154,6 +191,7 @@ export class BusinessOwnersService {
     return await this.dataSource.transaction(async (manager) => {
       const ownerRepo = manager.getRepository(BusinessOwner);
       const subRepo = manager.getRepository(Subscription);
+      const contactRepo = manager.getRepository(BusinessOwnerContact);
 
       const owner = await ownerRepo.findOne({
         where: { id },
@@ -166,7 +204,7 @@ export class BusinessOwnersService {
       Object.assign(owner, dto);
       await ownerRepo.save(owner);
 
-      // ⚠️ Only replace if provided
+      // ⚠️ Replace subscriptions if provided
       if (dto.subscriptions) {
         await subRepo.delete({
           business_owner: { id },
@@ -174,7 +212,7 @@ export class BusinessOwnersService {
 
         const newSubs = dto.subscriptions.map((sub) =>
           subRepo.create({
-            plan: { id: sub.plan_id },   // ✅ FIXED (IMPORTANT)
+            plan: { id: sub.plan_id },
             quantity: sub.quantity,
             custom_max_tenants: sub.custom_max_tenants ?? null,
             custom_max_outlets: sub.custom_max_outlets ?? null,
@@ -189,6 +227,28 @@ export class BusinessOwnersService {
         );
 
         await subRepo.save(newSubs);
+      }
+
+      // ⚠️ Replace owners/contacts if provided
+      if (dto.owners) {
+        await contactRepo.delete({
+          business_owner: { id },
+        });
+
+        if (dto.owners.length > 0) {
+          const newContacts = dto.owners.map((c) =>
+            contactRepo.create({
+              name: c.name,
+              email: c.email,
+              phone: c.phone ?? null,
+              role: c.role ?? "Owner",
+              is_primary: c.is_primary ?? false,
+              business_owner: owner,
+            })
+          );
+
+          await contactRepo.save(newContacts);
+        }
       }
 
       return this.findOne(id);

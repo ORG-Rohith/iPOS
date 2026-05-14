@@ -682,6 +682,86 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
                             </div>
                         </div>
                     </Card>
+
+                    {/* ===================================================== */}
+                    {/* COMPANY OWNERS */}
+                    {/* ===================================================== */}
+                    <Card className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <div className="flex justify-between items-center mb-4 border-b pb-2">
+                            <h2 className="text-lg font-semibold text-app-text">
+                                Company Owners
+                            </h2>
+
+                            <span className="text-xs font-bold bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">
+                                {(owner).owners?.length || 0} Owner
+                                {((owner).owners?.length || 0) !== 1 ? "s" : ""}
+                            </span>
+                        </div>
+
+                        <div className="space-y-3">
+                            {(owner).owners && (owner).owners.length > 0 ? (
+                                (owner).owners.map((contact: any, idx: number) => (
+                                    <div
+                                        key={idx}
+                                        className={`p-4 rounded-xl border space-y-2 ${contact.is_primary
+                                                ? "bg-blue-50/60 border-blue-200"
+                                                : "bg-gray-50 border-gray-100"
+                                            }`}
+                                    >
+                                        {/* Name + Badge */}
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-sm">
+                                                    {contact.name?.charAt(0)?.toUpperCase() || "?"}
+                                                </div>
+
+                                                <div>
+                                                    <p className="font-semibold text-gray-800 text-sm">
+                                                        {contact.name}
+                                                    </p>
+
+                                                    <p className="text-xs text-gray-500">
+                                                        {contact.role || "Owner"}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            {contact.is_primary && (
+                                                <span className="text-[10px] font-semibold bg-blue-600 text-white px-2 py-0.5 rounded-full">
+                                                    Primary
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        {/* Contact Info */}
+                                        <div className="flex flex-col gap-1 pl-10">
+                                            {contact.email && (
+                                                <a
+                                                    href={`mailto:${contact.email}`}
+                                                    className="text-xs text-blue-600 hover:underline"
+                                                >
+                                                    📧 {contact.email}
+                                                </a>
+                                            )}
+
+                                            {contact.phone && (
+                                                <a
+                                                    href={`tel:${contact.phone}`}
+                                                    className="text-xs text-blue-600 hover:underline"
+                                                >
+                                                    📞 {contact.phone}
+                                                </a>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="text-gray-500 text-center py-4 border border-dashed rounded-lg text-sm">
+                                    No owners added yet.
+                                </p>
+                            )}
+                        </div>
+                    </Card>
                 </div>
             </div>
         </BusinessOwnerLayout>

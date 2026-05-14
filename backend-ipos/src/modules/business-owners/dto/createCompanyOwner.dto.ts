@@ -8,7 +8,8 @@ import {
   IsBoolean,
 } from "class-validator";
 import { Type } from "class-transformer";
-import { SubscriptionDto } from "../../subscriptions/dto/subscription.dto";
+import { SubscriptionDto } from "../../licences/dto/licence.dto";
+import { BusinessOwnerContactDto } from "src/modules/companies/dto/companyOwnerContact.dto";
 
 export class CreateBusinessOwnerDto {
 
@@ -128,4 +129,14 @@ export class CreateBusinessOwnerDto {
   @ValidateNested({ each: true })
   @Type(() => SubscriptionDto)
   subscriptions?: SubscriptionDto[];
+
+  // ================================
+  // OWNERS / CONTACTS
+  // ================================
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => BusinessOwnerContactDto)
+  owners?: BusinessOwnerContactDto[];
 }

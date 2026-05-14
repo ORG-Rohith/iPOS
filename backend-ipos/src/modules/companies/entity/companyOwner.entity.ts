@@ -7,8 +7,9 @@ import {
   OneToMany,
   Index,
 } from "typeorm";
-import { Subscription } from "../../subscriptions/entity/subscription.entity";
+import { Subscription } from "../../licences/entity/licence.entity";
 import { Tenant } from "../../tenants/entity/tenants.entity";
+import { BusinessOwnerContact } from "./companyOwnerContact.entity";
 
 @Entity("core_business_owners")
 export class BusinessOwner {
@@ -38,6 +39,14 @@ export class BusinessOwner {
 
   @OneToMany(() => Tenant, (t) => t.business_owner)
   tenants: Tenant[];
+
+  // ================================
+  // MULTI-OWNER CONTACTS
+  // ================================
+  @OneToMany(() => BusinessOwnerContact, (c) => c.business_owner, {
+    cascade: true,
+  })
+  owners: BusinessOwnerContact[];
 
   @Column({ default: false })
   is_deleted: boolean;

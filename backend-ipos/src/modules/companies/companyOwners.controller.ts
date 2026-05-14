@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-import { BusinessOwnersService } from './business-owners.service';
-import { CreateBusinessOwnerDto } from './dto/create-business-owner.dto';
-import { UpdateBusinessOwnerDto } from './dto/update-business-owner.dto';
+import { BusinessOwnersService } from './companyOwners.service';
+import { CreateBusinessOwnerDto } from './dto/createCompanyOwner.dto';
+import { UpdateBusinessOwnerDto } from './dto/updateCompnayOwner.dto';
 
 @Controller('business-owners')
 export class BusinessOwnersController {

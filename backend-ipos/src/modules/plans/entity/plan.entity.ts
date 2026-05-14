@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
-import { Subscription } from '../../subscriptions/entity/subscription.entity';
+import { Subscription } from '../../licences/entity/licence.entity';
 
 @Entity('core_plans')
 export class Plan {

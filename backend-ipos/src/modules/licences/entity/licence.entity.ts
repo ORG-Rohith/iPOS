@@ -1,6 +1,6 @@
 
 
-import { BusinessOwner } from "src/modules/business-owners/entity/business-owner.entity";
+import { BusinessOwner } from "src/modules/companies/entity/companyOwner.entity";
 import { Plan } from "src/modules/plans/entity/plan.entity";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 

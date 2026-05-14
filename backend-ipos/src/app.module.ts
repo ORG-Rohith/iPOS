@@ -12,9 +12,9 @@ import { EmailModule } from './infrastructure/email/email.module';
 import { SeederModule } from './infrastructure/seeders/seeder.module';
 import { UsersModule } from './modules/users/users.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
-import { BusinessOwnersModule } from './modules/business-owners/business-owners.module';
+import { BusinessOwnersModule } from './modules/companies/companyOwners.module';
 import { PlansModule } from './modules/plans/plans.module';
-import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
+import { SubscriptionsModule } from './modules/licences/licence.module';
 
 @Module({
   imports: [
