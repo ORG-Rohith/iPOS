@@ -10,6 +10,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { TenantsModule } from "../tenants/tenants.module";
 import { Device } from "./entity/device.entity";
+import { DeviceRegistrationController } from "./device.registration.controller";
 
 @Module({
     imports: [TypeOrmModule.forFeature([User, Device]), AuthModule, OutletsModule, TenantsModule,
@@ -26,7 +27,7 @@ import { Device } from "./entity/device.entity";
             },
         }),
     }),],
-    controllers: [DevicesController],
+    controllers: [DevicesController, DeviceRegistrationController],
     providers: [DevicesService],
     exports: [DevicesService],
 })

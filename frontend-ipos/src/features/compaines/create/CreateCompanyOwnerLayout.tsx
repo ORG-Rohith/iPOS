@@ -5,7 +5,7 @@ interface TenantsLayoutProps {
     title: string;
 }
 
-const CreateBusinessOwnerLayout: React.FC<TenantsLayoutProps> = ({ children }) => {
+const CreateCompanyOwnerLayout: React.FC<TenantsLayoutProps> = ({ children }) => {
     return (
         <div className="min-h-screen bg-app-bg flex flex-col">
             <Topbar title="Create Tenant" variant="createTenant" />
@@ -14,4 +14,4 @@ const CreateBusinessOwnerLayout: React.FC<TenantsLayoutProps> = ({ children }) =
     );
 };
 
-export default CreateBusinessOwnerLayout;
+export default CreateCompanyOwnerLayout;

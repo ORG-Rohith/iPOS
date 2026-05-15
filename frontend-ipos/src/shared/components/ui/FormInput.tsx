@@ -20,7 +20,7 @@ const FormInput: React.FC<FormInputProps> = ({
         <div className="flex flex-col gap-1.5 w-full">
             <Label
                 htmlFor={id}
-                className="text-[12px] font-semibold text-gray-600 uppercase tracking-wide"
+                className="text-[12px] font-semibold text-gray-600 normal-case tracking-wide"
             >
                 {label}
             </Label>

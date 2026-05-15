@@ -18,7 +18,10 @@ export class Device {
 
     @Expose()
     @Column()
-    outlet_id: number;
+    outlet_id: string;
+
+    @Column({ nullable: false })
+    activation_code: number;
 
     @Expose()
     @Column()

@@ -26,7 +26,7 @@ import UserFormPage from "../../features/users/form/UserFormPage";
 import { RolesPage } from "../../features/roles/list/RolesPage";
 import RoleFormPage from "../../features/roles/form/RoleFormPage";
 import { BusinessOwnersPage } from "../../features/compaines/list/CompanyOwnerPage";
-import { CreateBusinessOwnerPage } from "../../features/compaines/create/CreateCompanyOwnerPage";
+import { CreateCompanyOwnerPage } from "../../features/compaines/create/CreateCompanyOwnerPage";
 import { EditBusinessOwnerPage } from "../../features/compaines/edit/EditCompanyOwnerPage";
 import { BusinessOwnerDetailsPage } from "../../features/compaines/details/CompanyOwnerDetailsPage";
 
@@ -80,7 +80,7 @@ const AppRoutes = () => (
 
         {/* Business Owners */}
         <Route path="/businessOwners" element={<BusinessOwnersPage />} />
-        <Route path="/business-owners/create" element={<CreateBusinessOwnerPage />} />
+        <Route path="/business-owners/create" element={<CreateCompanyOwnerPage />} />
         <Route path="/business-owners/edit/:id" element={<EditBusinessOwnerPage />} />
         <Route path="/business-owners/manage/:id" element={<BusinessOwnerDetailsPage />} />
       </Route>

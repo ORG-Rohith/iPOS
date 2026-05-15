@@ -305,11 +305,10 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
                                                             <span>Auto Renew: <strong>{sub.auto_renew ? "✅ Yes" : "❌ No"}</strong></span>
                                                         </div>
                                                     </div>
-                                                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                                                        sub.status === "active" ? "bg-green-100 text-green-700" : 
-                                                        sub.status === "trial" ? "bg-blue-100 text-blue-700" : 
-                                                        sub.status === "expired" ? "bg-gray-100 text-gray-700" : "bg-red-100 text-red-700"
-                                                    }`}>
+                                                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${sub.status === "active" ? "bg-green-100 text-green-700" :
+                                                            sub.status === "trial" ? "bg-blue-100 text-blue-700" :
+                                                                sub.status === "expired" ? "bg-gray-100 text-gray-700" : "bg-red-100 text-red-700"
+                                                        }`}>
                                                         {sub.status?.charAt(0).toUpperCase() + sub.status?.slice(1)}
                                                     </span>
                                                 </div>
@@ -374,11 +373,10 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
                                                                         </div>
                                                                     </TableCell>
                                                                     <TableCell>
-                                                                        <span className={`px-2 py-0.5 rounded-full text-[11px] font-semibold ${
-                                                                            sub.status === "active" ? "bg-green-100 text-green-700" : 
-                                                                            sub.status === "trial" ? "bg-blue-100 text-blue-700" : 
-                                                                            sub.status === "expired" ? "bg-gray-100 text-gray-700" : "bg-red-100 text-red-700"
-                                                                        }`}>
+                                                                        <span className={`px-2 py-0.5 rounded-full text-[11px] font-semibold ${sub.status === "active" ? "bg-green-100 text-green-700" :
+                                                                                sub.status === "trial" ? "bg-blue-100 text-blue-700" :
+                                                                                    sub.status === "expired" ? "bg-gray-100 text-gray-700" : "bg-red-100 text-red-700"
+                                                                            }`}>
                                                                             {sub.status?.charAt(0).toUpperCase() + sub.status?.slice(1)}
                                                                         </span>
                                                                     </TableCell>
@@ -615,8 +613,8 @@ export const BusinessOwnerDetailsPage: React.FC = () => {
                                     <div
                                         key={idx}
                                         className={`p-4 rounded-xl border space-y-2 ${contact.is_primary
-                                                ? "bg-blue-50/60 border-blue-200"
-                                                : "bg-gray-50 border-gray-100"
+                                            ? "bg-blue-50/60 border-blue-200"
+                                            : "bg-gray-50 border-gray-100"
                                             }`}
                                     >
                                         {/* Name + Badge */}

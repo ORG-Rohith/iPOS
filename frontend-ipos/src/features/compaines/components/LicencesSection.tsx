@@ -346,11 +346,11 @@ const SubscriptionSection: React.FC<Props> = ({
                                     </div>
 
                                     {/* QUANTITY */}
-                                    <div className="w-28">
+                                    <div className="min-w-[120px]">
                                         <FormInput
                                             id={`quantity-${index}`}
                                             name={`quantity-${index}`}
-                                            label="Quantity"
+                                            label="quantity"
                                             type="number"
                                             min="1"
                                             value={
