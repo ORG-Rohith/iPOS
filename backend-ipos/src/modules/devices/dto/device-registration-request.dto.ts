@@ -10,7 +10,7 @@ export class DeviceDetails {
 
     @IsString()
     @IsNotEmpty()
-    deviceId: string;
+    device_number: string;
 
     @IsString()
     @IsNotEmpty()
@@ -25,11 +25,11 @@ export class DeviceRegistrationRequestDto {
 
     @IsString()
     @IsNotEmpty()
-    userId: string;
+    user_uuid: string;
 
     @IsString()
     @IsNotEmpty()
-    outletId: string;
+    outlet_uuid: string;
 
     @IsObject()
     @ValidateNested()
@@ -43,5 +43,5 @@ export class DeviceValidationDto {
 
     @IsString()
     @IsNotEmpty()
-    accessCode: string;
+    access_code: string;
 }

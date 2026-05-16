@@ -14,18 +14,21 @@ export class Device {
 
     @Expose()
     @Column()
-    device_id: string;
+    device_number: string;
 
     @Expose()
     @Column()
-    outlet_id: string;
+    outlet_uuid: string;
 
     @Column({ nullable: false })
     activation_code: number;
 
     @Expose()
     @Column()
-    tenant_id: number;
+    tenant_uuid: string;
+
+    @Column({ type: 'timestamp', nullable: true })
+    last_synced_at?: Date;
 
     @CreateDateColumn()
     created_on: Date;

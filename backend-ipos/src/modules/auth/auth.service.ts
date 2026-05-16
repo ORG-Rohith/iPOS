@@ -98,9 +98,9 @@ export class AuthService {
   // ─────────────────────────────────────────
   // GET USER ROLES
   // ─────────────────────────────────────────
-  async getUserRoles(userId: number): Promise<JwtUserRole[]> {
+  async getUserRoles(user_id: number): Promise<JwtUserRole[]> {
     const userRoles = await this.userRoleRepo.find({
-      where: { user_id: userId },
+      where: { user_id: user_id },
       relations: ['role', 'outlet'],
     });
 

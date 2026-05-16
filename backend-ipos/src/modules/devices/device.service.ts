@@ -6,12 +6,10 @@ import { User } from "../users/entity/users.entity";
 import * as bcrypt from 'bcrypt';
 import { AuthService } from "../auth/auth.service";
 import { OutletsService } from "../outlets/outlets.service";
-import { JwtPayload, RequestUser } from "../users/types/jwt-payload.type";
 import { JwtService } from "@nestjs/jwt";
 import { TenantsService } from "../tenants/tenants.service";
 import { Device } from "./entity/device.entity";
-import { DevicePairDto } from "./dto/device-pair.dto";
-import { DeviceLoginResponseDto } from "./dto/device-login-response.dto";
+import { DeviceLoginResponseDto, DeviceRegistrationPayloadDto } from "./dto/device-login-response.dto";
 import { DeviceRegistrationRequestDto, DeviceValidationDto } from "./dto/device-registration-request.dto";
 
 
@@ -73,14 +71,14 @@ export class DevicesService {
 
 
         const payload: DeviceLoginResponseDto = {
-            user_id: user.id.toString(),
-            userName: user.name,
+            user_uuid: user.uuid,
+            user_full_name: user.name,
             role: roles.map((role) => ({
-                roleName: role.roleName,
+                role_name: role.roleName,
             })),
             outlets: tenant.outlets.map((outlet) => ({
                 uuid: outlet.uuid,
-                storeName: outlet.name,
+                store_name: outlet.name,
             })),
         };
 
@@ -96,13 +94,14 @@ export class DevicesService {
 
     async deviceRegistration(body: DeviceRegistrationRequestDto) {
         const existingDevice = await this.deviceRepo.findOne({
-            where: { device_id: body.devices.deviceId }
+            where: { device_number: body.devices.device_number }
         });
         if (existingDevice) {
             throw new BadRequestException("Device already exists");
         }
 
-        const user = await this.userRepo.findOne({ where: { id: parseInt(body.userId) } });
+        const user = await this.userRepo.findOne({ where: { uuid: body.user_uuid } });
+        const tenant = await this.tenantService.findByTenantId(user.tenant_id);
         if (!user) {
             throw new BadRequestException("User not found");
         }
@@ -110,16 +109,22 @@ export class DevicesService {
         const activationCode = await this.generateUniqueDeviceNumber();
 
         const device = this.deviceRepo.create({
-            outlet_id: body.outletId,
-            device_id: body.devices.deviceId,
+            outlet_uuid: body.outlet_uuid,
+            device_number: body.devices.device_number,
             os: body.devices.os,
-            tenant_id: user.tenant_id,
+            tenant_uuid: tenant.uuid,
             device_pair: false,
             is_active: true,
             activation_code: activationCode
         });
+        const deviceData = await this.deviceRepo.save(device);
 
-        return await this.deviceRepo.save(device);
+        const result: DeviceRegistrationPayloadDto = {
+            device_uuid: deviceData.uuid,
+            activation_code: activationCode.toString()
+        }
+
+        return { status: "success", result };
     }
     async deviceValidation(body: DeviceValidationDto) {
         const device = await this.deviceRepo.findOne({
@@ -128,7 +133,7 @@ export class DevicesService {
         if (!device) {
             throw new BadRequestException("Device not found");
         }
-        if (device.activation_code.toString() !== body.accessCode) {
+        if (device.activation_code.toString() !== body.access_code) {
             throw new BadRequestException("Invalid activation code");
         }
 
@@ -138,32 +143,7 @@ export class DevicesService {
         this.deviceRepo.update(device.id, { device_pair: true });
         return { status: "success", message: "Device paired successfully" };
     }
-    // async getAllOutlets(user: RequestUser) {
 
-    //     if (user.roles.some((role) => role.roleName === "Tenant Admin") || user.roles.some((role) => role.roleName === "Outlet Manager")) {
-    //         return this.outletService.findOutletByTenantId(user.tenantId.toString());
-    //     }
-    //     throw new UnauthorizedException("You are not authorized to get all outlets");
-    // }
-
-    // async generateDeviceId(user: RequestUser) {
-    //     console.log("user id from ", user);
-    //     if (!user.outletId) {
-    //         throw new BadRequestException(
-    //             "Outlet is required to generate device ID",
-    //         );
-    //     }
-
-    //     const deviceNumber =
-    //         await this.generateUniqueDeviceNumber();
-    //     const device = await this.deviceRepo.save({
-    //         device_id: deviceNumber,
-    //         outlet_id: user.outletId,
-    //         tenant_id: user.tenantId,
-    //         is_active: true,
-    //     });
-    //     return device;
-    // }
     private async generateUniqueDeviceNumber(): Promise<number> {
         let exists = true;
         let activationCode;
@@ -188,24 +168,5 @@ export class DevicesService {
     }
 
 
-    // async devicePair(dto: DevicePairDto) {
-    //     const { deviceId, outletId } = dto;
-    //     const device = await this.deviceRepo.findOne({
-    //         where: {
-    //             device_id: deviceId,
-    //             outlet_id: outletId
-    //         },
-    //     });
-    //     if (!device) {
-    //         throw new BadRequestException("Device not found");
-    //     }
-
-    //     if (device.device_pair === true) {
-    //         throw new BadRequestException("Device is already paired");
-    //     }
-    //     device.device_pair = true;
-    //     await this.deviceRepo.save(device);
-    //     return device;
-    // }
 
 }
